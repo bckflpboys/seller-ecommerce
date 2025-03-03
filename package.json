@@ -1,0 +1,35 @@
+{
+  "name": "ecom",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@paystack/inline-js": "^2.22.2",
+    "@types/bcryptjs": "^2.4.6",
+    "axios": "^1.8.1",
+    "bcryptjs": "^3.0.2",
+    "lucide-react": "^0.477.0",
+    "mongoose": "^8.12.0",
+    "next": "^15.2.0",
+    "next-auth": "^4.24.11",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/postcss7-compat": "^2.2.17",
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.4.1"
+  }
+}
