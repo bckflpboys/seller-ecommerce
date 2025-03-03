@@ -7,7 +7,7 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="relative h-[60vh] overflow-hidden">
         <Image
-          src="/images/about-hero.jpg"
+          src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop"
           alt="Eco-friendly farming"
           fill
           className="object-cover"
@@ -43,7 +43,7 @@ export default function AboutPage() {
             </div>
             <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl">
               <Image
-                src="/images/mission.jpg"
+                src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?q=80&w=2070&auto=format&fit=crop"
                 alt="Sustainable farming practices"
                 fill
                 className="object-cover"
@@ -112,17 +112,17 @@ export default function AboutPage() {
               {
                 name: 'Sarah Johnson',
                 role: 'Founder & CEO',
-                image: '/images/team/sarah.jpg'
+                image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop'
               },
               {
                 name: 'Michael Chen',
                 role: 'Agricultural Scientist',
-                image: '/images/team/michael.jpg'
+                image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop'
               },
               {
                 name: 'Emma Williams',
                 role: 'Sustainability Director',
-                image: '/images/team/emma.jpg'
+                image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop'
               }
             ].map((member, index) => (
               <div

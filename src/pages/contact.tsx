@@ -26,7 +26,7 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className="relative h-[40vh] overflow-hidden">
         <Image
-          src="/images/contact-hero.jpg"
+          src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=2072&auto=format&fit=crop"
           alt="Contact us"
           fill
           className="object-cover"
@@ -100,7 +100,7 @@ export default function ContactPage() {
               {/* Map */}
               <div className="relative h-[300px] rounded-xl overflow-hidden">
                 <Image
-                  src="/images/map.jpg"
+                  src="https://images.unsplash.com/photo-1553290322-e0c4bc89fe70?q=80&w=2073&auto=format&fit=crop"
                   alt="Location map"
                   fill
                   className="object-cover"
