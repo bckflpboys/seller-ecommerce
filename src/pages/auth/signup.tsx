@@ -3,7 +3,7 @@ import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Eye, EyeOff, ArrowRight, Github, Check } from 'lucide-react';
+import { Eye, EyeOff, ArrowRight, Check } from 'lucide-react';
 
 export default function SignUp() {
   const router = useRouter();
@@ -125,11 +125,17 @@ export default function SignUp() {
           </button>
 
           <button
-            onClick={() => signIn('github', { callbackUrl: '/' })}
-            className="w-full flex items-center justify-center px-4 py-3 border-2 border-gray-200 rounded-xl font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage transition-colors"
+            onClick={() => signIn('facebook', { callbackUrl: '/' })}
+            className="w-full flex items-center justify-center px-4 py-3 border-2 border-gray-200 rounded-xl font-medium text-[#1877F2] bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1877F2] transition-colors"
           >
-            <Github className="w-5 h-5 mr-2" />
-            Continue with GitHub
+            <Image
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/600px-Facebook_Logo_%282019%29.png"
+              alt="Facebook"
+              width={20}
+              height={20}
+              className="mr-2"
+            />
+            Continue with Facebook
           </button>
         </div>
 

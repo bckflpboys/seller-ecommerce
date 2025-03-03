@@ -2,6 +2,7 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Inter, Playfair_Display } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
+import { CartProvider } from '@/context/CartContext';
 import Layout from '@/components/Layout';
 
 const inter = Inter({
@@ -19,11 +20,13 @@ const playfair = Playfair_Display({
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
-      <div className={`${inter.variable} ${playfair.variable} font-sans`}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </div>
+      <CartProvider>
+        <main className={`${inter.variable} ${playfair.variable} font-sans`}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </main>
+      </CartProvider>
     </SessionProvider>
   );
 }
