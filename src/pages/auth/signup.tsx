@@ -29,9 +29,12 @@ export default function SignUp() {
     }
 
     try {
-      const response = await fetch('/api/auth/signup', {
+      // First, create the user account
+      const res = await fetch('/api/auth/signup', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
@@ -39,26 +42,27 @@ export default function SignUp() {
         }),
       });
 
-      const data = await response.json();
+      const data = await res.json();
 
-      if (!response.ok) {
+      if (!res.ok) {
         throw new Error(data.message || 'Something went wrong');
       }
 
-      // Sign in the user after successful registration
-      const result = await signIn('credentials', {
+      // If signup successful, automatically sign in the user
+      const signInResult = await signIn('credentials', {
         redirect: false,
         email: formData.email,
         password: formData.password,
       });
 
-      if (result?.error) {
+      if (signInResult?.error) {
         setError('Error signing in after registration');
       } else {
+        // Redirect to home page or dashboard
         router.push('/');
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong');
     } finally {
       setIsLoading(false);
     }
