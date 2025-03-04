@@ -26,6 +26,17 @@ interface Order {
   total: number;
 }
 
+interface ApiResponse {
+  user: {
+    name: string;
+    email: string;
+    role: string;
+    addresses: Address[];
+    favorites: any[];
+  };
+  message: string;
+}
+
 export default function Profile() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -103,10 +114,13 @@ export default function Profile() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          action: 'updateProfile'
+        }),
       });
 
-      const data = await res.json();
+      const data: ApiResponse = await res.json();
 
       if (!res.ok) {
         throw new Error(data.message || 'Error updating profile');
@@ -114,11 +128,12 @@ export default function Profile() {
 
       setProfile(prev => ({
         ...prev!,
-        name: data.user.name,
+        ...data.user
       }));
       setIsEditing(false);
     } catch (err: any) {
       setError(err.message);
+      console.error('Profile update error:', err);
     } finally {
       setIsLoading(false);
     }

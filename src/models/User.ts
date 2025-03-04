@@ -19,10 +19,17 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
+  address: {
+    type: String,
+    default: '',
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
+}, { 
+  timestamps: true,
+  versionKey: false // This removes the __v field
 });
 
 export default mongoose.models.User || mongoose.model('User', userSchema);

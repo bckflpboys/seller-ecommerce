@@ -9,7 +9,45 @@ interface HomeProps {
   featuredProducts: any[];
 }
 
+// Sample products to show when no featured products are available
+const SAMPLE_PRODUCTS = [
+  {
+    _id: 'sample1',
+    name: 'Organic Cleaning Kit',
+    description: 'All-natural cleaning solutions for your home',
+    price: 299.99,
+    image: 'https://images.unsplash.com/photo-1546552768-9e3a94b38a59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
+    category: 'Cleaning',
+  },
+  {
+    _id: 'sample2',
+    name: 'Natural Bath Set',
+    description: 'Handmade soaps and bath products',
+    price: 399.99,
+    image: 'https://images.unsplash.com/photo-1592029780368-c1fff15bcfd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1989&q=80',
+    category: 'Personal Care',
+  },
+  {
+    _id: 'sample3',
+    name: 'Eco-Friendly Kitchen Set',
+    description: 'Sustainable kitchen essentials for conscious cooking',
+    price: 499.99,
+    image: 'https://images.unsplash.com/photo-1589927986089-35812388d1f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    category: 'Kitchen',
+  },
+  {
+    _id: 'sample4',
+    name: 'Organic Tea Collection',
+    description: 'Premium organic teas from sustainable sources',
+    price: 199.99,
+    image: 'https://images.unsplash.com/photo-1597481499750-3e6b22637e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80',
+    category: 'Food',
+  },
+];
+
 export default function Home({ featuredProducts }: HomeProps) {
+  const productsToShow = featuredProducts.length > 0 ? featuredProducts : SAMPLE_PRODUCTS;
+
   return (
     <div>
       {/* Hero Section */}
@@ -47,102 +85,14 @@ export default function Home({ featuredProducts }: HomeProps) {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-earth-dark text-center">Featured Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.length > 0 ? (
-              featuredProducts.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))
-            ) : (
-              <>
-                <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                  <div className="relative h-48">
-                    <Image
-                      src="https://images.unsplash.com/photo-1546552768-9e3a94b38a59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-                      alt="Organic Cleaning Kit"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-2 text-earth-dark">Organic Cleaning Kit</h3>
-                    <p className="text-gray-600 text-sm mb-4">All-natural cleaning solutions for your home</p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-lg font-bold text-earth">R299.99</span>
-                      <Link href="/products" className="bg-sage text-white px-4 py-2 rounded-md hover:bg-sage-dark transition">
-                        View Details
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                  <div className="relative h-48">
-                    <Image
-                      src="https://images.unsplash.com/photo-1592029780368-c1fff15bcfd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1989&q=80"
-                      alt="Natural Bath Set"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-2 text-earth-dark">Natural Bath Set</h3>
-                    <p className="text-gray-600 text-sm mb-4">Handmade soaps and bath products</p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-lg font-bold text-earth">R399.99</span>
-                      <Link href="/products" className="bg-sage text-white px-4 py-2 rounded-md hover:bg-sage-dark transition">
-                        View Details
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                  <div className="relative h-48">
-                    <Image
-                      src="https://images.unsplash.com/photo-1589927986089-35812388d1f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                      alt="Organic Tea Collection"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-2 text-earth-dark">Organic Tea Collection</h3>
-                    <p className="text-gray-600 text-sm mb-4">Premium organic tea selection</p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-lg font-bold text-earth">R259.99</span>
-                      <Link href="/products" className="bg-sage text-white px-4 py-2 rounded-md hover:bg-sage-dark transition">
-                        View Details
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                  <div className="relative h-48">
-                    <Image
-                      src="https://images.unsplash.com/photo-1592136957897-b2b6ca21e10d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-                      alt="Eco Food Storage"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-2 text-earth-dark">Eco Food Storage</h3>
-                    <p className="text-gray-600 text-sm mb-4">Sustainable food storage solutions</p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-lg font-bold text-earth">R459.99</span>
-                      <Link href="/products" className="bg-sage text-white px-4 py-2 rounded-md hover:bg-sage-dark transition">
-                        View Details
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
+            {productsToShow.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
           </div>
           <div className="text-center mt-12">
             <Link
               href="/products"
-              className="inline-block bg-earth text-white px-8 py-3 rounded-md font-semibold hover:bg-earth-dark transition"
+              className="inline-block bg-sage hover:bg-sage-dark text-white px-8 py-3 rounded-md font-semibold transition"
             >
               View All Products
             </Link>
@@ -188,14 +138,11 @@ export default function Home({ featuredProducts }: HomeProps) {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     await connectDB();
-    const featuredProducts = await Product.find({})
-      .sort({ createdAt: -1 })
-      .limit(4)
-      .lean();
-
+    const products = await Product.find({ featured: true }).limit(4).lean();
+    
     return {
       props: {
-        featuredProducts: JSON.parse(JSON.stringify(featuredProducts)),
+        featuredProducts: JSON.parse(JSON.stringify(products)),
       },
     };
   } catch (error) {
