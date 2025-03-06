@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, Minus, Plus, Heart, Share2 } from 'lucide-react';
 import { formatCurrency } from '@/utils/format';
+import { useCart } from '@/context/CartContext';
+import { toast } from 'react-hot-toast';
 
 // Sample products from homepage
 const SAMPLE_PRODUCTS = [
@@ -113,6 +115,7 @@ interface ProductPageProps {
 export default function ProductPage({ product }: ProductPageProps) {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(product.image);
+  const { addItem } = useCart();
 
   const decreaseQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1);
@@ -120,6 +123,18 @@ export default function ProductPage({ product }: ProductPageProps) {
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
+  };
+
+  const handleAddToCart = () => {
+    addItem({
+      _id: product._id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      category: product.category,
+      quantity: quantity
+    });
+    toast.success(`${product.name} added to cart`);
   };
 
   return (
@@ -294,9 +309,7 @@ export default function ProductPage({ product }: ProductPageProps) {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <button
                       className="w-full bg-sage text-white px-8 py-4 rounded-xl font-medium hover:bg-sage-dark transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2"
-                      onClick={() => {
-                        // Add to cart logic here
-                      }}
+                      onClick={handleAddToCart}
                     >
                       Add to Cart
                     </button>
