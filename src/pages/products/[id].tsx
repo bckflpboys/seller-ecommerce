@@ -229,14 +229,17 @@ export default function ProductPage({ product }: ProductPageProps) {
                   )}
 
                   {/* Weight and Dimensions */}
-                  {(product.weight || product.dimensions) && (
+                  {((product.weight?.value && product.weight?.unit) || 
+                    (product.dimensions?.length && product.dimensions?.width && 
+                     product.dimensions?.height && product.dimensions?.unit)) && (
                     <div>
                       <h2 className="text-sm font-medium text-gray-900 mb-2">Specifications</h2>
                       <div className="space-y-1 text-gray-600">
-                        {product.weight && (
+                        {product.weight?.value && product.weight?.unit && (
                           <p>Weight: {product.weight.value} {product.weight.unit}</p>
                         )}
-                        {product.dimensions && (
+                        {product.dimensions?.length && product.dimensions?.width && 
+                         product.dimensions?.height && product.dimensions?.unit && (
                           <p>
                             Dimensions: {product.dimensions.length} x {product.dimensions.width} x {product.dimensions.height} {product.dimensions.unit}
                           </p>
@@ -253,9 +256,9 @@ export default function ProductPage({ product }: ProductPageProps) {
                         {product.isInStock ? 'In Stock' : 'Out of Stock'}
                       </span>
                     </div>
-                    {product.isInStock && product.stock <= (product.lowStockThreshold || 5) && (
+                    {product.isInStock && product.stock <= product.lowStockThreshold && (
                       <p className="text-sm text-amber-600 mt-1">
-                        Only {product.stock} left in stock
+                        Only {product.stock} left in stock - order soon
                       </p>
                     )}
                   </div>
@@ -282,9 +285,11 @@ export default function ProductPage({ product }: ProductPageProps) {
                             <Plus className="w-4 h-4" />
                           </button>
                         </div>
-                        <span className="text-sm text-gray-500">
-                          {product.stock} available
-                        </span>
+                        {product.stock <= product.lowStockThreshold && (
+                          <span className="text-sm text-amber-600">
+                            {product.stock} available
+                          </span>
+                        )}
                       </div>
                     </div>
                   )}

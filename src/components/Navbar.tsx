@@ -14,9 +14,19 @@ export default function Navbar() {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
-        setIsCartOpen(false);
+      const target = event.target as HTMLElement;
+      
+      // Don't close if clicking inside cart popup or on cart button
+      if (cartRef.current?.contains(target)) {
+        return;
       }
+
+      // Don't close if clicking on a link or button inside the cart popup
+      if (target.closest('.cart-popup')) {
+        return;
+      }
+
+      setIsCartOpen(false);
     }
 
     document.addEventListener('mousedown', handleClickOutside);
@@ -75,7 +85,7 @@ export default function Navbar() {
                     </span>
                   )}
                 </button>
-                {isCartOpen && <CartPopover />}
+                {isCartOpen && <CartPopover onClose={() => setIsCartOpen(false)} />}
               </div>
               
               {session ? (
@@ -118,7 +128,7 @@ export default function Navbar() {
                   </span>
                 )}
               </button>
-              {isCartOpen && <CartPopover />}
+              {isCartOpen && <CartPopover onClose={() => setIsCartOpen(false)} />}
             </div>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
