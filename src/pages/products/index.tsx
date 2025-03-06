@@ -1,32 +1,28 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import { GetStaticProps, GetServerSideProps } from 'next';
+import { GetServerSideProps } from 'next';
 import ProductCard from '@/components/ProductCard';
 import ProductFilter from '@/components/ProductFilter';
-import { SAMPLE_PRODUCTS } from '@/pages/index';
+import connectDB from '@/lib/mongodb';
+import Product from '@/models/Product';
 
-interface ProductData {
+// Get actual categories from database
+const CATEGORIES = ['Fertilizers', 'Soil', 'Supplements'];
+
+interface Product {
   _id: string;
   name: string;
   description: string;
   price: number;
-  image: string;
   category: string;
+  image: string;
+  stock: number;
+  isInStock: boolean;
 }
 
 interface ProductsPageProps {
-  initialProducts: ProductData[];
+  initialProducts: Product[];
 }
-
-const CATEGORIES = ['Cleaning', 'Personal Care', 'Kitchen', 'Food'];
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    props: {
-      initialProducts: SAMPLE_PRODUCTS
-    }
-  };
-};
 
 export default function ProductsPage({ initialProducts }: ProductsPageProps) {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -87,3 +83,36 @@ export default function ProductsPage({ initialProducts }: ProductsPageProps) {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    await connectDB();
+    
+    // Fetch products from database
+    const products = await Product.find({})
+      .select('_id name description price category image stock isInStock')
+      .lean();
+
+    // Convert _id to string and ensure all data is serializable
+    const serializedProducts = products.map((product: any) => ({
+      ...product,
+      _id: product._id.toString(),
+      price: Number(product.price),
+      stock: Number(product.stock),
+      isInStock: Boolean(product.isInStock)
+    }));
+
+    return {
+      props: {
+        initialProducts: serializedProducts
+      }
+    };
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return {
+      props: {
+        initialProducts: []
+      }
+    };
+  }
+};
