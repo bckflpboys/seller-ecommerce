@@ -27,6 +27,7 @@ export default function Navbar() {
     <nav className="bg-white border-b border-primary-200 sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
+          {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <Leaf className="w-8 h-8 text-earth" />
             <div className="font-display">
@@ -79,23 +80,20 @@ export default function Navbar() {
               
               {session ? (
                 <div className="flex items-center space-x-4">
-                  <Link 
-                    href="/profile" 
-                    className="hover:text-earth transition-colors duration-200"
-                  >
+                  <Link href="/profile" className="hover:text-earth transition-colors duration-200">
                     <User className="w-6 h-6" />
                   </Link>
                   <button
                     onClick={() => signOut()}
-                    className="bg-earth text-white px-4 py-2 rounded-lg hover:bg-earth-dark transition-colors duration-200 text-sm font-medium"
+                    className="text-earth-dark hover:text-earth transition-colors duration-200 font-medium"
                   >
-                    Logout
+                    Sign Out
                   </button>
                 </div>
               ) : (
                 <Link
-                  href="/auth/signin"
-                  className="bg-earth text-white px-6 py-2 rounded-lg hover:bg-earth-dark transition-colors duration-200 text-sm font-medium"
+                  href="/api/auth/signin"
+                  className="text-earth-dark hover:text-earth transition-colors duration-200 font-medium"
                 >
                   Sign In
                 </Link>
@@ -103,16 +101,35 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button 
-            className="md:hidden text-earth-dark hover:text-earth transition-colors duration-200"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile Menu */}
+          <div className="flex items-center space-x-4 md:hidden">
+            <div 
+              ref={cartRef}
+              className="relative"
+            >
+              <button 
+                onClick={() => setIsCartOpen(!isCartOpen)}
+                className="relative hover:text-earth transition-colors duration-200"
+              >
+                <ShoppingCart className="w-6 h-6" />
+                {cart.itemCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-sage text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {cart.itemCount}
+                  </span>
+                )}
+              </button>
+              {isCartOpen && <CartPopover />}
+            </div>
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-earth-dark hover:text-earth transition-colors duration-200"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Panel */}
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-primary-200 animate-fade-in">
             <div className="flex flex-col space-y-4">
@@ -134,6 +151,7 @@ export default function Navbar() {
               >
                 Contact
               </Link>
+
               <div className="pt-4 border-t border-primary-200">
                 {session ? (
                   <div className="flex flex-col space-y-4">
