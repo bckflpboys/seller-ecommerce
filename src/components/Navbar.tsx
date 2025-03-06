@@ -85,15 +85,15 @@ export default function Navbar() {
                   </Link>
                   <button
                     onClick={() => signOut()}
-                    className="text-earth-dark hover:text-earth transition-colors duration-200 font-medium"
+                    className="bg-earth-dark text-white px-4 py-2 rounded-lg hover:bg-earth transition-colors duration-200 text-sm font-medium"
                   >
-                    Sign Out
+                    Logout
                   </button>
                 </div>
               ) : (
                 <Link
-                  href="/api/auth/signin"
-                  className="text-earth-dark hover:text-earth transition-colors duration-200 font-medium"
+                  href="/auth/signin"
+                  className="bg-earth-dark text-white px-6 py-2 rounded-lg hover:bg-earth transition-colors duration-200 text-sm font-medium"
                 >
                   Sign In
                 </Link>
@@ -164,7 +164,7 @@ export default function Navbar() {
                     </Link>
                     <button
                       onClick={() => signOut()}
-                      className="bg-earth text-white px-4 py-2 rounded-lg hover:bg-earth-dark transition-colors duration-200 text-sm font-medium w-full"
+                      className="bg-earth-dark text-white px-4 py-2 rounded-lg hover:bg-earth transition-colors duration-200 text-sm font-medium w-full"
                     >
                       Logout
                     </button>
@@ -172,7 +172,7 @@ export default function Navbar() {
                 ) : (
                   <Link
                     href="/auth/signin"
-                    className="bg-earth text-white px-4 py-2 rounded-lg hover:bg-earth-dark transition-colors duration-200 text-sm font-medium block text-center"
+                    className="bg-earth-dark text-white px-4 py-2 rounded-lg hover:bg-earth transition-colors duration-200 text-sm font-medium block text-center"
                   >
                     Sign In
                   </Link>
