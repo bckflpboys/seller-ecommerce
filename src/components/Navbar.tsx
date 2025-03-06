@@ -1,11 +1,27 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { ShoppingCart, User, Leaf, Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useCart } from '@/context/CartContext';
+import CartPopover from './CartPopover';
 
 export default function Navbar() {
   const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const cartRef = useRef<HTMLDivElement>(null);
+  const { state: cart } = useCart();
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
+        setIsCartOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <nav className="bg-white border-b border-primary-200 sticky top-0 z-50">
@@ -43,15 +59,23 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center space-x-4 border-l border-primary-200 pl-8">
-              <Link 
-                href="/cart" 
-                className="relative hover:text-earth transition-colors duration-200"
+              <div 
+                ref={cartRef}
+                className="relative"
               >
-                <ShoppingCart className="w-6 h-6" />
-                <span className="absolute -top-2 -right-2 bg-sage text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  0
-                </span>
-              </Link>
+                <button 
+                  onClick={() => setIsCartOpen(!isCartOpen)}
+                  className="relative hover:text-earth transition-colors duration-200"
+                >
+                  <ShoppingCart className="w-6 h-6" />
+                  {cart.itemCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-sage text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      {cart.itemCount}
+                    </span>
+                  )}
+                </button>
+                {isCartOpen && <CartPopover />}
+              </div>
               
               {session ? (
                 <div className="flex items-center space-x-4">
