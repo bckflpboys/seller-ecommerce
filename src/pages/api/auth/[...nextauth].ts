@@ -13,16 +13,22 @@ declare module "next-auth" {
       email: string;
       name: string;
       role: string;
+      address: string;
+      phoneNumber: string;
     }
   }
   interface User {
     role: string;
+    address: string;
+    phoneNumber: string;
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     role?: string;
+    address?: string;
+    phoneNumber?: string;
   }
 }
 
@@ -56,6 +62,8 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           name: user.name,
           role: user.role,
+          address: user.address || '',
+          phoneNumber: user.phoneNumber || ''
         };
       }
     })
@@ -67,12 +75,16 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role;
+        token.address = user.address;
+        token.phoneNumber = user.phoneNumber;
       }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
-        (session.user as any).role = token.role;
+        session.user.role = token.role as string;
+        session.user.address = token.address as string;
+        session.user.phoneNumber = token.phoneNumber as string;
       }
       return session;
     },

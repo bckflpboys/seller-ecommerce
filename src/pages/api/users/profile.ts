@@ -36,9 +36,15 @@ export default async function handler(
           return res.status(404).json({ error: 'User not found' });
         }
 
-        // Only allow updating certain fields
-        const { name } = req.body;
-        user.name = name;
+        // Allow updating these fields
+        const { name, address, phoneNumber, userType } = req.body;
+        if (name) user.name = name;
+        if (address) user.address = address;
+        if (phoneNumber) user.phoneNumber = phoneNumber;
+        if (userType && ['user', 'supplier'].includes(userType)) {
+          user.role = userType;
+        }
+
         await user.save();
 
         // Return the updated user data
