@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ShoppingCart, Heart } from 'lucide-react';
 import { formatCurrency } from '@/utils/format';
+import { useCart } from '@/context/CartContext';
+import { toast } from 'react-hot-toast';
 
 interface ProductCardProps {
   product: {
@@ -15,9 +17,18 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { addItem } = useCart();
+
   const handleAddToCart = () => {
-    // TODO: Implement cart functionality
-    console.log('Adding to cart:', product._id);
+    addItem({
+      _id: product._id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      category: product.category,
+      quantity: 1
+    });
+    toast.success(`${product.name} added to cart`);
   };
 
   return (

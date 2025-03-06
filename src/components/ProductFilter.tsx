@@ -5,18 +5,20 @@ interface ProductFilterProps {
   categories: string[];
   selectedCategory: string;
   priceRange: [number, number];
+  sortBy: string;
   onCategoryChange: (category: string) => void;
-  onPriceChange: (range: [number, number]) => void;
-  onSortChange: (sort: string) => void;
+  onPriceRangeChange: (range: [number, number]) => void;
+  onSortByChange: (sort: string) => void;
 }
 
 export default function ProductFilter({
   categories,
   selectedCategory,
   priceRange,
+  sortBy,
   onCategoryChange,
-  onPriceChange,
-  onSortChange,
+  onPriceRangeChange,
+  onSortByChange,
 }: ProductFilterProps) {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
@@ -77,7 +79,7 @@ export default function ProductFilter({
               min="0"
               max="2000"
               value={priceRange[1]}
-              onChange={(e) => onPriceChange([priceRange[0], parseInt(e.target.value)])}
+              onChange={(e) => onPriceRangeChange([priceRange[0], parseInt(e.target.value)])}
               className="w-full accent-sage"
             />
           </div>
@@ -87,7 +89,8 @@ export default function ProductFilter({
         <div>
           <h3 className="font-display text-lg font-bold text-earth-dark mb-4">Sort By</h3>
           <select
-            onChange={(e) => onSortChange(e.target.value)}
+            value={sortBy}
+            onChange={(e) => onSortByChange(e.target.value)}
             className="w-full p-2 border border-primary-200 rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-sage focus:border-transparent"
           >
             <option value="newest">Newest</option>
