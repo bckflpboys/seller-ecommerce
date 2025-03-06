@@ -10,7 +10,7 @@ interface HomeProps {
 }
 
 // Sample products to show when no featured products are available
-const SAMPLE_PRODUCTS = [
+export const SAMPLE_PRODUCTS = [
   {
     _id: 'sample1',
     name: 'Organic Cleaning Kit',

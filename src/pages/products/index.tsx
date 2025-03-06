@@ -6,6 +6,7 @@ import ProductFilter from '@/components/ProductFilter';
 import connectDB from '@/lib/mongodb';
 import Product from '@/models/Product';
 import { Types } from 'mongoose';
+import { SAMPLE_PRODUCTS } from '@/pages/index';
 
 interface ProductData {
   _id: string;
@@ -107,11 +108,31 @@ export default function ProductsPage({ products: initialProducts }: ProductsPage
 export const getStaticProps: GetStaticProps = async () => {
   try {
     await connectDB();
-    const products = await Product.find({ isPublished: true }).lean();
+    const dbProducts = await Product.find({ isPublished: true }).lean();
+    
+    // Map database products to ensure all required fields exist
+    const mappedDbProducts = dbProducts.map(product => ({
+      _id: (product._id as Types.ObjectId).toString(),
+      name: product.name || '',
+      description: product.description || '',
+      price: product.price || 0,
+      image: product.image || '',
+      category: product.category || 'Uncategorized',
+      subcategory: product.subcategory || '',
+      brand: product.brand || '',
+      stock: product.stock || 0,
+      isInStock: product.isInStock || false,
+      isPublished: product.isPublished || false,
+      isFeatured: product.isFeatured || false,
+      features: product.features || [],
+      slug: product.slug || ''
+    }));
+
+    const allProducts = [...mappedDbProducts, ...SAMPLE_PRODUCTS];
 
     return {
       props: {
-        products: JSON.parse(JSON.stringify(products)),
+        products: allProducts,
       },
       revalidate: 60,
     };
@@ -119,7 +140,7 @@ export const getStaticProps: GetStaticProps = async () => {
     console.error('Error fetching products:', error);
     return {
       props: {
-        products: [],
+        products: SAMPLE_PRODUCTS,
       },
       revalidate: 60,
     };
