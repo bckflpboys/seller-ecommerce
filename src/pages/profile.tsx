@@ -27,15 +27,6 @@ interface UserProfile {
   phoneNumber: string;
 }
 
-interface Address {
-  id: string;
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  isDefault: boolean;
-}
-
 interface Order {
   id: string;
   date: string;
@@ -49,8 +40,7 @@ interface ApiResponse {
     name: string;
     email: string;
     role: string;
-    addresses: Address[];
-    favorites: any[];
+    addresses: any[];
   };
   message: string;
 }
@@ -72,17 +62,6 @@ export default function Profile() {
   const [error, setError] = useState('');
 
   // Dummy data for demonstration
-  const [addresses] = useState<Address[]>([
-    {
-      id: '1',
-      street: '123 Main St',
-      city: 'Cape Town',
-      state: 'Western Cape',
-      zipCode: '7441',
-      isDefault: true,
-    },
-  ]);
-
   const [orders] = useState<Order[]>([
     {
       id: '1',
@@ -98,27 +77,53 @@ export default function Profile() {
     'Soil pH Tester',
   ]);
 
+  // Function to fetch latest user data
+  const fetchUserData = async () => {
+    try {
+      const res = await fetch('/api/users/profile');
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.message || 'Error fetching user data');
+      }
+
+      // Update both profile and form data with database values
+      const userData = {
+        id: data._id,
+        name: data.name || '',
+        email: data.email || '',
+        role: data.role || 'user',
+        address: data.address || '',
+        phoneNumber: data.phoneNumber || ''
+      };
+
+      setProfile(userData);
+      setFormData({
+        id: data._id,
+        name: data.name || '',
+        address: data.address || '',
+        phoneNumber: data.phoneNumber || '',
+        userType: data.role || 'user'
+      });
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      setError('Failed to fetch profile data');
+    }
+  };
+
   useEffect(() => {
     if (status === 'unauthenticated') {
       router.push('/auth/signin');
     } else if (session?.user) {
-      setProfile({
-        id: session.user.id,
-        name: session.user.name,
-        email: session.user.email,
-        role: session.user.role,
-        address: session.user.address,
-        phoneNumber: session.user.phoneNumber
-      });
-      setFormData({
-        id: session.user.id,
-        name: session.user.name,
-        address: session.user.address,
-        phoneNumber: session.user.phoneNumber,
-        userType: session.user.role
-      });
+      fetchUserData();
     }
   }, [session, status, router]);
+
+  useEffect(() => {
+    if (activeTab === 'profile' && !isEditing) {
+      fetchUserData();
+    }
+  }, [activeTab, isEditing]);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -162,21 +167,9 @@ export default function Profile() {
         throw new Error(data.message || 'Error updating profile');
       }
 
-      // Update profile state
-      setProfile(prev => ({
-        ...prev!,
-        ...data.user
-      }));
+      // Fetch the latest user data from the database
+      await fetchUserData();
 
-      // Update session data
-      if (session?.user) {
-        session.user.id = formData.id;
-        session.user.name = (formData.name || '').trim();
-        session.user.address = (formData.address || '').trim();
-        session.user.phoneNumber = (formData.phoneNumber || '').trim();
-        session.user.role = formData.userType;
-      }
-      
       setIsEditing(false);
     } catch (err: any) {
       setError(err.message);
@@ -370,47 +363,6 @@ export default function Profile() {
             )}
           </div>
         );
-
-      case 'addresses':
-        return (
-          <div className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">Delivery Addresses</h2>
-              <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
-                Add New Address
-              </button>
-            </div>
-            {addresses.length > 0 ? (
-              <div className="space-y-4">
-                {addresses.map((address) => (
-                  <div key={address.id} className="bg-white p-4 rounded-lg shadow border">
-                    <div className="flex justify-between items-start">
-                      <div className="space-y-1">
-                        <div className="flex items-center space-x-2">
-                          <MapPin className="w-5 h-5 text-gray-600" />
-                          <p className="font-medium">{address.street}</p>
-                        </div>
-                        <p className="text-gray-600">{address.city}, {address.state}</p>
-                        <p className="text-gray-600">{address.zipCode}</p>
-                        {address.isDefault && (
-                          <span className="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
-                            Default Address
-                          </span>
-                        )}
-                      </div>
-                      <div className="space-x-2">
-                        <button className="text-green-600 hover:text-green-700">Edit</button>
-                        <button className="text-red-600 hover:text-red-700">Delete</button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-600">No addresses saved.</p>
-            )}
-          </div>
-        );
     }
   };
 
@@ -418,32 +370,38 @@ export default function Profile() {
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="bg-white shadow rounded-lg">
-          <div className="border-b border-gray-200">
-            <nav className="flex -mb-px">
-              {[
-                { id: 'profile', label: 'Profile', icon: User },
-                { id: 'orders', label: 'Orders', icon: ShoppingBag },
-                { id: 'favorites', label: 'Favorites', icon: Heart },
-                { id: 'addresses', label: 'Addresses', icon: MapPin },
-              ].map(({ id, label, icon: Icon }) => (
-                <button
-                  key={id}
-                  onClick={() => setActiveTab(id)}
-                  className={`
-                    flex-1 px-4 py-4 text-center border-b-2 text-sm font-medium
-                    ${activeTab === id
-                      ? 'border-green-500 text-green-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
-                  `}
-                >
-                  <div className="flex items-center justify-center space-x-2">
-                    <Icon className="w-5 h-5" />
-                    <span>{label}</span>
-                  </div>
-                </button>
-              ))}
-            </nav>
-          </div>
+          <nav className="flex space-x-4 border-b border-gray-200 pb-4 mb-6">
+            <button
+              onClick={() => setActiveTab('profile')}
+              className={`${
+                activeTab === 'profile'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              } whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm`}
+            >
+              Profile
+            </button>
+            <button
+              onClick={() => setActiveTab('orders')}
+              className={`${
+                activeTab === 'orders'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              } whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm`}
+            >
+              Orders
+            </button>
+            <button
+              onClick={() => setActiveTab('favorites')}
+              className={`${
+                activeTab === 'favorites'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              } whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm`}
+            >
+              Favorites
+            </button>
+          </nav>
           <div className="p-6">
             {renderTabContent()}
           </div>
