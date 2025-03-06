@@ -41,7 +41,15 @@ export default async function handler(
         user.name = name;
         await user.save();
 
-        res.status(200).json({ message: 'Profile updated successfully' });
+        // Return the updated user data
+        const updatedUser = await User.findById(user._id)
+          .select('-password')
+          .lean();
+
+        res.status(200).json({ 
+          user: updatedUser,
+          message: 'Profile updated successfully' 
+        });
       } catch (error) {
         res.status(500).json({ error: 'Failed to update profile' });
       }

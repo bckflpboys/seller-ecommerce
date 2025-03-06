@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut, signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { User, Pencil, Save, X, MapPin, Heart, ShoppingBag } from 'lucide-react';
@@ -126,10 +126,17 @@ export default function Profile() {
         throw new Error(data.message || 'Error updating profile');
       }
 
+      // Update profile state
       setProfile(prev => ({
         ...prev!,
         ...data.user
       }));
+
+      // Update session data
+      if (session?.user) {
+        session.user.name = formData.name.trim();
+      }
+      
       setIsEditing(false);
     } catch (err: any) {
       setError(err.message);
