@@ -75,53 +75,51 @@ export default function CheckoutPage() {
 
   const handlePaymentSuccess = async (reference: string) => {
     try {
-      console.log('Payment success callback triggered with reference:', reference);
-      console.log('Starting order creation with reference:', reference);
+      console.log('Payment successful, creating order with reference:', reference);
       
-      // Prepare order items with productId
-      const orderItems = cart.items.map((item: CartItem) => ({
-        productId: item._id || item.id, // Now TypeScript knows both _id and id exist
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        category: item.category,
-        image: item.image
-      }));
-
-      const orderData = {
-        items: orderItems,
-        total: cart.total,
-        paymentReference: reference,
-        email,
-        shippingAddress: address
-      };
-
-      console.log('Sending order data to API:', JSON.stringify(orderData, null, 2));
-
       const response = await fetch('/api/orders/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(orderData),
+        body: JSON.stringify({
+          items: cart.items.map((item: CartItem) => ({
+            productId: item._id || item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            category: item.category,
+            image: item.image
+          })),
+          total: cart.total,
+          paymentReference: reference,
+          email,
+          shippingAddress: {
+            street: address.street,
+            city: address.city,
+            province: address.province,
+            postalCode: address.postalCode,
+          },
+        }),
       });
 
-      console.log('Order API response status:', response.status);
-      const data = await response.json();
-      console.log('Order API response data:', data);
-
       if (!response.ok) {
-        console.error('Order API error:', data);
-        toast.error(data.message || 'Failed to create order');
-        return;
+        throw new Error('Failed to create order');
       }
 
-      console.log('Order created successfully:', data);
+      // Clear the cart after successful order
       clearCart();
+      
+      // Show success message
       toast.success('Order placed successfully!');
-      router.push('/orders');
+
+      // Redirect to order tracking page with a slight delay to ensure toast is shown
+      setTimeout(() => {
+        window.location.href = `/orders/${reference}`;
+      }, 1000);
+      
     } catch (error) {
-      console.error('Error in handlePaymentSuccess:', error);
+      console.error('Error creating order:', error);
       toast.error('Failed to create order. Please contact support.');
     }
   };
