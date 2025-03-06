@@ -46,18 +46,18 @@ const productSchema = new mongoose.Schema({
     required: [true, 'Please provide a product category'],
     index: true,
   },
+  stock: {
+    type: Number,
+    required: [true, 'Please provide stock quantity'],
+    min: [0, 'Stock cannot be negative'],
+    default: 0,
+  },
   subcategory: {
     type: String,
     index: true,
   },
   brand: {
     type: String,
-  },
-  stock: {
-    type: Number,
-    required: [true, 'Please provide product stock'],
-    default: 0,
-    min: [0, 'Stock cannot be negative'],
   },
   isInStock: {
     type: Boolean,

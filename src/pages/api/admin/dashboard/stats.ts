@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
 import dbConnect from '@/lib/db';
 import Order from '@/models/Order';
+import Product from '@/models/Product';
 import { authOptions } from '../../auth/[...nextauth]';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -239,13 +240,68 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       avgProcessingTime: processingTimes?.avgProcessingTime?.toFixed(1) || 0
     };
 
+    // Get product stock information
+    const productStock = await Product.aggregate([
+      {
+        $project: {
+          name: 1,
+          stock: { $ifNull: ["$stock", 0] }, // Handle cases where stock might be null
+          price: 1,
+          expectedRevenue: { 
+            $multiply: [
+              { $ifNull: ["$stock", 0] }, 
+              "$price"
+            ] 
+          }
+        }
+      },
+      {
+        $sort: { stock: 1 } // Sort by stock ascending to show low stock first
+      }
+    ]);
+
+    // Calculate total expected revenue and handle potential null values
+    const totalExpectedRevenue = productStock.reduce((sum, product) => 
+      sum + (product.expectedRevenue || 0), 0
+    );
+
+    // Get products with low stock (less than 10 items)
+    const lowStockProducts = productStock.filter(product => 
+      (product.stock || 0) < 10
+    );
+
+    // Calculate average price (excluding products with 0 or null price)
+    const validPrices = productStock.filter(product => product.price > 0);
+    const averagePrice = validPrices.length > 0
+      ? validPrices.reduce((sum, product) => sum + product.price, 0) / validPrices.length
+      : 0;
+
+    const stockAnalytics = {
+      productStock: productStock.map(product => ({
+        name: product.name,
+        stock: product.stock || 0,
+        price: product.price || 0,
+        expectedRevenue: product.expectedRevenue || 0
+      })),
+      totalExpectedRevenue,
+      lowStockProducts: lowStockProducts.map(product => ({
+        name: product.name,
+        stock: product.stock || 0,
+        price: product.price || 0
+      })),
+      averagePrice,
+      totalProducts: productStock.length,
+      totalStockItems: productStock.reduce((sum, product) => sum + (product.stock || 0), 0)
+    };
+
     res.status(200).json({
       salesData: monthlySales,
       productPerformance,
       keyMetrics,
       orderStatusDistribution,
       topSellingProducts,
-      timeAnalytics
+      timeAnalytics,
+      stockAnalytics
     });
   } catch (error) {
     console.error('Error fetching analytics:', error);
