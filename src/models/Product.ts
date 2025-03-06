@@ -142,20 +142,12 @@ const productSchema = new mongoose.Schema({
     type: Map,
     of: String,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
+}, {
+  timestamps: true
 });
 
 // Update the updatedAt timestamp before saving
 productSchema.pre('save', function(next) {
-  this.updatedAt = new Date();
-  
   // Generate slug from name if not provided
   if (!this.slug) {
     this.slug = this.name

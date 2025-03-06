@@ -5,43 +5,109 @@ import Link from 'next/link';
 import { ArrowLeft, Minus, Plus, Heart, Share2 } from 'lucide-react';
 import { formatCurrency } from '@/utils/format';
 
-// This would come from your database
-const MOCK_PRODUCTS = [
+// Sample products from homepage
+const SAMPLE_PRODUCTS = [
   {
-    _id: '1',
-    name: 'Natural Cleaning Kit',
-    description: 'Complete set of eco-friendly cleaning solutions made with natural ingredients.',
-    longDescription: `Our Natural Cleaning Kit is the perfect solution for those who want to keep their home clean while being environmentally conscious. This comprehensive set includes:
-
-    • All-Purpose Cleaner made with essential oils
-    • Glass Cleaner with vinegar and natural enzymes
-    • Bathroom Cleaner with tea tree oil
-    • Kitchen Degreaser with citrus extracts
-    • 3 Reusable Microfiber Cloths
-    • 2 Natural Scrub Brushes
-    
-    All products are biodegradable, non-toxic, and safe for use around children and pets. The concentrated formulas mean less plastic waste and more value for your money.`,
+    _id: 'sample1',
+    name: 'Organic Cleaning Kit',
+    description: 'All-natural cleaning solutions for your home',
+    longDescription: 'Our Organic Cleaning Kit is a comprehensive set of eco-friendly cleaning solutions that are safe for your home and the environment. Made with natural ingredients, these products effectively clean while being gentle on surfaces and safe for your family.',
     price: 299.99,
-    image: 'https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&q=80&w=800&h=800',
-    gallery: [
-      'https://images.unsplash.com/photo-1585421514498-7947c2a41e4f?auto=format&fit=crop&q=80&w=800&h=800',
-      'https://images.unsplash.com/photo-1585421514264-7d990aa6c9e9?auto=format&fit=crop&q=80&w=800&h=800',
-      'https://images.unsplash.com/photo-1585421514180-69a99c744b85?auto=format&fit=crop&q=80&w=800&h=800',
-    ],
+    image: 'https://images.unsplash.com/photo-1546552768-9e3a94b38a59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
     category: 'Cleaning',
-    inStock: true,
+    gallery: [
+      'https://images.unsplash.com/photo-1546552768-9e3a94b38a59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
+      'https://images.unsplash.com/photo-1585421514738-01798e348b17?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80',
+      'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80'
+    ],
     features: [
       'All-natural ingredients',
-      'Biodegradable formulas',
-      'Pet and child safe',
-      'Reusable containers',
-      'Concentrated formulas',
+      'Safe for all surfaces',
+      'Biodegradable packaging',
+      'Pet and child friendly'
     ],
+    inStock: true
   },
+  {
+    _id: 'sample2',
+    name: 'Natural Bath Set',
+    description: 'Handmade soaps and bath products',
+    longDescription: 'Experience the luxury of natural bathing with our handcrafted bath set. Each product is made with organic ingredients and essential oils, providing a spa-like experience in your own home.',
+    price: 399.99,
+    image: 'https://images.unsplash.com/photo-1592029780368-c1fff15bcfd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1989&q=80',
+    category: 'Personal Care',
+    gallery: [
+      'https://images.unsplash.com/photo-1592029780368-c1fff15bcfd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1989&q=80',
+      'https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1989&q=80',
+      'https://images.unsplash.com/photo-1584305574694-52628e04c393?ixlib=rb-4.0.3&auto=format&fit=crop&w=1989&q=80'
+    ],
+    features: [
+      'Organic ingredients',
+      'Essential oils',
+      'Handmade with care',
+      'No artificial fragrances'
+    ],
+    inStock: true
+  },
+  {
+    _id: 'sample3',
+    name: 'Eco-Friendly Kitchen Set',
+    description: 'Sustainable kitchen essentials for conscious cooking',
+    longDescription: 'Transform your kitchen into an eco-friendly space with our sustainable kitchen essentials. This set includes everything you need to reduce waste and cook sustainably.',
+    price: 499.99,
+    image: 'https://images.unsplash.com/photo-1589927986089-35812388d1f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    category: 'Kitchen',
+    gallery: [
+      'https://images.unsplash.com/photo-1589927986089-35812388d1f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      'https://images.unsplash.com/photo-1610701596007-11502861dcfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+      'https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80'
+    ],
+    features: [
+      'Plastic-free',
+      'Durable materials',
+      'Reusable design',
+      'Easy to clean'
+    ],
+    inStock: true
+  },
+  {
+    _id: 'sample4',
+    name: 'Organic Tea Collection',
+    description: 'Premium organic teas from sustainable sources',
+    longDescription: 'Discover our carefully curated collection of organic teas sourced from sustainable farms around the world. Each blend is crafted to provide the perfect cup of tea.',
+    price: 199.99,
+    image: 'https://images.unsplash.com/photo-1597481499750-3e6b22637e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80',
+    category: 'Food',
+    gallery: [
+      'https://images.unsplash.com/photo-1597481499750-3e6b22637e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80',
+      'https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80',
+      'https://images.unsplash.com/photo-1563822249366-3efb23b8e0c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80'
+    ],
+    features: [
+      'Organic certified',
+      'Fair trade',
+      'Biodegradable packaging',
+      'Multiple varieties'
+    ],
+    inStock: true
+  }
 ];
 
+interface ProductData {
+  _id: string;
+  name: string;
+  description: string;
+  longDescription: string;
+  price: number;
+  image: string;
+  gallery: string[];
+  category: string;
+  inStock: boolean;
+  features: string[];
+}
+
 interface ProductPageProps {
-  product: typeof MOCK_PRODUCTS[0];
+  product: ProductData;
 }
 
 export default function ProductPage({ product }: ProductPageProps) {
@@ -254,20 +320,16 @@ export default function ProductPage({ product }: ProductPageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // In a real app, you would fetch this from an API
-  const paths = MOCK_PRODUCTS.map((product) => ({
-    params: { id: product._id },
-  }));
-
   return {
-    paths,
-    fallback: false, // Show 404 for non-existent products
+    paths: SAMPLE_PRODUCTS.map((product) => ({
+      params: { id: product._id },
+    })),
+    fallback: false,
   };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // In a real app, you would fetch this from an API
-  const product = MOCK_PRODUCTS.find((p) => p._id === params?.id);
+  const product = SAMPLE_PRODUCTS.find(p => p._id === params?.id);
 
   if (!product) {
     return {
@@ -279,6 +341,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       product,
     },
-    revalidate: 60, // Regenerate page every 60 seconds
   };
 };
