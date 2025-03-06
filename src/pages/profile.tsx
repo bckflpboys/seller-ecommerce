@@ -27,11 +27,29 @@ interface UserProfile {
   phoneNumber: string;
 }
 
+interface OrderItem {
+  _id?: string;
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+  category: string;
+  image: string;
+}
+
 interface Order {
-  id: string;
-  date: string;
-  status: string;
+  _id: string;
+  items: OrderItem[];
   total: number;
+  status: string;
+  createdAt: string;
+  shippingAddress: {
+    street: string;
+    city: string;
+    province: string;
+    postalCode: string;
+    country: string;
+  };
 }
 
 interface ApiResponse {
@@ -60,22 +78,34 @@ export default function Profile() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-
-  // Dummy data for demonstration
-  const [orders] = useState<Order[]>([
-    {
-      id: '1',
-      date: '2025-03-01',
-      status: 'Delivered',
-      total: 299.99,
-    },
-  ]);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [isLoadingOrders, setIsLoadingOrders] = useState(false);
 
   const [favorites] = useState<string[]>([
     'Organic Fertilizer',
     'Garden Tools Set',
     'Soil pH Tester',
   ]);
+
+  // Function to fetch user orders
+  const fetchOrders = async () => {
+    setIsLoadingOrders(true);
+    try {
+      const res = await fetch('/api/users/orders');
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.message || 'Error fetching orders');
+      }
+
+      setOrders(data);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      setError('Failed to load orders');
+    } finally {
+      setIsLoadingOrders(false);
+    }
+  };
 
   // Function to fetch latest user data
   const fetchUserData = async () => {
@@ -99,7 +129,7 @@ export default function Profile() {
 
       setProfile(userData);
       setFormData({
-        id: data._id,
+        id: data._id || '',
         name: data.name || '',
         address: data.address || '',
         phoneNumber: data.phoneNumber || '',
@@ -107,23 +137,26 @@ export default function Profile() {
       });
     } catch (error) {
       console.error('Error fetching user data:', error);
-      setError('Failed to fetch profile data');
+      setError('Failed to load user data');
     }
   };
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/auth/signin');
-    } else if (session?.user) {
+    if (status === 'authenticated' && session) {
       fetchUserData();
+      if (activeTab === 'orders') {
+        fetchOrders();
+      }
+    } else if (status === 'unauthenticated') {
+      router.push('/auth/signin');
     }
-  }, [session, status, router]);
+  }, [status, session, activeTab]);
 
   useEffect(() => {
-    if (activeTab === 'profile' && !isEditing) {
-      fetchUserData();
+    if (activeTab === 'orders') {
+      fetchOrders();
     }
-  }, [activeTab, isEditing]);
+  }, [activeTab]);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -317,28 +350,78 @@ export default function Profile() {
       case 'orders':
         return (
           <div className="space-y-6">
-            <h2 className="text-xl font-semibold">Your Orders</h2>
-            {orders.length > 0 ? (
+            <h2 className="text-2xl font-semibold mb-6">My Orders</h2>
+            {isLoadingOrders ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage mx-auto"></div>
+                <p className="mt-4 text-gray-600">Loading orders...</p>
+              </div>
+            ) : orders.length === 0 ? (
+              <div className="text-center py-8">
+                <ShoppingBag className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+                <p className="text-gray-600">No orders found</p>
+                <a href="/products" className="text-sage hover:text-sage-dark mt-2 inline-block">
+                  Start shopping
+                </a>
+              </div>
+            ) : (
               <div className="space-y-4">
                 {orders.map((order) => (
-                  <div key={order.id} className="bg-white p-4 rounded-lg shadow border">
-                    <div className="flex justify-between items-center">
+                  <div key={order._id} className="bg-white p-6 rounded-lg shadow-md">
+                    <div className="flex justify-between items-start mb-4">
                       <div>
-                        <p className="font-medium">Order #{order.id}</p>
-                        <p className="text-sm text-gray-600">{order.date}</p>
+                        <p className="text-sm text-gray-600">Order ID: {order._id}</p>
+                        <p className="text-sm text-gray-600">
+                          Date: {new Date(order.createdAt).toLocaleDateString()}
+                        </p>
                       </div>
                       <div className="text-right">
-                        <p className="font-medium">R{order.total.toFixed(2)}</p>
-                        <span className="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
+                        <p className="font-semibold">Total: R{order.total.toFixed(2)}</p>
+                        <span className={`inline-block px-3 py-1 rounded-full text-sm ${
+                          order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
+                          order.status === 'Processing' ? 'bg-blue-100 text-blue-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
                           {order.status}
                         </span>
                       </div>
                     </div>
+                    
+                    <div className="border-t pt-4">
+                      <h4 className="font-medium mb-2">Items</h4>
+                      <div className="space-y-2">
+                        {order.items.map((item, index) => (
+                          <div key={item._id || index} className="flex items-center gap-4">
+                            <div className="relative w-16 h-16">
+                              <Image
+                                src={item.image}
+                                alt={item.name}
+                                fill
+                                className="object-cover rounded"
+                              />
+                            </div>
+                            <div className="flex-1">
+                              <p className="font-medium">{item.name}</p>
+                              <p className="text-sm text-gray-600">
+                                Quantity: {item.quantity} × R{item.price.toFixed(2)}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t">
+                      <h4 className="font-medium mb-2">Shipping Address</h4>
+                      <p className="text-sm text-gray-600">
+                        {order.shippingAddress.street}<br />
+                        {order.shippingAddress.city}, {order.shippingAddress.province} {order.shippingAddress.postalCode}<br />
+                        {order.shippingAddress.country}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
-            ) : (
-              <p className="text-gray-600">No orders found.</p>
             )}
           </div>
         );
@@ -346,7 +429,7 @@ export default function Profile() {
       case 'favorites':
         return (
           <div className="space-y-6">
-            <h2 className="text-xl font-semibold">Your Favorites</h2>
+            <h2 className="text-2xl font-semibold mb-6">My Favorites</h2>
             {favorites.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {favorites.map((item, index) => (
