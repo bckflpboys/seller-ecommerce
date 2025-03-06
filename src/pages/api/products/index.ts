@@ -135,18 +135,28 @@ export default async function handler(
         }
 
         // Validate required fields
-        const { name, description, price, category, image } = req.body;
-        if (!name || !description || !price || !category || !image) {
+        const { name, description, price, category, image, keyFeatures } = req.body;
+        if (!name || !description || !price || !category || !image || !keyFeatures || !keyFeatures.length) {
           return res.status(400).json({
             error: 'Missing required fields',
-            required: ['name', 'description', 'price', 'category', 'image'],
+            required: ['name', 'description', 'price', 'category', 'image', 'keyFeatures'],
+            received: { name, description, price, category, image, keyFeatures }
+          });
+        }
+
+        // Validate key features
+        if (keyFeatures.length > 4) {
+          return res.status(400).json({
+            error: 'Validation error',
+            details: ['Maximum 4 key features allowed'],
           });
         }
 
         // Create product with default values
         const productData = {
           ...req.body,
-          isInStock: req.body.stock > 0,
+          isInStock: req.body.stockQuantity > 0,
+          stock: req.body.stockQuantity,
           slug: req.body.slug || name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
         };
 

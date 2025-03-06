@@ -31,6 +31,16 @@ const productSchema = new mongoose.Schema({
   images: [{
     type: String,
   }],
+  keyFeatures: {
+    type: [String],
+    validate: {
+      validator: function(features: string[]) {
+        return features.length <= 4;
+      },
+      message: 'Maximum 4 key features allowed'
+    },
+    required: [true, 'Please provide at least one key feature'],
+  },
   category: {
     type: String,
     required: [true, 'Please provide a product category'],
@@ -80,6 +90,7 @@ const productSchema = new mongoose.Schema({
     value: {
       type: Number,
       min: [0, 'Weight cannot be negative'],
+      required: false
     },
     unit: {
       type: String,
@@ -91,14 +102,17 @@ const productSchema = new mongoose.Schema({
     length: {
       type: Number,
       min: [0, 'Length cannot be negative'],
+      required: false
     },
     width: {
       type: Number,
       min: [0, 'Width cannot be negative'],
+      required: false
     },
     height: {
       type: Number,
       min: [0, 'Height cannot be negative'],
+      required: false
     },
     unit: {
       type: String,

@@ -55,6 +55,7 @@ export default async function handler(
       }
 
     case 'PUT':
+    case 'PATCH':
       try {
         const session = await getServerSession(req, res, authOptions);
         if (!session || (session.user as any).role !== 'admin') {
@@ -67,9 +68,13 @@ export default async function handler(
         // Update data
         const updateData = {
           ...req.body,
-          isInStock: req.body.stock > 0,
           updatedAt: new Date(),
         };
+
+        // For PUT requests or when stock is provided
+        if (req.method === 'PUT' || req.body.stock !== undefined) {
+          updateData.isInStock = req.body.stock > 0;
+        }
 
         // If name is changed, update slug (unless slug is manually provided)
         if (req.body.name && req.body.name !== currentProduct.name && !req.body.slug) {
@@ -111,10 +116,7 @@ export default async function handler(
           });
         }
 
-        return res.status(500).json({ 
-          error: 'Failed to update product',
-          message: error.message
-        });
+        return res.status(500).json({ error: 'Failed to update product' });
       }
 
     case 'DELETE':
@@ -124,92 +126,19 @@ export default async function handler(
           return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        await getProduct(false); // Verify product exists
-        await Product.findByIdAndDelete(id);
-        
-        return res.status(200).json({ message: 'Product deleted successfully' });
-      } catch (err) {
-        const error = err as Error;
-        if (error.message === 'Product not found') {
+        const product = await Product.findByIdAndDelete(id);
+        if (!product) {
           return res.status(404).json({ error: 'Product not found' });
         }
+
+        return res.status(200).json({ message: 'Product deleted successfully' });
+      } catch (error) {
         console.error('Error deleting product:', error);
-        return res.status(500).json({ 
-          error: 'Failed to delete product',
-          message: error.message
-        });
-      }
-
-    case 'PATCH':
-      try {
-        const session = await getServerSession(req, res, authOptions);
-        if (!session) {
-          return res.status(401).json({ error: 'Unauthorized' });
-        }
-
-        const { action } = req.body;
-        const product = await getProduct();
-
-        switch (action) {
-          case 'review':
-            // Add a review
-            const { rating, comment } = req.body;
-            if (!rating) {
-              return res.status(400).json({ error: 'Rating is required' });
-            }
-
-            // Check if user has already reviewed
-            const existingReviewIndex = product.reviews.findIndex(
-              (review: any) => review.user.toString() === session.user.id
-            );
-
-            if (existingReviewIndex >= 0) {
-              // Update existing review
-              product.reviews[existingReviewIndex] = {
-                user: session.user.id,
-                rating,
-                comment,
-                createdAt: new Date(),
-              };
-            } else {
-              // Add new review
-              product.reviews.push({
-                user: session.user.id,
-                rating,
-                comment,
-                createdAt: new Date(),
-              });
-            }
-
-            // Update average rating
-            const totalRating = product.reviews.reduce(
-              (sum: number, review: any) => sum + review.rating,
-              0
-            );
-            product.ratings = {
-              average: totalRating / product.reviews.length,
-              count: product.reviews.length,
-            };
-
-            await product.save();
-            break;
-
-          default:
-            return res.status(400).json({ error: 'Invalid action' });
-        }
-
-        return res.status(200).json(product);
-      } catch (err) {
-        const error = err as Error;
-        console.error('Error updating product:', error);
-        return res.status(500).json({ 
-          error: 'Failed to update product',
-          message: error.message
-        });
+        return res.status(500).json({ error: 'Failed to delete product' });
       }
 
     default:
-      res.setHeader('Allow', ['GET', 'PUT', 'DELETE', 'PATCH']);
+      res.setHeader('Allow', ['GET', 'PUT', 'PATCH', 'DELETE']);
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
