@@ -12,6 +12,16 @@ const PaystackButton = dynamic(
   { ssr: false }
 );
 
+interface CartItem {
+  _id: string;
+  id?: string;  // Optional id field
+  name: string;
+  price: number;
+  quantity: number;
+  category: string;
+  image: string;
+}
+
 interface Address {
   street: string;
   city: string;
@@ -69,8 +79,8 @@ export default function CheckoutPage() {
       console.log('Starting order creation with reference:', reference);
       
       // Prepare order items with productId
-      const orderItems = cart.items.map(item => ({
-        productId: item._id || item.id, // Try both _id and id
+      const orderItems = cart.items.map((item: CartItem) => ({
+        productId: item._id || item.id, // Now TypeScript knows both _id and id exist
         name: item.name,
         price: item.price,
         quantity: item.quantity,
@@ -290,7 +300,7 @@ export default function CheckoutPage() {
               amount={cart.total}
               email={email}
               onSuccess={handlePaymentSuccess}
-              handleClose={handlePaymentClose}
+              onClose={handlePaymentClose}
               validateBeforePay={validateAndPay}
             />
           </div>
