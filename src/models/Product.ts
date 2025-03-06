@@ -35,11 +35,11 @@ const productSchema = new mongoose.Schema({
     type: [String],
     validate: {
       validator: function(features: string[]) {
-        return features.length <= 4;
+        return !features || features.length <= 4;
       },
       message: 'Maximum 4 key features allowed'
     },
-    required: [true, 'Please provide at least one key feature'],
+    default: [],
   },
   category: {
     type: String,

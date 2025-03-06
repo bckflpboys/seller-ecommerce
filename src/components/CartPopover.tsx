@@ -20,7 +20,7 @@ export default function CartPopover({ onClose }: CartPopoverProps) {
   }
 
   return (
-    <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-lg p-4 z-50 cart-popup">
+    <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-lg p-4 z-51 cart-popup">
       <div className="max-h-96 overflow-y-auto">
         {cart.items.map((item) => (
           <div key={item._id} className="flex items-center gap-3 py-2 border-b border-gray-100 last:border-0">

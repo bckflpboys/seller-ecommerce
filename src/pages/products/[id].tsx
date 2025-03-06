@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, Minus, Plus, Heart, Share2 } from 'lucide-react';
+import { ArrowLeft, Minus, Plus, Heart, Share2, FileText, ListChecks, Box } from 'lucide-react';
 import { formatCurrency } from '@/utils/format';
 import { useCart } from '@/context/CartContext';
 import { toast } from 'react-hot-toast';
@@ -124,7 +124,7 @@ export default function ProductPage({ product }: ProductPageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-sage-50/50 via-white to-earth-50/50">
       {/* Navigation Bar */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
+      <nav className="sticky top-0 z-40 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <Link 
@@ -198,6 +198,21 @@ export default function ProductPage({ product }: ProductPageProps) {
               {/* Product Info */}
               <div className="p-8 lg:p-12">
                 <div className="pb-6">
+                  {/* Stock Status */}
+                  <div className="mb-3">
+                    <div className="flex items-center space-x-2">
+                      <div className={`w-2 h-2 rounded-full ${product.isInStock ? 'bg-green-500' : 'bg-red-500'}`} />
+                      <span className={`text-sm ${product.isInStock ? 'text-green-600' : 'text-red-600'}`}>
+                        {product.isInStock ? 'In Stock' : 'Out of Stock'}
+                      </span>
+                    </div>
+                    {product.isInStock && product.stock <= product.lowStockThreshold && (
+                      <p className="text-sm text-amber-600 mt-1">
+                        Only {product.stock} left in stock - order soon
+                      </p>
+                    )}
+                  </div>
+
                   <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
                   <p className="text-xl font-semibold text-sage">{formatCurrency(product.price)}</p>
                   {product.compareAtPrice && product.compareAtPrice > product.price && (
@@ -211,20 +226,34 @@ export default function ProductPage({ product }: ProductPageProps) {
                   {/* Description */}
                   {product.description && (
                     <div>
-                      <h2 className="text-sm font-medium text-gray-900 mb-2">Description</h2>
-                      <p className="text-gray-600">{product.description}</p>
+                      <div className="flex items-center gap-2 mb-4">
+                        <FileText className="w-5 h-5 text-sage" />
+                        <h2 className="text-lg font-semibold text-earth-dark">Description</h2>
+                      </div>
+                      <div 
+                        className="text-gray-600"
+                        dangerouslySetInnerHTML={{ 
+                          __html: product.description.replace(/\n/g, '<br />') 
+                        }}
+                      />
                     </div>
                   )}
 
                   {/* Key Features */}
-                  {keyFeatures.length > 0 && (
-                    <div>
-                      <h2 className="text-sm font-medium text-gray-900 mb-2">Key Features</h2>
-                      <ul className="list-disc list-inside space-y-1 text-gray-600">
+                  {keyFeatures?.length > 0 && (
+                    <div className="mb-8">
+                      <div className="flex items-center gap-2 mb-4">
+                        <ListChecks className="w-5 h-5 text-sage" />
+                        <h2 className="text-lg font-semibold text-earth-dark">Key Features</h2>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {keyFeatures.map((feature, index) => (
-                          <li key={index}>{feature}</li>
+                          <div key={index} className="flex items-center gap-2">
+                            <span className="text-sage">◆</span>
+                            <span className="text-gray-600">{feature}</span>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                     </div>
                   )}
 
@@ -233,7 +262,10 @@ export default function ProductPage({ product }: ProductPageProps) {
                     (product.dimensions?.length && product.dimensions?.width && 
                      product.dimensions?.height && product.dimensions?.unit)) && (
                     <div>
-                      <h2 className="text-sm font-medium text-gray-900 mb-2">Specifications</h2>
+                      <div className="flex items-center gap-2 mb-4">
+                        <Box className="w-5 h-5 text-sage" />
+                        <h2 className="text-lg font-semibold text-earth-dark">Specifications</h2>
+                      </div>
                       <div className="space-y-1 text-gray-600">
                         {product.weight?.value && product.weight?.unit && (
                           <p>Weight: {product.weight.value} {product.weight.unit}</p>
@@ -247,21 +279,6 @@ export default function ProductPage({ product }: ProductPageProps) {
                       </div>
                     </div>
                   )}
-
-                  {/* Stock Status */}
-                  <div>
-                    <div className="flex items-center space-x-2">
-                      <div className={`w-2 h-2 rounded-full ${product.isInStock ? 'bg-green-500' : 'bg-red-500'}`} />
-                      <span className={`text-sm ${product.isInStock ? 'text-green-600' : 'text-red-600'}`}>
-                        {product.isInStock ? 'In Stock' : 'Out of Stock'}
-                      </span>
-                    </div>
-                    {product.isInStock && product.stock <= product.lowStockThreshold && (
-                      <p className="text-sm text-amber-600 mt-1">
-                        Only {product.stock} left in stock - order soon
-                      </p>
-                    )}
-                  </div>
 
                   {/* Quantity Selector */}
                   {product.isInStock && (
