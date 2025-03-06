@@ -5,9 +5,10 @@ import { useRouter } from 'next/router';
 
 interface AdminLayoutProps {
   children: ReactNode;
+  activeTab: string;
 }
 
-export default function AdminLayout({ children }: AdminLayoutProps) {
+export default function AdminLayout({ children, activeTab }: AdminLayoutProps) {
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
@@ -33,7 +34,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      <AdminSidebar />
+      <AdminSidebar activeTab={activeTab} />
       <main className="flex-1 p-8">
         {children}
       </main>

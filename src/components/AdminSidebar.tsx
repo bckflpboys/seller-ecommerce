@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { 
   LayoutDashboard, 
   Package, 
@@ -9,42 +9,51 @@ import {
   BarChart
 } from 'lucide-react';
 
+interface AdminSidebarProps {
+  activeTab: string;
+}
+
 const menuItems = [
   {
     title: 'Dashboard',
     icon: LayoutDashboard,
-    href: '/admin'
+    href: '/admin',
+    id: 'dashboard'
   },
   {
     title: 'Products',
     icon: Package,
-    href: '/admin/products'
+    href: '/admin/products',
+    id: 'products'
   },
   {
     title: 'Orders',
     icon: ShoppingBag,
-    href: '/admin/orders'
+    href: '/admin/orders',
+    id: 'orders'
   },
   {
     title: 'Customers',
     icon: Users,
-    href: '/admin/customers'
+    href: '/admin/customers',
+    id: 'customers'
   },
   {
     title: 'Analytics',
     icon: BarChart,
-    href: '/admin/analytics'
+    href: '/admin/analytics',
+    id: 'analytics'
   },
   {
     title: 'Settings',
     icon: Settings,
-    href: '/admin/settings'
+    href: '/admin/settings',
+    id: 'settings'
   }
 ];
 
-export default function AdminSidebar() {
+export default function AdminSidebar({ activeTab }: AdminSidebarProps) {
   const router = useRouter();
-  const currentPath = router.pathname;
 
   return (
     <div className="w-64 min-h-screen bg-white border-r border-gray-200">
@@ -56,13 +65,17 @@ export default function AdminSidebar() {
       
       <nav className="px-4 py-2">
         {menuItems.map((item) => {
-          const isActive = currentPath === item.href;
+          const isActive = activeTab === item.id;
           const Icon = item.icon;
           
           return (
             <Link
               key={item.href}
-              href={item.href}
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                router.push(item.href);
+              }}
               className={`flex items-center space-x-2 px-4 py-3 rounded-lg transition-colors duration-200 ${
                 isActive 
                   ? 'bg-sage/10 text-sage' 
