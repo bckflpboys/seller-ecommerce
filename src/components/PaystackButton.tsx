@@ -1,8 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { PaystackButton as PaystackButtonOriginal } from 'react-paystack';
-import { Button } from '@/components/ui/button';
+
+declare global {
+  interface Window {
+    PaystackPop: any;
+  }
+}
 
 interface PaystackButtonProps {
   amount: number;
@@ -14,36 +18,35 @@ interface PaystackButtonProps {
 
 const PaystackButton = ({ amount, email, onSuccess, onClose, validateBeforePay }: PaystackButtonProps) => {
   const [isClient, setIsClient] = useState(false);
-  const [showPaystack, setShowPaystack] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
+    // Load Paystack script
+    const script = document.createElement('script');
+    script.src = 'https://js.paystack.co/v1/inline.js';
+    script.async = true;
+    document.body.appendChild(script);
+    
+    return () => {
+      document.body.removeChild(script);
+    };
   }, []);
-
-  const reference = (new Date()).getTime().toString();
-  
-  const componentProps = {
-    reference,
-    email,
-    amount: amount * 100,
-    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-    text: `Pay R${amount}`,
-    currency: 'ZAR',
-    label: 'Soil Solution Order',
-    onSuccess: (response: any) => {
-      const ref = response?.reference || response?.trxref || reference;
-      onSuccess(ref);
-      setShowPaystack(false);
-    },
-    onClose: () => {
-      onClose();
-      setShowPaystack(false);
-    }
-  };
 
   const handlePayClick = () => {
     if (!validateBeforePay || validateBeforePay()) {
-      setShowPaystack(true);
+      const handler = window.PaystackPop.setup({
+        key: 'pk_test_4db21e3677324abaf9e79eadd4bb56d03dd2bcbe',
+        email,
+        amount: amount * 100,
+        currency: 'ZAR',
+        ref: new Date().getTime().toString(),
+        onClose,
+        callback: (response: any) => {
+          const ref = response?.reference || response?.trxref;
+          onSuccess(ref);
+        },
+      });
+      handler.openIframe();
     }
   };
 
@@ -52,21 +55,12 @@ const PaystackButton = ({ amount, email, onSuccess, onClose, validateBeforePay }
   }
 
   return (
-    <div className="w-full">
-      {!showPaystack ? (
-        <button
-          onClick={handlePayClick}
-          className="w-full bg-sage hover:bg-sage-dark text-white font-semibold py-3 rounded-lg shadow-md"
-        >
-          Pay R{amount}
-        </button>
-      ) : (
-        <PaystackButtonOriginal 
-          {...componentProps}
-          className="w-full bg-sage hover:bg-sage-dark text-white font-semibold py-3 rounded-lg shadow-md"
-        />
-      )}
-    </div>
+    <button
+      onClick={handlePayClick}
+      className="w-full bg-sage hover:bg-sage-dark text-white font-semibold py-3 rounded-lg shadow-md"
+    >
+      Pay R{amount}
+    </button>
   );
 };
 
