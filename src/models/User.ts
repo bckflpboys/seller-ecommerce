@@ -16,16 +16,30 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'supplier', 'admin'],
+    enum: ['user', 'admin'],
     default: 'user',
-  },
-  address: {
-    type: String,
-    default: '',
   },
   phoneNumber: {
     type: String,
     default: '',
+  },
+  address: {
+    street: {
+      type: String,
+      default: '',
+    },
+    city: {
+      type: String,
+      default: '',
+    },
+    province: {
+      type: String,
+      default: '',
+    },
+    postalCode: {
+      type: String,
+      default: '',
+    },
   },
   createdAt: {
     type: Date,
@@ -36,4 +50,6 @@ const userSchema = new mongoose.Schema({
   versionKey: false // This removes the __v field
 });
 
-export default mongoose.models.User || mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model('User', userSchema);
+
+export default User;

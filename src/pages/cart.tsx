@@ -3,6 +3,13 @@ import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { formatCurrency } from '@/utils/format';
 import { Minus, Plus, Trash2, ArrowLeft, ShoppingBag, ArrowRightIcon } from 'lucide-react';
+import { GetServerSideProps } from 'next';
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {} // Will be passed to the page component as props
+  };
+};
 
 export default function CartPage() {
   const { state, removeItem, updateQuantity } = useCart();
@@ -145,15 +152,14 @@ export default function CartPage() {
                   </div>
                 </div>
               </div>
-              <button
-                onClick={() => {
-                  // Add checkout logic here
-                }}
-                className="w-full mt-6 px-6 py-3 border border-transparent rounded-xl shadow-sm text-white bg-sage hover:bg-sage-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage transition-colors flex items-center justify-center space-x-2"
-              >
-                <span>Proceed to Checkout</span>
-                <ArrowRightIcon className="w-5 h-5" />
-              </button>
+              <div className="mt-6">
+                <Link
+                  href="/checkout"
+                  className="block w-full bg-sage text-white text-center py-3 px-6 rounded-xl hover:bg-sage-dark transition-colors"
+                >
+                  Proceed to Checkout
+                </Link>
+              </div>
             </div>
           </div>
         </div>

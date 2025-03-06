@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import { GetStaticProps } from 'next';
+import { GetStaticProps, GetServerSideProps } from 'next';
 import ProductCard from '@/components/ProductCard';
 import ProductFilter from '@/components/ProductFilter';
 import { SAMPLE_PRODUCTS } from '@/pages/index';
@@ -15,12 +15,20 @@ interface ProductData {
 }
 
 interface ProductsPageProps {
-  products: ProductData[];
+  initialProducts: ProductData[];
 }
 
 const CATEGORIES = ['Cleaning', 'Personal Care', 'Kitchen', 'Food'];
 
-export default function ProductsPage({ products: initialProducts }: ProductsPageProps) {
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {
+      initialProducts: SAMPLE_PRODUCTS
+    }
+  };
+};
+
+export default function ProductsPage({ initialProducts }: ProductsPageProps) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
   const [sortBy, setSortBy] = useState('newest');
@@ -79,12 +87,3 @@ export default function ProductsPage({ products: initialProducts }: ProductsPage
     </>
   );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  return {
-    props: {
-      products: SAMPLE_PRODUCTS
-    },
-    revalidate: 60
-  };
-};
