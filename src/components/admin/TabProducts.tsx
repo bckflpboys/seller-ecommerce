@@ -51,10 +51,43 @@ export default function TabProducts() {
 
   // Delete product
   const deleteProduct = async (productId: string) => {
-    if (!window.confirm('Are you sure you want to delete this product?')) {
-      return;
-    }
+    toast((t) => (
+      <div className="flex items-center gap-4 min-w-[300px]">
+        <div className="flex-1">
+          <p className="text-sm font-medium text-gray-900">Delete Product</p>
+          <p className="text-sm text-gray-500">Are you sure you want to delete this product?</p>
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+              handleDeleteConfirm(productId);
+            }}
+            className="px-3 py-2 text-xs font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Delete
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="px-3 py-2 text-xs font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    ), {
+      duration: 5000,
+      position: 'top-center',
+      style: {
+        background: 'white',
+        padding: '16px',
+        borderRadius: '12px',
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+      },
+    });
+  };
 
+  const handleDeleteConfirm = async (productId: string) => {
     try {
       const response = await fetch(`/api/admin/products/${productId}`, {
         method: 'DELETE',
@@ -77,12 +110,12 @@ export default function TabProducts() {
   }, [currentPage, searchTerm, categoryFilter]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold text-gray-900">Products</h2>
+        <h2 className="text-3xl font-bold text-gray-900">Products</h2>
         <button
           onClick={() => router.push('/admin/products/create')}
-          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sage hover:bg-sage/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage"
+          className="inline-flex items-center px-5 py-2.5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-sage transition-all duration-200 hover:bg-sage/90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage transform hover:scale-105"
         >
           <Plus className="h-5 w-5 mr-2" />
           Add Product
@@ -90,8 +123,8 @@ export default function TabProducts() {
       </div>
 
       {/* Filters */}
-      <div className="flex gap-4">
-        <div className="flex-1 relative">
+      <div className="flex gap-6">
+        <div className="flex-1 relative group">
           <input
             type="text"
             placeholder="Search products..."
@@ -100,9 +133,9 @@ export default function TabProducts() {
               setSearchTerm(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full pl-10 pr-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sage focus:border-transparent"
+            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sage focus:border-transparent transition-all duration-200 group-hover:border-sage/50"
           />
-          <Search className="h-5 w-5 text-gray-400 absolute left-3 top-2.5" />
+          <Search className="h-5 w-5 text-gray-400 absolute left-4 top-3.5 group-hover:text-sage transition-colors duration-200" />
         </div>
         <select
           value={categoryFilter}
@@ -110,7 +143,7 @@ export default function TabProducts() {
             setCategoryFilter(e.target.value);
             setCurrentPage(1);
           }}
-          className="border-2 border-gray-300 rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-sage focus:border-transparent"
+          className="border-2 border-gray-200 rounded-xl px-6 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-sage focus:border-transparent hover:border-sage/50 transition-all duration-200 cursor-pointer"
         >
           <option value="all">All Categories</option>
           <option value="fertilizers">Fertilizers</option>
@@ -119,40 +152,46 @@ export default function TabProducts() {
         </select>
       </div>
 
-      <div className="bg-white rounded-lg border-2 border-gray-300 shadow-sm">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md">
         {loading ? (
-          <div className="p-8 text-center text-gray-500">Loading products...</div>
+          <div className="p-12 text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage mx-auto"></div>
+            <p className="mt-4 text-gray-500">Loading products...</p>
+          </div>
         ) : products.length === 0 ? (
-          <div className="p-8 text-center text-gray-500">No products found</div>
+          <div className="p-12 text-center">
+            <div className="text-gray-400 mb-3">No products found</div>
+            <p className="text-sm text-gray-500">Try adjusting your search or filters</p>
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Product
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Category
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Price
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Stock
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-gray-100">
                 {products.map((product) => (
-                  <tr key={product._id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
+                  <tr key={product._id} className="hover:bg-gray-50/50 transition-colors duration-150">
+                    <td className="px-6 py-5 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="h-10 w-10 flex-shrink-0">
-                          <div className="h-10 w-10 rounded-full relative overflow-hidden">
+                        <div className="h-12 w-12 flex-shrink-0">
+                          <div className="h-12 w-12 rounded-lg relative overflow-hidden border border-gray-200">
                             <Image
                               src={product.image}
                               alt={product.name}
@@ -162,20 +201,22 @@ export default function TabProducts() {
                           </div>
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-earth">{product.name}</div>
-                          <div className="text-sm text-gray-500">{product.description}</div>
+                          <div className="text-sm font-medium text-gray-900">{product.name}</div>
+                          <div className="text-sm text-gray-500 line-clamp-1">{product.description}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {product.category}
+                    <td className="px-6 py-5 whitespace-nowrap">
+                      <span className="px-3 py-1 text-sm text-gray-600 bg-gray-100 rounded-full">
+                        {product.category}
+                      </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-5 whitespace-nowrap text-sm font-medium text-gray-900">
                       R{product.price.toFixed(2)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-5 whitespace-nowrap">
                       <span
-                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
                           product.stock > 10
                             ? 'bg-green-100 text-green-800'
                             : product.stock > 0
@@ -186,16 +227,16 @@ export default function TabProducts() {
                         {product.stock} in stock
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm space-x-3">
+                    <td className="px-6 py-5 whitespace-nowrap text-sm space-x-4">
                       <button
                         onClick={() => router.push(`/admin/products/edit/${product._id}`)}
-                        className="text-earth hover:text-earth-dark transition-colors duration-200"
+                        className="text-earth hover:text-earth-dark transition-colors duration-200 font-medium"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => deleteProduct(product._id)}
-                        className="text-red-600 hover:text-red-800 transition-colors duration-200"
+                        className="text-red-600 hover:text-red-800 transition-colors duration-200 font-medium"
                       >
                         Delete
                       </button>
@@ -209,21 +250,21 @@ export default function TabProducts() {
 
         {/* Pagination */}
         {!loading && products.length > 0 && (
-          <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+          <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-gray-50/50">
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:shadow-sm"
             >
               Previous
             </button>
-            <span className="text-sm text-gray-700">
+            <span className="text-sm font-medium text-gray-700">
               Page {currentPage} of {totalPages}
             </span>
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:shadow-sm"
             >
               Next
             </button>
