@@ -101,7 +101,7 @@ export default function TabAnalytics() {
     <div className="space-y-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Monthly Sales Chart */}
-        <div className="bg-white p-6 rounded-xl border-2 border-gray-200 shadow-sm">
+        <div className="bg-white p-6 rounded-xl border border-gray-300 shadow-sm">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Monthly Sales</h3>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
@@ -118,7 +118,7 @@ export default function TabAnalytics() {
         </div>
 
         {/* Product Performance Chart */}
-        <div className="bg-white p-6 rounded-xl border-2 border-gray-200 shadow-sm">
+        <div className="bg-white p-6 rounded-xl border border-gray-300 shadow-sm">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Product Performance</h3>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
@@ -138,7 +138,7 @@ export default function TabAnalytics() {
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {data.keyMetrics.map((metric, index) => (
-          <div key={index} className="bg-white p-6 rounded-xl border-2 border-gray-200 shadow-sm">
+          <div key={index} className="bg-white p-6 rounded-xl border border-gray-300 shadow-sm">
             <h4 className="text-sm font-medium text-gray-600">{metric.label}</h4>
             <p className="mt-2 text-3xl font-semibold text-gray-900">{metric.value}</p>
           </div>
@@ -244,7 +244,7 @@ export default function TabAnalytics() {
         </div>
 
         {/* Time-based Analytics */}
-        <div className="bg-white p-6 rounded-xl border-2 border-gray-200 shadow-sm">
+        <div className="bg-white p-6 rounded-xl border border-gray-300 shadow-sm">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Time-based Analytics</h3>
           <div className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
@@ -303,7 +303,7 @@ export default function TabAnalytics() {
         </div>
 
         {/* Stock Analytics */}
-        <div className="col-span-2 bg-white p-6 rounded-xl border-2 border-gray-200 shadow-sm">
+        <div className="col-span-2 bg-white p-6 rounded-xl border border-gray-300 shadow-sm">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Stock Analytics</h3>
           <div className="space-y-6">
             {/* Summary Stats */}
@@ -391,7 +391,7 @@ export default function TabAnalytics() {
         </div>
 
         {/* Top Selling Products */}
-        <div className="col-span-2 bg-white p-6 rounded-xl border-2 border-gray-200 shadow-sm">
+        <div className="col-span-2 bg-white p-6 rounded-xl border border-gray-300 shadow-sm">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Top Selling Products</h3>
           <div className="overflow-x-auto">
             <table className="min-w-full">
