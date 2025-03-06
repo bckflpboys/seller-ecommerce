@@ -26,6 +26,11 @@ export default async function handler(
       return res.status(400).json({ message: 'Product ID is required' });
     }
 
+    // Set headers to prevent caching
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+
     const user = await User.findOne({ email: session.user.email })
       .select('favorites')
       .lean<Pick<IUser, 'favorites'>>();
@@ -39,9 +44,11 @@ export default async function handler(
       id => id?.toString() === productId
     );
 
+    // Add timestamp to force fresh response
     return res.status(200).json({
       isFavorite,
-      message: isFavorite ? 'Product is in favorites' : 'Product is not in favorites'
+      message: isFavorite ? 'Product is in favorites' : 'Product is not in favorites',
+      timestamp: new Date().toISOString()
     });
   } catch (error) {
     console.error('Error checking favorite status:', error);

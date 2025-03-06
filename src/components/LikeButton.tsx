@@ -21,10 +21,25 @@ export default function LikeButton({ productId, initialIsLiked = false, onLikeCh
       if (session?.user) {
         console.log('Checking like status for:', { productId, user: session.user.email });
         try {
-          const res = await fetch(`/api/users/favorites/check?productId=${productId}`);
+          // Add timestamp to prevent caching
+          const timestamp = new Date().getTime();
+          const res = await fetch(
+            `/api/users/favorites/check?productId=${productId}&t=${timestamp}`,
+            {
+              headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache'
+              }
+            }
+          );
+          
+          if (!res.ok) {
+            throw new Error('Failed to check favorite status');
+          }
+
           const data = await res.json();
           console.log('Check response:', data);
-          setIsLiked(data.isLiked);
+          setIsLiked(data.isFavorite);
         } catch (error) {
           console.error('Error checking like status:', error);
         }
@@ -41,6 +56,11 @@ export default function LikeButton({ productId, initialIsLiked = false, onLikeCh
       return;
     }
 
+    if (!productId) {
+      console.error('No product ID provided');
+      return;
+    }
+
     setIsLoading(true);
     console.log('Updating like status:', { 
       productId, 
@@ -53,6 +73,8 @@ export default function LikeButton({ productId, initialIsLiked = false, onLikeCh
         method: isLiked ? 'DELETE' : 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache'
         },
         body: JSON.stringify({ productId }),
       });
@@ -64,12 +86,17 @@ export default function LikeButton({ productId, initialIsLiked = false, onLikeCh
         throw new Error(data.message || 'Failed to update favorite');
       }
 
+      if (!data.success) {
+        throw new Error(data.message || 'Operation failed');
+      }
+
       const newIsLiked = !isLiked;
       console.log('Setting new like status:', newIsLiked);
       setIsLiked(newIsLiked);
       onLikeChange?.(newIsLiked);
     } catch (error) {
       console.error('Error updating favorite:', error);
+      // Don't throw the error, just log it
     } finally {
       setIsLoading(false);
     }

@@ -3,7 +3,7 @@ import mongoose, { Document } from 'mongoose';
 export interface IUser extends Document {
   name: string;
   email: string;
-  password: string;
+  password?: string;
   role: 'user' | 'admin';
   phoneNumber?: string;
   address?: {
@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Please provide a password'],
+    required: false, // Make password optional for OAuth users
   },
   role: {
     type: String,
@@ -72,7 +72,6 @@ const userSchema = new mongoose.Schema({
   },
 }, { 
   timestamps: true,
-  versionKey: false // This removes the __v field
 });
 
 // Add a method to check if a product is favorited
