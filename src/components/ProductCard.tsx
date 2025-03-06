@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ShoppingCart, Heart } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import { formatCurrency } from '@/utils/format';
 import { useCart } from '@/context/CartContext';
 import { toast } from 'react-hot-toast';
+import LikeButton from './LikeButton';
 
 interface ProductCardProps {
   product: {
@@ -46,9 +47,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </Link>
         <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button className="p-2 bg-white rounded-full shadow-md hover:bg-sage hover:text-white transition-colors duration-200">
-            <Heart className="w-5 h-5" />
-          </button>
+          <LikeButton productId={product._id} />
         </div>
       </div>
       <div className="p-4 flex flex-col flex-grow border-t-2 border-gray-200">

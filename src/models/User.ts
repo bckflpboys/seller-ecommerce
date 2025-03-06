@@ -1,4 +1,21 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+
+export interface IUser extends Document {
+  name: string;
+  email: string;
+  password: string;
+  role: 'user' | 'admin';
+  phoneNumber?: string;
+  address?: {
+    street: string;
+    city: string;
+    province: string;
+    postalCode: string;
+  };
+  favorites: mongoose.Types.ObjectId[];
+  createdAt: Date;
+  hasFavorite: (productId: string) => boolean;
+}
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -41,6 +58,14 @@ const userSchema = new mongoose.Schema({
       default: '',
     },
   },
+  favorites: {
+    type: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product'
+    }],
+    default: [],
+    required: true
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -50,6 +75,13 @@ const userSchema = new mongoose.Schema({
   versionKey: false // This removes the __v field
 });
 
-const User = mongoose.models.User || mongoose.model('User', userSchema);
+// Add a method to check if a product is favorited
+userSchema.methods.hasFavorite = function(productId: string) {
+  return this.favorites?.some((id: mongoose.Types.ObjectId) => 
+    id.toString() === productId
+  ) || false;
+};
+
+const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 
 export default User;
