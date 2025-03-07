@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import dbConnect from '@/lib/db';
 import Order from '@/models/Order';
 import Product from '@/models/Product';
+import User from '@/models/User';
 import { authOptions } from '../../auth/[...nextauth]';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -17,6 +18,86 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     await dbConnect();
+
+    // Calculate current and previous month metrics
+    const now = new Date();
+    const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const firstDayOfPrevMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
+    // Get total products
+    const totalProducts = await Product.countDocuments();
+    const prevMonthProducts = await Product.countDocuments({
+      createdAt: { $gte: firstDayOfPrevMonth, $lt: firstDayOfMonth }
+    });
+
+    // Get orders metrics
+    const [orderMetrics] = await Order.aggregate([
+      {
+        $facet: {
+          currentMonth: [
+            { $match: { createdAt: { $gte: firstDayOfMonth } } },
+            { $group: { _id: null, total: { $sum: "$total" }, count: { $sum: 1 } } }
+          ],
+          prevMonth: [
+            { $match: { createdAt: { $gte: firstDayOfPrevMonth, $lt: firstDayOfMonth } } },
+            { $group: { _id: null, total: { $sum: "$total" }, count: { $sum: 1 } } }
+          ],
+          total: [
+            { $group: { _id: null, count: { $sum: 1 } } }
+          ],
+          avgOrderValue: [
+            { $group: { _id: null, avg: { $avg: "$total" } } }
+          ]
+        }
+      }
+    ]);
+
+    const currentMonthOrders = orderMetrics.currentMonth[0]?.count || 0;
+    const prevMonthOrders = orderMetrics.prevMonth[0]?.count || 0;
+    const currentMonthRevenue = orderMetrics.currentMonth[0]?.total || 0;
+    const prevMonthRevenue = orderMetrics.prevMonth[0]?.total || 0;
+    const totalOrders = orderMetrics.total[0]?.count || 0;
+    const avgOrderValue = orderMetrics.avgOrderValue[0]?.avg || 0;
+
+    // Calculate percentage changes
+    const calculateChange = (current: number, previous: number) => {
+      if (previous === 0) return 0;
+      return ((current - previous) / previous) * 100;
+    };
+
+    const changes = {
+      products: calculateChange(totalProducts, prevMonthProducts),
+      orders: calculateChange(currentMonthOrders, prevMonthOrders),
+      revenue: calculateChange(currentMonthRevenue, prevMonthRevenue)
+    };
+
+    // Get total customers (users with role 'user')
+    const [userMetrics] = await User.aggregate([
+      {
+        $match: { role: 'user' }
+      },
+      {
+        $facet: {
+          currentMonth: [
+            { $match: { createdAt: { $gte: firstDayOfMonth } } },
+            { $count: 'count' }
+          ],
+          prevMonth: [
+            { $match: { createdAt: { $gte: firstDayOfPrevMonth, $lt: firstDayOfMonth } } },
+            { $count: 'count' }
+          ],
+          total: [{ $count: 'count' }]
+        }
+      }
+    ]);
+
+    const totalCustomers = userMetrics.total[0]?.count || 0;
+    const currentMonthCustomers = userMetrics.currentMonth[0]?.count || 0;
+    const prevMonthCustomers = userMetrics.prevMonth[0]?.count || 0;
+
+    const customerChanges = {
+      customers: calculateChange(currentMonthCustomers, prevMonthCustomers)
+    };
 
     // Get monthly sales data (last 6 months)
     const monthlySales = await Order.aggregate([
@@ -78,53 +159,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       { $limit: 5 }
     ]);
 
-    // Calculate key metrics
-    const [metrics] = await Order.aggregate([
-      {
-        $facet: {
-          avgOrderValue: [
-            { $group: { _id: null, avg: { $avg: "$total" } } }
-          ],
-          totalOrders: [
-            { $group: { _id: null, count: { $sum: 1 } } }
-          ],
-          prevMonthOrders: [
-            {
-              $match: {
-                createdAt: {
-                  $gte: new Date(new Date().setMonth(new Date().getMonth() - 1))
-                }
-              }
-            },
-            { $group: { _id: null, count: { $sum: 1 } } }
-          ],
-          prevMonthRevenue: [
-            {
-              $match: {
-                createdAt: {
-                  $gte: new Date(new Date().setMonth(new Date().getMonth() - 1))
-                }
-              }
-            },
-            { $group: { _id: null, total: { $sum: "$total" } } }
-          ]
-        }
-      }
-    ]);
-
-    const avgOrderValue = metrics.avgOrderValue[0]?.avg || 0;
-    const totalOrders = metrics.totalOrders[0]?.count || 0;
-    const monthlyOrders = metrics.prevMonthOrders[0]?.count || 0;
-    const monthlyRevenue = metrics.prevMonthRevenue[0]?.total || 0;
-
-    // Calculate growth rate (simplified)
-    const growthRate = ((monthlyOrders / (totalOrders || 1)) * 100).toFixed(1);
-
     const keyMetrics = [
       { label: 'Average Order Value', value: `R${avgOrderValue.toFixed(2)}` },
-      { label: 'Conversion Rate', value: `${((monthlyOrders / totalOrders) * 100).toFixed(1)}%` },
-      { label: 'Customer Retention', value: '75%' }, // This would need customer data to calculate accurately
-      { label: 'Growth Rate', value: `${growthRate}%` }
+      { label: 'Conversion Rate', value: `${((currentMonthOrders / totalOrders) * 100).toFixed(1)}%` },
+      { label: 'Customer Retention', value: '75%' },
+      { label: 'Growth Rate', value: `${((currentMonthOrders / prevMonthOrders - 1) * 100).toFixed(1)}%` }
     ];
 
     // Get order status distribution
@@ -295,6 +334,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
 
     res.status(200).json({
+      totalProducts,
+      totalOrders,
+      totalCustomers,
+      totalRevenue: currentMonthRevenue,
+      changes,
+      customerChanges,
       salesData: monthlySales,
       productPerformance,
       keyMetrics,
