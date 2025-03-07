@@ -25,5 +25,19 @@ export default withAuth(
 
 // Protect all routes that require authentication
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"]
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api/auth (auth API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - /auth (auth pages)
+     * - / (home page)
+     * - /about
+     * - /products (public product listing)
+     * - /contact
+     */
+    "/((?!api/auth|_next/static|_next/image|favicon.ico|auth|about|products|contact|$).*)"
+  ]
 };
