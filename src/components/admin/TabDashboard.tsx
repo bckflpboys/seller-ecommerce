@@ -44,30 +44,30 @@ export default function TabDashboard() {
     {
       title: 'Total Products',
       value: stats?.totalProducts ?? 0,
-      change: `${stats?.changes.products.toFixed(1)}%`,
+      change: `${stats?.changes?.products?.toFixed(1) ?? 0}%`,
       icon: Package,
-      trend: (stats?.changes.products ?? 0) >= 0 ? 'up' : 'down'
+      trend: (stats?.changes?.products ?? 0) >= 0 ? 'up' : 'down'
     },
     {
       title: 'Total Orders',
       value: stats?.totalOrders ?? 0,
-      change: `${stats?.changes.orders.toFixed(1)}%`,
+      change: `${stats?.changes?.orders?.toFixed(1) ?? 0}%`,
       icon: ShoppingBag,
-      trend: (stats?.changes.orders ?? 0) >= 0 ? 'up' : 'down'
+      trend: (stats?.changes?.orders ?? 0) >= 0 ? 'up' : 'down'
     },
     {
       title: 'Total Customers',
       value: stats?.totalCustomers ?? 0,
-      change: `${stats?.changes.customers.toFixed(1)}%`,
+      change: `${stats?.changes?.customers?.toFixed(1) ?? 0}%`,
       icon: Users,
-      trend: (stats?.changes.customers ?? 0) >= 0 ? 'up' : 'down'
+      trend: (stats?.changes?.customers ?? 0) >= 0 ? 'up' : 'down'
     },
     {
       title: 'Revenue',
-      value: `R${stats?.totalRevenue.toFixed(2) ?? '0.00'}`,
-      change: `${stats?.changes.revenue.toFixed(1)}%`,
+      value: `R${(stats?.totalRevenue ?? 0).toFixed(2)}`,
+      change: `${stats?.changes?.revenue?.toFixed(1) ?? 0}%`,
       icon: TrendingUp,
-      trend: (stats?.changes.revenue ?? 0) >= 0 ? 'up' : 'down'
+      trend: (stats?.changes?.revenue ?? 0) >= 0 ? 'up' : 'down'
     }
   ];
 

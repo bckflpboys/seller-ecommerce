@@ -111,7 +111,14 @@ export default function TabCustomers() {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap border-r border-gray-300">
-                    <div className="text-sm text-gray-900">{user.address || 'Not provided'}</div>
+                    <div className="text-sm text-gray-900">
+                      {[
+                        user.address.street,
+                        user.address.city,
+                        user.address.province,
+                        user.address.postalCode
+                      ].filter(Boolean).join(', ') || 'Not provided'}
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div className="flex items-center">

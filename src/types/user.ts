@@ -5,6 +5,11 @@ export interface User {
   role: 'admin' | 'user';
   createdAt: string;
   updatedAt: string;
-  address?: string;
-  phoneNumber?: string;
+  phoneNumber: string;
+  address: {
+    street: string;
+    city: string;
+    province: string;
+    postalCode: string;
+  };
 }

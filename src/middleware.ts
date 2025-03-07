@@ -6,6 +6,11 @@ export default withAuth(
     // Get user role from token
     const userRole = req.nextauth.token?.role;
 
+    // If user is admin and not already on an admin page, redirect to admin dashboard
+    if (userRole === "admin" && !req.nextUrl.pathname.startsWith("/admin")) {
+      return NextResponse.redirect(new URL("/admin", req.url));
+    }
+
     // Check if route starts with /admin
     if (req.nextUrl.pathname.startsWith("/admin")) {
       if (userRole !== "admin") {
@@ -23,7 +28,7 @@ export default withAuth(
   }
 );
 
-// Protect all admin routes
+// Protect all routes that require authentication
 export const config = {
-  matcher: ["/admin/:path*"]
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"]
 };
