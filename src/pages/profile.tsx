@@ -23,7 +23,12 @@ interface UserProfile {
   name: string;
   email: string;
   role: string;
-  address: string;
+  address: {
+    street: string;
+    city: string;
+    province: string;
+    postalCode: string;
+  };
   phoneNumber: string;
 }
 
@@ -72,7 +77,12 @@ export default function Profile() {
   const [formData, setFormData] = useState({
     id: '',
     name: '',
-    address: '',
+    address: {
+      street: '',
+      city: '',
+      province: '',
+      postalCode: ''
+    },
     phoneNumber: '',
     userType: 'user'
   });
@@ -123,7 +133,12 @@ export default function Profile() {
         name: data.name || '',
         email: data.email || '',
         role: data.role || 'user',
-        address: data.address || '',
+        address: {
+          street: data.address?.street || '',
+          city: data.address?.city || '',
+          province: data.address?.province || '',
+          postalCode: data.address?.postalCode || ''
+        },
         phoneNumber: data.phoneNumber || ''
       };
 
@@ -131,7 +146,12 @@ export default function Profile() {
       setFormData({
         id: data._id || '',
         name: data.name || '',
-        address: data.address || '',
+        address: {
+          street: data.address?.street || '',
+          city: data.address?.city || '',
+          province: data.address?.province || '',
+          postalCode: data.address?.postalCode || ''
+        },
         phoneNumber: data.phoneNumber || '',
         userType: data.role || 'user'
       });
@@ -166,7 +186,12 @@ export default function Profile() {
     setFormData({
       id: profile?.id || '',
       name: profile?.name || '',
-      address: profile?.address || '',
+      address: {
+        street: profile?.address?.street || '',
+        city: profile?.address?.city || '',
+        province: profile?.address?.province || '',
+        postalCode: profile?.address?.postalCode || ''
+      },
       phoneNumber: profile?.phoneNumber || '',
       userType: profile?.role || 'user'
     });
@@ -188,7 +213,12 @@ export default function Profile() {
         body: JSON.stringify({
           id: formData.id,
           name: (formData.name || '').trim(),
-          address: (formData.address || '').trim(),
+          address: {
+            street: (formData.address.street || '').trim(),
+            city: (formData.address.city || '').trim(),
+            province: (formData.address.province || '').trim(),
+            postalCode: (formData.address.postalCode || '').trim(),
+          },
           phoneNumber: (formData.phoneNumber || '').trim(),
           userType: formData.userType,
         }),
@@ -200,9 +230,7 @@ export default function Profile() {
         throw new Error(data.message || 'Error updating profile');
       }
 
-      // Fetch the latest user data from the database
       await fetchUserData();
-
       setIsEditing(false);
     } catch (err: any) {
       setError(err.message);
@@ -265,17 +293,70 @@ export default function Profile() {
                   />
                 </div>
 
-                <div>
-                  <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                    Address
-                  </label>
-                  <textarea
-                    id="address"
-                    value={formData.address}
-                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    rows={3}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                  />
+                <div className="space-y-4">
+                  <h3 className="text-sm font-medium text-gray-700">Address</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="street" className="block text-sm font-medium text-gray-700">
+                        Street Address
+                      </label>
+                      <input
+                        type="text"
+                        id="street"
+                        value={formData.address.street}
+                        onChange={(e) => setFormData({
+                          ...formData,
+                          address: { ...formData.address, street: e.target.value }
+                        })}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                        City
+                      </label>
+                      <input
+                        type="text"
+                        id="city"
+                        value={formData.address.city}
+                        onChange={(e) => setFormData({
+                          ...formData,
+                          address: { ...formData.address, city: e.target.value }
+                        })}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="province" className="block text-sm font-medium text-gray-700">
+                        Province
+                      </label>
+                      <input
+                        type="text"
+                        id="province"
+                        value={formData.address.province}
+                        onChange={(e) => setFormData({
+                          ...formData,
+                          address: { ...formData.address, province: e.target.value }
+                        })}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700">
+                        Postal Code
+                      </label>
+                      <input
+                        type="text"
+                        id="postalCode"
+                        value={formData.address.postalCode}
+                        onChange={(e) => setFormData({
+                          ...formData,
+                          address: { ...formData.address, postalCode: e.target.value }
+                        })}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div>
@@ -330,11 +411,19 @@ export default function Profile() {
               <div className="bg-white rounded-lg shadow p-6 space-y-4">
                 <div>
                   <h3 className="text-sm font-medium text-gray-500">Address</h3>
-                  <p className="mt-1 text-sm text-gray-900">{profile?.address}</p>
+                  <div className="mt-1 text-sm text-gray-900">
+                    {profile?.address?.street && <p>{profile.address.street}</p>}
+                    {profile?.address?.city && <p>{profile.address.city}</p>}
+                    {profile?.address?.province && <p>{profile.address.province}</p>}
+                    {profile?.address?.postalCode && <p>{profile.address.postalCode}</p>}
+                    {!profile?.address?.street && !profile?.address?.city && 
+                     !profile?.address?.province && !profile?.address?.postalCode && 
+                     <p>No address provided</p>}
+                  </div>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-gray-500">Phone Number</h3>
-                  <p className="mt-1 text-sm text-gray-900">{profile?.phoneNumber}</p>
+                  <p className="mt-1 text-sm text-gray-900">{profile?.phoneNumber || 'Not provided'}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-gray-500">Account Type</h3>
