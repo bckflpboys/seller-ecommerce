@@ -35,6 +35,24 @@ export default function TabCustomers() {
     user.phoneNumber?.includes(searchTerm)
   );
 
+  const formatAddress = (address: any) => {
+    if (!address) return 'Not provided';
+    
+    // Handle new schema (object with street, city, etc.)
+    if (typeof address === 'object') {
+      const { street, city, province, postalCode } = address;
+      const parts = [street, city, province, postalCode].filter(Boolean);
+      return parts.length > 0 ? parts.join(', ') : 'Not provided';
+    }
+    
+    // Handle old schema (string)
+    if (typeof address === 'string') {
+      return address || 'Not provided';
+    }
+
+    return 'Not provided';
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -111,14 +129,7 @@ export default function TabCustomers() {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap border-r border-gray-300">
-                    <div className="text-sm text-gray-900">
-                      {[
-                        user.address.street,
-                        user.address.city,
-                        user.address.province,
-                        user.address.postalCode
-                      ].filter(Boolean).join(', ') || 'Not provided'}
-                    </div>
+                    <div className="text-sm text-gray-900">{formatAddress(user.address)}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div className="flex items-center">
