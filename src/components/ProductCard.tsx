@@ -35,19 +35,21 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="bg-white rounded-xl border-2 border-gray-200 shadow-warm group hover:shadow-xl hover:border-sage/30 transition-all duration-300 flex flex-col h-full">
       <div className="relative aspect-square overflow-hidden rounded-t-xl">
-        <Link href={`/products/${product._id}`}>
-          <Image
-            src={product.image}
-            alt={product.name}
-            width={800}
-            height={800}
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        </Link>
-        <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <LikeButton productId={product._id} />
+        <div className="relative w-full pb-[100%]">
+          <Link href={`/products/${product._id}`}>
+            <Image
+              src={product.image}
+              alt={product.name}
+              width={800}
+              height={800}
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              priority
+            />
+            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </Link>
+          <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <LikeButton productId={product._id} />
+          </div>
         </div>
       </div>
       <div className="p-4 flex flex-col flex-grow border-t-2 border-gray-200">
