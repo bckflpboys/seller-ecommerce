@@ -65,22 +65,22 @@ export default function ContactPage() {
                   {
                     icon: MapPin,
                     title: 'Visit Us',
-                    content: '123 Eco Street, Green Valley, GV 12345'
+                    content: '4139 Sehurutsi Street, Kimberley, Northern Cape'
                   },
                   {
                     icon: Phone,
                     title: 'Call Us',
-                    content: '+1 (234) 567-8900'
+                    content: '+27 67 152 0479'
                   },
                   {
                     icon: Mail,
                     title: 'Email Us',
-                    content: 'info@ecostore.com'
+                    content: 'soilsolutionsptyltd@gmail.com'
                   },
                   {
                     icon: Clock,
                     title: 'Business Hours',
-                    content: 'Mon - Fri: 9:00 AM - 6:00 PM'
+                    content: 'Mon - Fri: 8:00 AM - 5:00 PM'
                   }
                 ].map((item, index) => (
                   <div key={index} className="flex items-start space-x-4">
@@ -99,11 +99,16 @@ export default function ContactPage() {
 
               {/* Map */}
               <div className="relative h-[300px] rounded-xl overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1553290322-e0c4bc89fe70?q=80&w=2073&auto=format&fit=crop"
-                  alt="Location map"
-                  fill
-                  className="object-cover"
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.744772826592!2d24.75!3d-28.74!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e9b0dd60e75d84d%3A0x7c0b7a3d12345678!2s4139%20Sehurutsi%20Street%2C%20Kimberley%2C%20Northern%20Cape!5e0!3m2!1sen!2sza!4v1678451234567!5m2!1sen!2sza"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="absolute inset-0"
+                  title="Soil Solutions Location Map"
                 />
               </div>
             </div>

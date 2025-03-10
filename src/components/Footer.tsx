@@ -60,23 +60,33 @@ export default function Footer() {
             <h3 className="text-lg font-display font-bold text-earth-dark mb-6">Categories</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/products/natural" className="text-gray-600 hover:text-earth transition-colors duration-200">
-                  Natural Products
+                <Link href="/products?category=muthi-products" className="text-gray-600 hover:text-earth transition-colors duration-200">
+                  Muthi Products
                 </Link>
               </li>
               <li>
-                <Link href="/products/cleaning" className="text-gray-600 hover:text-earth transition-colors duration-200">
-                  Eco Cleaning
+                <Link href="/products?category=poultry-products" className="text-gray-600 hover:text-earth transition-colors duration-200">
+                  Poultry Products
                 </Link>
               </li>
               <li>
-                <Link href="/products/food" className="text-gray-600 hover:text-earth transition-colors duration-200">
-                  Sustainable Food
+                <Link href="/products?category=livestock" className="text-gray-600 hover:text-earth transition-colors duration-200">
+                  Livestock
                 </Link>
               </li>
               <li>
-                <Link href="/products/new" className="text-gray-600 hover:text-earth transition-colors duration-200">
-                  New Arrivals
+                <Link href="/products?category=cleaning-products" className="text-gray-600 hover:text-earth transition-colors duration-200">
+                  Cleaning Products
+                </Link>
+              </li>
+              <li>
+                <Link href="/products?category=sanitary-products" className="text-gray-600 hover:text-earth transition-colors duration-200">
+                  Sanitary Products
+                </Link>
+              </li>
+              <li>
+                <Link href="/products?category=vegetables" className="text-gray-600 hover:text-earth transition-colors duration-200">
+                  Vegetables
                 </Link>
               </li>
             </ul>
@@ -87,15 +97,15 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-center space-x-3 text-gray-600">
                 <MapPin className="w-5 h-5 text-earth flex-shrink-0" />
-                <span>123 Nature Street, Green City, SA</span>
+                <span>4139 Sehurutsi Street, Kimberley, Northern Cape</span>
               </li>
               <li className="flex items-center space-x-3 text-gray-600">
                 <Phone className="w-5 h-5 text-earth flex-shrink-0" />
-                <span>+27 12 345 6789</span>
+                <span>+27 67 152 0479</span>
               </li>
               <li className="flex items-center space-x-3 text-gray-600">
                 <Mail className="w-5 h-5 text-earth flex-shrink-0" />
-                <span>info@ecostore.co.za</span>
+                <span>soilsolutionsptyltd@gmail.com</span>
               </li>
             </ul>
           </div>
