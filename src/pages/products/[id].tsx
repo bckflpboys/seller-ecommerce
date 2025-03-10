@@ -157,15 +157,17 @@ export default function ProductPage({ product }: ProductPageProps) {
               <div className="lg:border-r border-gray-100">
                 {/* Main Image */}
                 <div className="relative aspect-square bg-gray-50">
-                  <Image
-                    src={selectedImage}
-                    alt={product.name}
-                    width={800}
-                    height={800}
-                    className="object-cover transition-transform duration-500 hover:scale-105"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent" />
+                  <div className="relative w-full pb-[100%]">
+                    <Image
+                      src={selectedImage}
+                      alt={product.name}
+                      width={800}
+                      height={800}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent" />
+                  </div>
                 </div>
 
                 {/* Thumbnail Gallery */}
@@ -180,13 +182,15 @@ export default function ProductPage({ product }: ProductPageProps) {
                             selectedImage === image ? 'ring-2 ring-sage ring-offset-2' : ''
                           }`}
                         >
-                          <Image
-                            src={image}
-                            alt={`${product.name} - Image ${index + 1}`}
-                            width={200}
-                            height={200}
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
+                          <div className="relative w-full pb-[100%]">
+                            <Image
+                              src={image}
+                              alt={`${product.name} - Image ${index + 1}`}
+                              width={200}
+                              height={200}
+                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                          </div>
                         </button>
                       ))}
                     </div>
