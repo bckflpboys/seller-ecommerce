@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { User, Pencil, Save, X, MapPin, Heart, ShoppingBag } from 'lucide-react';
+import Link from 'next/link';
 
 // Extend the Session User type
 declare module "next-auth" {
@@ -68,6 +69,15 @@ interface ApiResponse {
   message: string;
 }
 
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+}
+
 export default function Profile() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -90,12 +100,8 @@ export default function Profile() {
   const [error, setError] = useState('');
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoadingOrders, setIsLoadingOrders] = useState(false);
-
-  const [favorites] = useState<string[]>([
-    'Organic Fertilizer',
-    'Garden Tools Set',
-    'Soil pH Tester',
-  ]);
+  const [favorites, setFavorites] = useState<Product[]>([]);
+  const [isLoadingFavorites, setIsLoadingFavorites] = useState(false);
 
   // Function to fetch user orders
   const fetchOrders = async () => {
@@ -161,6 +167,26 @@ export default function Profile() {
     }
   };
 
+  // Function to fetch user's favorite products
+  const fetchFavorites = async () => {
+    setIsLoadingFavorites(true);
+    try {
+      const res = await fetch('/api/users/favorites/products');
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.message || 'Error fetching favorites');
+      }
+
+      setFavorites(data.products);
+    } catch (error) {
+      console.error('Error fetching favorites:', error);
+      setError('Failed to load favorites');
+    } finally {
+      setIsLoadingFavorites(false);
+    }
+  };
+
   useEffect(() => {
     if (status === 'authenticated' && session) {
       fetchUserData();
@@ -175,6 +201,12 @@ export default function Profile() {
   useEffect(() => {
     if (activeTab === 'orders') {
       fetchOrders();
+    }
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (activeTab === 'favorites') {
+      fetchFavorites();
     }
   }, [activeTab]);
 
@@ -449,9 +481,12 @@ export default function Profile() {
               <div className="text-center py-8">
                 <ShoppingBag className="h-12 w-12 mx-auto text-gray-400 mb-4" />
                 <p className="text-gray-600">No orders found</p>
-                <a href="/products" className="text-sage hover:text-sage-dark mt-2 inline-block">
+                <Link 
+                  href="/products" 
+                  className="text-sage hover:text-sage-dark mt-2 inline-block"
+                >
                   Start shopping
-                </a>
+                </Link>
               </div>
             ) : (
               <div className="space-y-4">
@@ -519,19 +554,66 @@ export default function Profile() {
         return (
           <div className="space-y-6">
             <h2 className="text-2xl font-semibold mb-6">My Favorites</h2>
-            {favorites.length > 0 ? (
+            {isLoadingFavorites ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage mx-auto"></div>
+                <p className="mt-4 text-gray-600">Loading favorites...</p>
+              </div>
+            ) : favorites.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {favorites.map((item, index) => (
-                  <div key={index} className="bg-white p-4 rounded-lg shadow border">
-                    <div className="flex items-center justify-between">
-                      <p className="font-medium">{item}</p>
-                      <Heart className="w-5 h-5 text-red-500 fill-current" />
+                {favorites.map((product) => (
+                  <div key={product._id} className="bg-white p-4 rounded-lg shadow border hover:shadow-md transition-shadow">
+                    <div className="flex items-center space-x-4">
+                      <div className="relative w-20 h-20 flex-shrink-0">
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          fill
+                          className="object-cover rounded"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <Link 
+                          href={`/products/${product._id}`}
+                          className="text-earth-dark hover:text-earth font-medium line-clamp-1"
+                        >
+                          {product.name}
+                        </Link>
+                        <p className="text-sm text-sage mt-1">{product.category}</p>
+                        <p className="text-sm font-medium text-earth mt-1">
+                          R{product.price.toFixed(2)}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          fetch(`/api/users/favorites`, {
+                            method: 'DELETE',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ productId: product._id })
+                          }).then(() => {
+                            fetchFavorites();
+                          });
+                        }}
+                        className="p-2 text-red-500 hover:text-red-600 transition-colors"
+                        aria-label="Remove from favorites"
+                      >
+                        <Heart className="w-5 h-5 fill-current" />
+                      </button>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-gray-600">No favorites yet.</p>
+              <div className="text-center py-8">
+                <Heart className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+                <p className="text-gray-600">No favorites yet</p>
+                <Link 
+                  href="/products" 
+                  className="text-sage hover:text-sage-dark mt-2 inline-block"
+                >
+                  Browse products
+                </Link>
+              </div>
             )}
           </div>
         );
