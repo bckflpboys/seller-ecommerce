@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, Minus, Plus, Heart, Share2, FileText, ListChecks, Box } from 'lucide-react';
+import { ArrowLeft, Minus, Plus, Share2, FileText, ListChecks, Box } from 'lucide-react';
 import { formatCurrency } from '@/utils/format';
 import { useCart } from '@/context/CartContext';
 import { toast } from 'react-hot-toast';
 import connectDB from '@/lib/mongodb';
 import Product from '@/models/Product';
 import { Document, Model, Types } from 'mongoose';
+import LikeButton from '@/components/LikeButton';
 
 interface MongoProduct extends Document {
   _id: Types.ObjectId;
@@ -137,9 +138,7 @@ export default function ProductPage({ product }: ProductPageProps) {
               Back to Products
             </Link>
             <div className="flex items-center space-x-4">
-              <button className="p-2 hover:text-sage transition-colors" aria-label="Search">
-                <Heart className="w-5 h-5" />
-              </button>
+              <LikeButton productId={product._id} />
               <button className="p-2 hover:text-sage transition-colors" aria-label="Cart">
                 <Share2 className="w-5 h-5" />
               </button>
