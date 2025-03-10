@@ -225,12 +225,26 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* Shipping Address */}
+          {/* Shipping Information */}
           <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-            <h2 className="text-xl font-semibold text-earth-dark mb-4">Shipping Address</h2>
+            <h2 className="text-xl font-semibold text-earth-dark mb-4">Shipping Information</h2>
             <div className="space-y-4">
               <div>
-                <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-earth-dark mb-1">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-sage focus:border-transparent ${
+                    fieldErrors.email ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                />
+              </div>
+              <div>
+                <label htmlFor="street" className="block text-sm font-medium text-earth-dark mb-1">
                   Street Address
                 </label>
                 <input
@@ -238,14 +252,13 @@ export default function CheckoutPage() {
                   id="street"
                   value={address.street}
                   onChange={handleAddressChange('street')}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sage focus:border-transparent ${
-                    fieldErrors.street ? 'border-red-500' : 'border-gray-200'
+                  className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-sage focus:border-transparent ${
+                    fieldErrors.street ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  required
                 />
               </div>
               <div>
-                <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="city" className="block text-sm font-medium text-earth-dark mb-1">
                   City
                 </label>
                 <input
@@ -253,14 +266,13 @@ export default function CheckoutPage() {
                   id="city"
                   value={address.city}
                   onChange={handleAddressChange('city')}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sage focus:border-transparent ${
-                    fieldErrors.city ? 'border-red-500' : 'border-gray-200'
+                  className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-sage focus:border-transparent ${
+                    fieldErrors.city ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  required
                 />
               </div>
               <div>
-                <label htmlFor="province" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="province" className="block text-sm font-medium text-earth-dark mb-1">
                   Province
                 </label>
                 <input
@@ -268,14 +280,13 @@ export default function CheckoutPage() {
                   id="province"
                   value={address.province}
                   onChange={handleAddressChange('province')}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sage focus:border-transparent ${
-                    fieldErrors.province ? 'border-red-500' : 'border-gray-200'
+                  className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-sage focus:border-transparent ${
+                    fieldErrors.province ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  required
                 />
               </div>
               <div>
-                <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="postalCode" className="block text-sm font-medium text-earth-dark mb-1">
                   Postal Code
                 </label>
                 <input
@@ -283,10 +294,9 @@ export default function CheckoutPage() {
                   id="postalCode"
                   value={address.postalCode}
                   onChange={handleAddressChange('postalCode')}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sage focus:border-transparent ${
-                    fieldErrors.postalCode ? 'border-red-500' : 'border-gray-200'
+                  className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-sage focus:border-transparent ${
+                    fieldErrors.postalCode ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  required
                 />
               </div>
             </div>

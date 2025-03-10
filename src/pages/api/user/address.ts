@@ -21,12 +21,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Put the entire address string in the street field
+    // Map the address fields from the user schema
     const address = {
-      street: user.address || '',
-      city: '',
-      province: '',
-      postalCode: '',
+      street: user.address?.street || '',
+      city: user.address?.city || '',
+      province: user.address?.province || '',
+      postalCode: user.address?.postalCode || '',
     };
 
     res.status(200).json({ address });
