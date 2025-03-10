@@ -361,11 +361,12 @@ export default function CreateProduct() {
                 className="mt-1 block w-full border-2 border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sage focus:border-sage"
               >
                 <option value="">Select a category</option>
-                <option value="fertilizers">Fertilizers</option>
-                <option value="pesticides">Pesticides</option>
-                <option value="seeds">Seeds</option>
-                <option value="tools">Tools</option>
-                <option value="equipment">Equipment</option>
+                <option value="muthi-products">Muthi Products</option>
+                <option value="poultry-products">Poultry Products</option>
+                <option value="livestock">Livestock</option>
+                <option value="cleaning-products">Cleaning Products</option>
+                <option value="sanitary-products">Sanitary Products</option>
+                <option value="vegetables">Vegetables</option>
               </select>
             </div>
 

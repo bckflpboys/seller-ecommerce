@@ -7,7 +7,14 @@ import connectDB from '@/lib/mongodb';
 import Product from '@/models/Product';
 
 // Get actual categories from database
-const CATEGORIES = ['Fertilizers', 'Soil', 'Supplements'];
+const CATEGORIES = [
+  'Muthi Products',
+  'Poultry Products',
+  'Livestock',
+  'Cleaning Products',
+  'Sanitary Products',
+  'Vegetables'
+];
 
 interface Product {
   _id: string;

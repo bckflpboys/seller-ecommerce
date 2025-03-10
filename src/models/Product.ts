@@ -44,6 +44,17 @@ const productSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Please provide a product category'],
+    enum: {
+      values: [
+        'muthi-products',
+        'poultry-products',
+        'livestock',
+        'cleaning-products',
+        'sanitary-products',
+        'vegetables'
+      ],
+      message: '{VALUE} is not a valid category'
+    },
     index: true,
   },
   stock: {
