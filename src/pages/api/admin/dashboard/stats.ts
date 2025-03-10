@@ -99,6 +99,53 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       customers: calculateChange(currentMonthCustomers, prevMonthCustomers)
     };
 
+    let mostFavoritedProducts: { name: string; favoriteCount: number }[] = [];
+
+    try {
+      // Get most favorited products
+      const favoriteMetrics = await User.aggregate([
+        { 
+          $match: { 
+            favorites: { $exists: true, $ne: [] } 
+          } 
+        },
+        { $unwind: "$favorites" },
+        { 
+          $group: { 
+            _id: "$favorites",
+            favoriteCount: { $sum: 1 }
+          }
+        },
+        { $sort: { favoriteCount: -1 } },
+        { $limit: 5 }
+      ]);
+
+      console.log('Favorite metrics:', favoriteMetrics);
+
+      const favoriteProductIds = favoriteMetrics.map(f => f._id);
+      console.log('Favorite product IDs:', favoriteProductIds);
+
+      const favoriteProducts = await Product.find({
+        _id: { $in: favoriteProductIds }
+      })
+      .select('name')
+      .lean();
+
+      console.log('Favorite products:', favoriteProducts);
+
+      mostFavoritedProducts = favoriteProducts.map(product => ({
+        name: product.name,
+        favoriteCount: favoriteMetrics.find(f => String(f._id) === String(product._id))?.favoriteCount || 0
+      }))
+      .sort((a, b) => b.favoriteCount - a.favoriteCount);
+
+      console.log('Most favorited products:', mostFavoritedProducts);
+    } catch (error) {
+      console.error('Error getting favorite products:', error);
+      // Return empty array if there's an error
+      mostFavoritedProducts = [];
+    }
+
     // Get monthly sales data (last 6 months)
     const monthlySales = await Order.aggregate([
       {
@@ -345,6 +392,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       keyMetrics,
       orderStatusDistribution,
       topSellingProducts,
+      mostFavoritedProducts,
       timeAnalytics,
       stockAnalytics
     });

@@ -24,6 +24,10 @@ interface AnalyticsData {
     quantity: number;
     revenue: number;
   }>;
+  mostFavoritedProducts: Array<{
+    name: string;
+    favoriteCount: number;
+  }>;
   timeAnalytics: {
     peakDay: {
       name: string;
@@ -417,6 +421,39 @@ export default function TabAnalytics() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Most Favorited Products */}
+        <div className="col-span-1 lg:col-span-2 bg-white p-3 sm:p-4 md:p-6 rounded-xl border border-gray-300 shadow-sm">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-4">Most Favorited Products</h3>
+          <div className="overflow-x-auto -mx-3 sm:-mx-4 md:-mx-6">
+            <div className="inline-block min-w-full align-middle">
+              <div className="overflow-hidden">
+                {data.mostFavoritedProducts && data.mostFavoritedProducts.length > 0 ? (
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-600">Product</th>
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-600">Favorites</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200 bg-white">
+                      {data.mostFavoritedProducts.map((product, index) => (
+                        <tr key={index} className="hover:bg-gray-50">
+                          <td className="px-3 sm:px-6 py-2 sm:py-4 text-xs sm:text-sm text-gray-900 whitespace-nowrap">{product.name}</td>
+                          <td className="px-3 sm:px-6 py-2 sm:py-4 text-xs sm:text-sm text-gray-600 whitespace-nowrap">{product.favoriteCount}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    No favorited products yet
+                  </div>
+                )}
               </div>
             </div>
           </div>
