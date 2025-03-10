@@ -2,8 +2,10 @@ import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
+import ProductCardSkeleton from '@/components/ProductCardSkeleton';
 import connectDB from '@/lib/mongodb';
 import Product from '@/models/Product';
+import { useState, useEffect } from 'react';
 
 interface ProductType {
   _id: string;
@@ -20,9 +22,23 @@ interface HomeProps {
   products: ProductType[];
 }
 
-export default function Home({ products }: HomeProps) {
+export default function Home({ products: initialProducts }: HomeProps) {
+  const [products, setProducts] = useState(initialProducts);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setProducts(initialProducts);
+    setIsLoading(false);
+  }, [initialProducts]);
+
+  const renderSkeletons = () => {
+    return Array(4).fill(null).map((_, index) => (
+      <ProductCardSkeleton key={index} />
+    ));
+  };
+
   return (
-    <div>
+    <main>
       {/* Hero Section */}
       <section className="relative h-[600px] flex items-center justify-center">
         <div className="absolute inset-0 z-0">
@@ -60,15 +76,17 @@ export default function Home({ products }: HomeProps) {
             Featured Products
           </h2>
           <div className={`grid grid-cols-1 gap-6 ${
-            products.length === 1 
+            !isLoading && products.length === 1 
               ? 'md:grid-cols-1 md:max-w-md mx-auto' 
-              : products.length === 2 
+              : !isLoading && products.length === 2 
                 ? 'md:grid-cols-2 md:max-w-3xl mx-auto'
-                : products.length === 3 
+                : !isLoading && products.length === 3 
                   ? 'md:grid-cols-3 md:max-w-5xl mx-auto'
                   : 'md:grid-cols-2 lg:grid-cols-4'
           }`}>
-            {products.length > 0 ? (
+            {isLoading ? (
+              renderSkeletons()
+            ) : products.length > 0 ? (
               products.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))
@@ -88,7 +106,7 @@ export default function Home({ products }: HomeProps) {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
 
