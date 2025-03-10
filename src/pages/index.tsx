@@ -56,15 +56,25 @@ export default function Home({ products }: HomeProps) {
       {/* Featured Products */}
       <section className="py-16 bg-primary-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-earth-dark text-center">Featured Products</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <h2 className="text-3xl font-bold mb-8 text-earth-dark text-center">
+            Featured Products
+          </h2>
+          <div className={`grid grid-cols-1 gap-6 ${
+            products.length === 1 
+              ? 'md:grid-cols-1 md:max-w-md mx-auto' 
+              : products.length === 2 
+                ? 'md:grid-cols-2 md:max-w-3xl mx-auto'
+                : products.length === 3 
+                  ? 'md:grid-cols-3 md:max-w-5xl mx-auto'
+                  : 'md:grid-cols-2 lg:grid-cols-4'
+          }`}>
             {products.length > 0 ? (
               products.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))
             ) : (
               <div className="col-span-full text-center text-gray-600">
-                No featured products available at the moment.
+                No products available at the moment.
               </div>
             )}
           </div>
@@ -86,10 +96,20 @@ export const getServerSideProps: GetServerSideProps = async () => {
   try {
     await connectDB();
     
-    const products = await Product.find({ isFeatured: true })
+    // First try to get featured products
+    let products = await Product.find({ isFeatured: true })
       .select('_id name description price category image stock isInStock')
       .limit(4)
       .lean();
+
+    // If no featured products, get the latest 4 products
+    if (products.length === 0) {
+      products = await Product.find()
+        .select('_id name description price category image stock isInStock')
+        .sort({ createdAt: -1 })
+        .limit(4)
+        .lean();
+    }
 
     const serializedProducts = products.map((product: any) => ({
       ...product,
