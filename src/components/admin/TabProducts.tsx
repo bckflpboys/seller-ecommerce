@@ -146,9 +146,12 @@ export default function TabProducts() {
           className="border-2 border-gray-200 rounded-xl px-6 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-sage focus:border-transparent hover:border-sage/50 transition-all duration-200 cursor-pointer"
         >
           <option value="all">All Categories</option>
-          <option value="fertilizers">Fertilizers</option>
-          <option value="soil">Soil</option>
-          <option value="supplements">Supplements</option>
+          <option value="muthi-products">Muthi Products</option>
+          <option value="poultry-products">Poultry Products</option>
+          <option value="livestock">Livestock</option>
+          <option value="cleaning-products">Cleaning Products</option>
+          <option value="sanitary-products">Sanitary Products</option>
+          <option value="vegetables">Vegetables</option>
         </select>
       </div>
 
