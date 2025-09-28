@@ -123,23 +123,23 @@ export default function ProductPage({ product }: ProductPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sage-50/50 via-white to-earth-50/50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50/50 via-white to-blue-50/50">
       {/* Navigation Bar */}
-      <nav className="sticky top-0 z-40 bg-white border-b border-gray-100">
+      <nav className="sticky top-0 z-40 bg-white border-b border-blue-400">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <Link 
               href="/products" 
-              className="inline-flex items-center text-earth hover:text-earth-dark transition-colors text-sm font-medium group"
+              className="inline-flex items-center text-blue-900 hover:text-blue-500 transition-colors text-sm font-medium group"
             >
-              <span className="w-8 h-8 flex items-center justify-center rounded-full bg-sage/5 group-hover:bg-sage/10 mr-2 transition-colors">
-                <ArrowLeft className="w-4 h-4" />
+              <span className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-400/5 group-hover:bg-blue-400/10 mr-2 transition-colors">
+                <ArrowLeft className="w-4 h-4 text-blue-400" />
               </span>
               Back to Products
             </Link>
             <div className="flex items-center space-x-4">
               <LikeButton productId={product._id} />
-              <button className="p-2 hover:text-sage transition-colors" aria-label="Cart">
+              <button className="p-2 hover:text-blue-400 transition-colors" aria-label="Cart">
                 <Share2 className="w-5 h-5" />
               </button>
             </div>
@@ -151,10 +151,10 @@ export default function ProductPage({ product }: ProductPageProps) {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-7xl mx-auto">
           {/* Product Grid */}
-          <div className="bg-white rounded-3xl shadow-2xl shadow-sage-500/5 overflow-hidden">
+          <div className="bg-white rounded-3xl shadow-2xl shadow-blue-500/5 overflow-hidden">
             <div className="grid lg:grid-cols-2 gap-0">
               {/* Image Gallery */}
-              <div className="lg:border-r border-gray-100">
+              <div className="border border-blue-400 rounded-l-3xl">
                 {/* Main Image */}
                 <div className="relative aspect-square bg-gray-50">
                   <div className="relative w-full pb-[100%]">
@@ -172,14 +172,14 @@ export default function ProductPage({ product }: ProductPageProps) {
 
                 {/* Thumbnail Gallery */}
                 {gallery.length > 0 && (
-                  <div className="p-6 border-t border-gray-100">
+                  <div className="p-6 border-t border-blue-400">
                     <div className="grid grid-cols-4 gap-4">
                       {gallery.map((image, index) => (
                         <button
                           key={index}
                           onClick={() => setSelectedImage(image)}
                           className={`group relative aspect-square rounded-xl overflow-hidden bg-gray-50 ${
-                            selectedImage === image ? 'ring-2 ring-sage ring-offset-2' : ''
+                            selectedImage === image ? 'ring-2 ring-blue-400 ring-offset-2' : ''
                           }`}
                         >
                           <div className="relative w-full pb-[100%]">
@@ -217,7 +217,7 @@ export default function ProductPage({ product }: ProductPageProps) {
                   </div>
 
                   <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
-                  <p className="text-xl font-semibold text-sage">{formatCurrency(product.price)}</p>
+                  <p className="text-xl font-semibold text-blue-400">{formatCurrency(product.price)}</p>
                   {product.compareAtPrice && product.compareAtPrice > product.price && (
                     <p className="text-sm text-gray-500 line-through">
                       {formatCurrency(product.compareAtPrice)}
@@ -230,8 +230,8 @@ export default function ProductPage({ product }: ProductPageProps) {
                   {product.description && (
                     <div>
                       <div className="flex items-center gap-2 mb-4">
-                        <FileText className="w-5 h-5 text-sage" />
-                        <h2 className="text-lg font-semibold text-earth-dark">Description</h2>
+                        <FileText className="w-5 h-5 text-blue-400" />
+                        <h2 className="text-lg font-semibold text-blue-900">Description</h2>
                       </div>
                       <div 
                         className="text-gray-600"
@@ -246,13 +246,13 @@ export default function ProductPage({ product }: ProductPageProps) {
                   {keyFeatures?.length > 0 && (
                     <div className="mb-8">
                       <div className="flex items-center gap-2 mb-4">
-                        <ListChecks className="w-5 h-5 text-sage" />
-                        <h2 className="text-lg font-semibold text-earth-dark">Key Features</h2>
+                        <ListChecks className="w-5 h-5 text-blue-400" />
+                        <h2 className="text-lg font-semibold text-blue-900">Key Features</h2>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {keyFeatures.map((feature, index) => (
                           <div key={index} className="flex items-center gap-2">
-                            <span className="text-sage">◆</span>
+                            <span className="text-blue-400">◆</span>
                             <span className="text-gray-600">{feature}</span>
                           </div>
                         ))}
@@ -266,8 +266,8 @@ export default function ProductPage({ product }: ProductPageProps) {
                      product.dimensions?.height && product.dimensions?.unit)) && (
                     <div>
                       <div className="flex items-center gap-2 mb-4">
-                        <Box className="w-5 h-5 text-sage" />
-                        <h2 className="text-lg font-semibold text-earth-dark">Specifications</h2>
+                        <Box className="w-5 h-5 text-blue-400" />
+                        <h2 className="text-lg font-semibold text-blue-900">Specifications</h2>
                       </div>
                       <div className="space-y-1 text-gray-600">
                         {product.weight?.value && product.weight?.unit && (
@@ -288,11 +288,11 @@ export default function ProductPage({ product }: ProductPageProps) {
                     <div>
                       <h2 className="text-sm font-medium text-gray-900 mb-2">Quantity</h2>
                       <div className="flex items-center space-x-4">
-                        <div className="flex items-center border-2 border-gray-200 rounded-lg">
+                        <div className="flex items-center border-2 border-blue-400 rounded-lg">
                           <button
                             onClick={decreaseQuantity}
                             disabled={quantity <= 1}
-                            className="p-2 hover:text-sage disabled:opacity-50 disabled:hover:text-current"
+                            className="p-2 hover:text-blue-400 disabled:opacity-50 disabled:hover:text-current"
                           >
                             <Minus className="w-4 h-4" />
                           </button>
@@ -300,7 +300,7 @@ export default function ProductPage({ product }: ProductPageProps) {
                           <button
                             onClick={increaseQuantity}
                             disabled={quantity >= product.stock}
-                            className="p-2 hover:text-sage disabled:opacity-50 disabled:hover:text-current"
+                            className="p-2 hover:text-blue-400 disabled:opacity-50 disabled:hover:text-current"
                           >
                             <Plus className="w-4 h-4" />
                           </button>
@@ -318,7 +318,7 @@ export default function ProductPage({ product }: ProductPageProps) {
                   <button
                     onClick={handleAddToCart}
                     disabled={!product.isInStock || quantity > product.stock}
-                    className="w-full bg-sage text-white py-3 px-6 rounded-xl hover:bg-sage-dark transition-colors disabled:opacity-50 disabled:hover:bg-sage"
+                    className="w-full bg-blue-400 text-white py-3 px-6 rounded-xl hover:bg-blue-500 transition-colors disabled:opacity-50 disabled:hover:bg-blue-400"
                   >
                     Add to Cart
                   </button>
