@@ -112,16 +112,16 @@ export default function OrderPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50/50 via-white to-blue-50/50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white shadow-lg border-2 border-gray-300 rounded-lg overflow-hidden">
+        <div className="bg-white shadow-lg border-2 border-blue-200 rounded-lg overflow-hidden">
           {/* Order Header */}
-          <div className="px-4 py-5 sm:px-6 flex justify-between items-center border-b-2 border-gray-300 bg-white">
+          <div className="px-4 py-5 sm:px-6 flex justify-between items-center border-b-2 border-blue-200 bg-white">
             <div>
-              <h3 className="text-xl leading-6 font-semibold text-gray-900">
+              <h3 className="text-xl leading-6 font-semibold text-blue-900">
                 Order Details
               </h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-600">
+              <p className="mt-1 max-w-2xl text-sm text-blue-600">
                 Order Reference: {order.paymentReference}
               </p>
             </div>
@@ -129,21 +129,21 @@ export default function OrderPage() {
           </div>
 
           {/* Order Info */}
-          <div className="border-b-2 border-gray-300 px-4 py-5 sm:px-6 bg-gray-100">
+          <div className="border-b-2 border-blue-200 px-4 py-5 sm:px-6 bg-blue-50">
             <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
               <div className="sm:col-span-1">
-                <dt className="text-sm font-semibold text-gray-600">Order Date</dt>
-                <dd className="mt-1 text-sm text-gray-900">
+                <dt className="text-sm font-semibold text-blue-600">Order Date</dt>
+                <dd className="mt-1 text-sm text-blue-900">
                   {format(new Date(order.createdAt), 'PPP')}
                 </dd>
               </div>
               <div className="sm:col-span-1">
-                <dt className="text-sm font-semibold text-gray-600">Email</dt>
-                <dd className="mt-1 text-sm text-gray-900">{order.email}</dd>
+                <dt className="text-sm font-semibold text-blue-600">Email</dt>
+                <dd className="mt-1 text-sm text-blue-900">{order.email}</dd>
               </div>
               <div className="sm:col-span-2">
-                <dt className="text-sm font-semibold text-gray-600">Shipping Address</dt>
-                <dd className="mt-1 text-sm text-gray-900 p-4 bg-white rounded-md border-2 border-gray-300 shadow-sm">
+                <dt className="text-sm font-semibold text-blue-600">Shipping Address</dt>
+                <dd className="mt-1 text-sm text-blue-900 p-4 bg-white rounded-md border-2 border-blue-200 shadow-sm">
                   {order.shippingAddress.street}<br />
                   {order.shippingAddress.city}<br />
                   {order.shippingAddress.province}, {order.shippingAddress.postalCode}
@@ -153,13 +153,13 @@ export default function OrderPage() {
           </div>
 
           {/* Order Items */}
-          <div className="border-b-2 border-gray-300 bg-white">
+          <div className="border-b-2 border-blue-200 bg-white">
             <div className="px-4 py-5 sm:px-6">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">Order Items</h4>
+              <h4 className="text-lg font-semibold text-blue-900 mb-4">Order Items</h4>
               <div className="space-y-4">
                 {order.items.map((item) => (
-                  <div key={item.productId} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg border-2 border-gray-300 shadow-sm">
-                    <div className="flex-shrink-0 w-24 h-24 relative rounded-md overflow-hidden border-2 border-gray-300">
+                  <div key={item.productId} className="flex items-center space-x-4 p-4 bg-blue-50 rounded-lg border-2 border-blue-200 shadow-sm">
+                    <div className="flex-shrink-0 w-24 h-24 relative rounded-md overflow-hidden border-2 border-blue-200">
                       <Image
                         src={item.image}
                         alt={item.name}
@@ -168,11 +168,11 @@ export default function OrderPage() {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-base font-semibold text-gray-900">{item.name}</p>
-                      <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
-                      <p className="text-sm text-gray-600">Price per item: R{item.price.toFixed(2)}</p>
+                      <p className="text-base font-semibold text-blue-900">{item.name}</p>
+                      <p className="text-sm text-blue-600">Quantity: {item.quantity}</p>
+                      <p className="text-sm text-blue-600">Price per item: R{item.price.toFixed(2)}</p>
                     </div>
-                    <div className="flex-shrink-0 text-base font-semibold text-gray-900">
+                    <div className="flex-shrink-0 text-base font-semibold text-blue-900">
                       Total: R{(item.price * item.quantity).toFixed(2)}
                     </div>
                   </div>
@@ -182,9 +182,9 @@ export default function OrderPage() {
           </div>
 
           {/* Order Total */}
-          <div className="px-6 py-6 bg-gray-100 border-t-2 border-gray-300">
+          <div className="px-6 py-6 bg-blue-50 border-t-2 border-blue-200">
             <div className="flex justify-end">
-              <div className="text-xl font-semibold text-gray-900">
+              <div className="text-xl font-semibold text-blue-900">
                 Total: R{order.total.toFixed(2)}
               </div>
             </div>
