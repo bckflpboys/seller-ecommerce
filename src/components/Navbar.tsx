@@ -80,7 +80,7 @@ export default function Navbar() {
                 >
                   <ShoppingCart className="w-6 h-6" />
                   {cart.itemCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-brown-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {cart.itemCount}
                     </span>
                   )}
@@ -123,7 +123,7 @@ export default function Navbar() {
               >
                 <ShoppingCart className="w-6 h-6" />
                 {cart.itemCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-brown-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                     {cart.itemCount}
                   </span>
                 )}
