@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { User, Pencil, Save, X, MapPin, Heart, ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
+import { formatCurrency } from '@/utils/format';
 
 // Extend the Session User type
 declare module "next-auth" {
@@ -83,6 +84,7 @@ export default function Profile() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('profile');
   const [isEditing, setIsEditing] = useState(false);
+  const [isEditingAddress, setIsEditingAddress] = useState(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [formData, setFormData] = useState({
     id: '',
@@ -95,6 +97,12 @@ export default function Profile() {
     },
     phoneNumber: '',
     userType: 'user'
+  });
+  const [addressFormData, setAddressFormData] = useState({
+    street: profile?.address?.street || '',
+    city: profile?.address?.city || '',
+    province: profile?.address?.province || '',
+    postalCode: profile?.address?.postalCode || ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -160,6 +168,12 @@ export default function Profile() {
         },
         phoneNumber: data.phoneNumber || '',
         userType: data.role || 'user'
+      });
+      setAddressFormData({
+        street: data.address?.street || '',
+        city: data.address?.city || '',
+        province: data.address?.province || '',
+        postalCode: data.address?.postalCode || ''
       });
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -491,7 +505,7 @@ export default function Profile() {
             ) : (
               <div className="space-y-4">
                 {orders.map((order) => (
-                  <div key={order._id} className="bg-white p-6 rounded-lg shadow-md">
+                  <div key={order._id} className="bg-white p-6 rounded-lg shadow border hover:shadow-md transition-shadow">
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         <p className="text-sm text-gray-600">Order ID: {order._id}</p>
@@ -501,7 +515,7 @@ export default function Profile() {
                       </div>
                       <div className="text-right">
                         <p className="font-semibold">Total: R{order.total.toFixed(2)}</p>
-                        <span className={`inline-block px-3 py-1 rounded-full text-sm ${
+                        <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
                           order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
                           order.status === 'Processing' ? 'bg-blue-100 text-blue-800' :
                           'bg-gray-100 text-gray-800'
@@ -621,45 +635,361 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-white shadow rounded-lg">
-          <nav className="flex space-x-4 border-b border-gray-200 pb-4 mb-6">
-            <button
-              onClick={() => setActiveTab('profile')}
-              className={`${
-                activeTab === 'profile'
-                  ? 'border-green-500 text-green-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              } whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm`}
-            >
-              Profile
-            </button>
-            <button
-              onClick={() => setActiveTab('orders')}
-              className={`${
-                activeTab === 'orders'
-                  ? 'border-green-500 text-green-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              } whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm`}
-            >
-              Orders
-            </button>
-            <button
-              onClick={() => setActiveTab('favorites')}
-              className={`${
-                activeTab === 'favorites'
-                  ? 'border-green-500 text-green-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              } whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm`}
-            >
-              Favorites
-            </button>
-          </nav>
-          <div className="p-6">
-            {renderTabContent()}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50/50 via-white to-blue-50/50">
+      {/* Profile Header */}
+      <div className="bg-blue-600 py-16 px-4 text-center text-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="w-24 h-24 mx-auto rounded-full bg-blue-500 flex items-center justify-center border-4 border-white mb-4">
+            <User className="w-12 h-12" />
           </div>
+          <h1 className="text-3xl font-bold mb-2">
+            {profile?.name || 'User Profile'}
+          </h1>
+          <p className="text-blue-100">{profile?.email}</p>
         </div>
+      </div>
+
+      {/* Profile Navigation */}
+      <div className="bg-white border-b border-blue-200">
+        <div className="max-w-4xl mx-auto flex overflow-x-auto">
+          {[
+            { id: 'profile', label: 'Profile', icon: User },
+            { id: 'orders', label: 'Orders', icon: ShoppingBag },
+            { id: 'favorites', label: 'Favorites', icon: Heart },
+            { id: 'addresses', label: 'Addresses', icon: MapPin }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center px-6 py-4 font-medium text-sm whitespace-nowrap transition-colors ${activeTab === tab.id ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-blue-500'}`}
+            >
+              <tab.icon className="w-5 h-5 mr-2" />
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Profile Content */}
+      <div className="max-w-4xl mx-auto py-8 px-4">
+        {activeTab === 'profile' && (
+          <div className="bg-white rounded-xl shadow-lg border border-blue-200 p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-blue-900">Personal Information</h2>
+              {!isEditing ? (
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="flex items-center text-blue-600 hover:text-blue-800"
+                >
+                  <Pencil className="w-5 h-5 mr-2" />
+                  Edit Profile
+                </button>
+              ) : (
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => {
+                      setIsEditing(false);
+                      setFormData({
+                        id: profile?.id || '',
+                        name: profile?.name || '',
+                        address: {
+                          street: profile?.address.street || '',
+                          city: profile?.address.city || '',
+                          province: profile?.address.province || '',
+                          postalCode: profile?.address.postalCode || ''
+                        },
+                        phoneNumber: profile?.phoneNumber || '',
+                        userType: profile?.role || 'user'
+                      });
+                    }}
+                    className="flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                  >
+                    <X className="w-5 h-5 mr-2" />
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSubmit}
+                    className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  >
+                    <Save className="w-5 h-5 mr-2" />
+                    Save Changes
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {isEditing ? (
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-blue-900 mb-2">Full Name</label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-blue-900 mb-2">Phone Number</label>
+                  <input
+                    type="tel"
+                    value={formData.phoneNumber}
+                    onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div className="w-1/3 text-sm font-medium text-blue-900">Name</div>
+                  <div className="w-2/3 text-gray-700">{profile?.name || 'Not provided'}</div>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-1/3 text-sm font-medium text-blue-900">Email</div>
+                  <div className="w-2/3 text-gray-700">{profile?.email}</div>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-1/3 text-sm font-medium text-blue-900">Phone</div>
+                  <div className="w-2/3 text-gray-700">{profile?.phoneNumber || 'Not provided'}</div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'orders' && (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-blue-900 mb-6">Your Orders</h2>
+            {orders.length > 0 ? (
+              orders.map((order) => (
+                <div key={order._id} className="bg-white rounded-xl shadow-lg border border-blue-200 overflow-hidden">
+                  <div className="p-6 border-b border-blue-100 bg-blue-50">
+                    <div className="flex flex-wrap justify-between items-center">
+                      <div>
+                        <h3 className="font-bold text-blue-900">Order #{order._id.slice(-6).toUpperCase()}</h3>
+                        <p className="text-sm text-blue-600">{new Date(order.createdAt).toLocaleDateString()}</p>
+                      </div>
+                      <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                        {order.status}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    {order.items.map((item) => (
+                      <div key={item._id} className="flex py-4 border-b border-blue-100 last:border-0">
+                        <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                          <Image src={item.image} alt={item.name} width={64} height={64} className="object-cover" />
+                        </div>
+                        <div className="ml-4 flex-1">
+                          <h4 className="font-medium text-blue-900">{item.name}</h4>
+                          <p className="text-sm text-blue-600">Qty: {item.quantity}</p>
+                          <p className="text-sm font-medium text-blue-800">{formatCurrency(item.price * item.quantity)}</p>
+                        </div>
+                      </div>
+                    ))}
+                    <div className="flex justify-between items-center mt-6 pt-6 border-t border-blue-100">
+                      <div>
+                        <p className="text-sm text-blue-900">Shipping to:</p>
+                        <p className="text-blue-800">
+                          {order.shippingAddress.street}, {order.shippingAddress.city}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-blue-900">Order Total</p>
+                        <p className="text-xl font-bold text-blue-800">{formatCurrency(order.total)}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="bg-white rounded-xl shadow-lg border border-blue-200 p-8 text-center">
+                <ShoppingBag className="w-12 h-12 mx-auto text-blue-400 mb-4" />
+                <h3 className="text-xl font-bold text-blue-900 mb-2">No Orders Yet</h3>
+                <p className="text-blue-700 mb-6">Your order history will appear here</p>
+                <Link href="/products" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                  Browse Products
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'favorites' && (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-blue-900 mb-6">Your Favorites</h2>
+            {favorites.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {favorites.map((product) => (
+                  <div key={product._id} className="bg-white rounded-xl shadow-lg border border-blue-200 overflow-hidden hover:shadow-xl transition-shadow">
+                    <div className="relative h-48 bg-gray-100">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-bold text-blue-900 mb-1">{product.name}</h3>
+                      <p className="text-blue-600 font-medium mb-2">{formatCurrency(product.price)}</p>
+                      <p className="text-sm text-blue-800 line-clamp-2">{product.description}</p>
+                      <div className="mt-4 flex justify-between items-center">
+                        <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full">{product.category}</span>
+                        <Link href={`/products/${product._id}`} className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                          View Product
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-white rounded-xl shadow-lg border border-blue-200 p-8 text-center">
+                <Heart className="w-12 h-12 mx-auto text-blue-400 mb-4" />
+                <h3 className="text-xl font-bold text-blue-900 mb-2">No Favorites Yet</h3>
+                <p className="text-blue-700 mb-6">Your favorite products will appear here</p>
+                <Link href="/products" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                  Browse Products
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'addresses' && (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-blue-900 mb-6">Your Addresses</h2>
+            <div className="bg-white rounded-xl shadow-lg border border-blue-200 p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-lg font-bold text-blue-900">Default Address</h3>
+                {!isEditingAddress ? (
+                  <button
+                    onClick={() => setIsEditingAddress(true)}
+                    className="text-blue-600 hover:text-blue-800 font-medium"
+                  >
+                    <Pencil className="w-5 h-5 inline mr-1" />
+                    Edit
+                  </button>
+                ) : (
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => {
+                        setIsEditingAddress(false);
+                        setAddressFormData({
+                          street: profile?.address.street || '',
+                          city: profile?.address.city || '',
+                          province: profile?.address.province || '',
+                          postalCode: profile?.address.postalCode || ''
+                        });
+                      }}
+                      className="flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                    >
+                      <X className="w-5 h-5 mr-2" />
+                      Cancel
+                    </button>
+                    <button
+                      onClick={async () => {
+                        setIsLoading(true);
+                        try {
+                          const res = await fetch('/api/users/profile', {
+                            method: 'PUT',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              id: profile?.id,
+                              address: addressFormData,
+                            }),
+                          });
+
+                          const data: ApiResponse = await res.json();
+
+                          if (!res.ok) {
+                            throw new Error(data.message || 'Error updating address');
+                          }
+
+                          await fetchUserData();
+                          setIsEditingAddress(false);
+                        } catch (err: any) {
+                          setError(err.message);
+                          console.error('Address update error:', err);
+                        } finally {
+                          setIsLoading(false);
+                        }
+                      }}
+                      className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    >
+                      <Save className="w-5 h-5 mr-2" />
+                      Save Changes
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {isEditingAddress ? (
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium text-blue-900 mb-2">Street Address</label>
+                    <input
+                      type="text"
+                      value={addressFormData.street}
+                      onChange={(e) => setAddressFormData({ ...addressFormData, street: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-blue-900 mb-2">City</label>
+                    <input
+                      type="text"
+                      value={addressFormData.city}
+                      onChange={(e) => setAddressFormData({ ...addressFormData, city: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-blue-900 mb-2">Province</label>
+                    <input
+                      type="text"
+                      value={addressFormData.province}
+                      onChange={(e) => setAddressFormData({ ...addressFormData, province: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-blue-900 mb-2">Postal Code</label>
+                    <input
+                      type="text"
+                      value={addressFormData.postalCode}
+                      onChange={(e) => setAddressFormData({ ...addressFormData, postalCode: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-start">
+                    <div className="w-1/3 text-sm font-medium text-blue-900">Address</div>
+                    <div className="w-2/3 text-gray-700">{profile?.address.street || 'Not provided'}</div>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-1/3 text-sm font-medium text-blue-900">City</div>
+                    <div className="w-2/3 text-gray-700">{profile?.address.city || 'Not provided'}</div>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-1/3 text-sm font-medium text-blue-900">Province</div>
+                    <div className="w-2/3 text-gray-700">{profile?.address.province || 'Not provided'}</div>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-1/3 text-sm font-medium text-blue-900">Postal Code</div>
+                    <div className="w-2/3 text-gray-700">{profile?.address.postalCode || 'Not provided'}</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
