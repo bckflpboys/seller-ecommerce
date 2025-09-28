@@ -24,20 +24,20 @@ export default withAuth(
 );
 
 // Protect all routes that require authentication
+// This config specifies the routes that the middleware will run on.
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api/auth (auth API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - /auth (auth pages)
-     * - / (home page)
-     * - /about
-     * - /products (public product listing)
-     * - /contact
-     */
-    "/((?!api/auth|_next/static|_next/image|favicon.ico|auth|about|products|contact|$).*)"
+    // Page routes
+    "/admin/:path*",
+    "/cart",
+    "/checkout",
+    "/orders/:path*",
+    "/profile",
+    // API routes
+    "/api/admin/:path*",
+    "/api/orders/:path*",
+    "/api/upload",
+    "/api/user/:path*",
+    "/api/users/:path*"
   ]
 };
