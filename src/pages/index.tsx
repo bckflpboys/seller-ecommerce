@@ -7,6 +7,7 @@ import connectDB from '@/lib/mongodb';
 import Product from '@/models/Product';
 import { useState, useEffect } from 'react';
 
+
 interface ProductType {
   _id: string;
   name: string;
@@ -49,14 +50,14 @@ export default function Home({ products: initialProducts }: HomeProps) {
             muted
             className="object-cover w-full h-full"
           />
-          <div className="absolute inset-0 bg-earth-dark/60" />
+          <div className="absolute inset-0 bg-sky-200/15" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl mx-auto text-white text-center">
-            <h1 className="text-5xl font-bold mb-6">
+            <h1 className="text-5xl font-bold mb-6 text-blue-600">
               Welcome to Soil Solution
             </h1>
-            <p className="text-xl mb-8">
+            <p className="text-xl mb-8 text-black">
               Discover our collection of premium fertilizers, soil supplements, and agricultural solutions.
             </p>
             <Link
@@ -106,6 +107,7 @@ export default function Home({ products: initialProducts }: HomeProps) {
           </div>
         </div>
       </section>
+     
     </main>
   );
 }
