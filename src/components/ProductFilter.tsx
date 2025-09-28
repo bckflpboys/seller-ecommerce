@@ -23,7 +23,7 @@ export default function ProductFilter({
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   return (
-    <div className="bg-white rounded-lg shadow-warm p-6 sticky top-24">
+    <div className="bg-white rounded-xl border-2 border-blue-400 shadow-md p-6 sticky top-24">
       <div className="flex justify-between items-center md:hidden mb-4">
         <button
           onClick={() => setIsFiltersOpen(!isFiltersOpen)}
@@ -38,14 +38,14 @@ export default function ProductFilter({
       <div className={`space-y-6 ${isFiltersOpen ? 'block' : 'hidden md:block'}`}>
         {/* Categories */}
         <div>
-          <h3 className="font-display text-lg font-bold text-earth-dark mb-4">Categories</h3>
+          <h3 className="font-display text-lg font-bold text-blue-900 mb-4">Categories</h3>
           <div className="space-y-2">
             <button
               onClick={() => onCategoryChange('all')}
               className={`w-full text-left px-3 py-2 rounded-md transition-colors duration-200 ${
                 selectedCategory === 'all'
-                  ? 'bg-sage text-white'
-                  : 'text-gray-600 hover:bg-sage/10'
+                  ? 'bg-blue-400 text-white rounded-md'
+                  : 'text-blue-900 hover:bg-blue-50 rounded-md'
               }`}
             >
               All Products
@@ -56,8 +56,8 @@ export default function ProductFilter({
                 onClick={() => onCategoryChange(category)}
                 className={`w-full text-left px-3 py-2 rounded-md transition-colors duration-200 ${
                   selectedCategory === category
-                    ? 'bg-sage text-white'
-                    : 'text-gray-600 hover:bg-sage/10'
+                    ? 'bg-blue-900 text-white'
+                    : 'text-blue-900 hover:bg-blue-100'
                 }`}
               >
                 {category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
@@ -68,11 +68,11 @@ export default function ProductFilter({
 
         {/* Price Range */}
         <div>
-          <h3 className="font-display text-lg font-bold text-earth-dark mb-4">Price Range</h3>
+          <h3 className="font-display text-lg font-bold text-blue-900 mb-4">Price Range</h3>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">R{priceRange[0]}</span>
-              <span className="text-gray-600">R{priceRange[1]}</span>
+              <span className="text-blue-900">R{priceRange[0]}</span>
+              <span className="text-blue-900">R{priceRange[1]}</span>
             </div>
             <input
               type="range"
@@ -80,18 +80,18 @@ export default function ProductFilter({
               max="2000"
               value={priceRange[1]}
               onChange={(e) => onPriceRangeChange([priceRange[0], parseInt(e.target.value)])}
-              className="w-full accent-sage"
+              className="w-full accent-blue-400"
             />
           </div>
         </div>
 
         {/* Sort */}
         <div>
-          <h3 className="font-display text-lg font-bold text-earth-dark mb-4">Sort By</h3>
+          <h3 className="font-display text-lg font-bold text-blue-900 mb-4">Sort By</h3>
           <select
             value={sortBy}
             onChange={(e) => onSortByChange(e.target.value)}
-            className="w-full p-2 border border-primary-200 rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-sage focus:border-transparent"
+            className="w-full p-2 border border-blue-300 rounded-lg text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
           >
             <option value="newest">Newest</option>
             <option value="price-low-high">Price: Low to High</option>
