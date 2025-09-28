@@ -33,7 +33,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-xl border-2 border-gray-200 shadow-warm group hover:shadow-xl hover:border-sage/30 transition-all duration-300 flex flex-col h-full">
+    <div className="bg-white rounded-xl border-2 border-blue-400 shadow-warm group hover:shadow-xl hover:border-blue-500 transition-all duration-300 flex flex-col h-full">
       <div className="relative aspect-square overflow-hidden rounded-t-xl">
         <div className="relative w-full pb-[100%]">
           <Link href={`/products/${product._id}`}>
@@ -52,27 +52,27 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
       </div>
-      <div className="p-4 flex flex-col flex-grow border-t-2 border-gray-200">
+      <div className="p-4 flex flex-col flex-grow border-t-2 border-blue-300">
         <div className="mb-2">
-          <span className="text-xs font-medium text-sage-dark uppercase tracking-wider">
+          <span className="text-xs font-medium text-blue-400 uppercase tracking-wider">
             {product.category}
           </span>
         </div>
         <Link href={`/products/${product._id}`}>
-          <h3 className="font-display text-lg font-bold text-earth-dark mb-1 hover:text-earth transition-colors duration-200">
+          <h3 className="font-display text-lg font-bold text-blue-900 mb-1 hover:text-blue-500 transition-colors duration-200">
             {product.name}
           </h3>
         </Link>
         <p className="text-gray-600 text-sm mb-3 line-clamp-2 flex-grow">
           {product.description}
         </p>
-        <div className="flex items-center justify-between mt-auto pt-3 pb-2 border-t-2 border-gray-200 bg-gray-100/80">
-          <span className="text-base sm:text-lg font-bold text-earth">
+        <div className="flex items-center justify-between mt-auto pt-3 pb-2 border-t-2 border-blue-300 bg-blue-50">
+          <span className="text-base sm:text-lg font-bold text-blue-900">
             {formatCurrency(product.price)}
           </span>
           <button
             onClick={handleAddToCart}
-            className="inline-flex items-center gap-1 text-xs font-medium text-white bg-sage hover:bg-sage-dark transition-colors duration-200 px-2 py-1 rounded-full whitespace-nowrap ml-2"
+            className="inline-flex items-center gap-1 text-xs font-medium text-white bg-blue-400 hover:bg-blue-500 transition-colors duration-200 px-2 py-1 rounded-full whitespace-nowrap ml-2"
           >
             <ShoppingCart className="w-3 h-3" />
             <span className="hidden xs:inline">Add to Cart</span>
