@@ -42,12 +42,12 @@ export default function Home({ products: initialProducts }: HomeProps) {
       {/* Hero Section */}
       <section className="relative h-[600px] flex items-center justify-center">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1485637701894-09ad422f6de6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-            alt="Hero background"
-            fill
-            className="object-cover"
-            priority
+          <video
+            src="/clousoft-banner-video.mp4"
+            autoPlay
+            loop
+            muted
+            className="object-cover w-full h-full"
           />
           <div className="absolute inset-0 bg-earth-dark/60" />
         </div>
