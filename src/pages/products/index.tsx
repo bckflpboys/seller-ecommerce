@@ -8,12 +8,12 @@ import Product from '@/models/Product';
 
 // Get actual categories from database
 const CATEGORIES = [
-  'muthi-products',
-  'poultry-products',
-  'livestock',
+  // 'muthi-products',
+  // 'poultry-products',
+  // 'livestock',
   'cleaning-products',
   'sanitary-products',
-  'vegetables'
+  // 'vegetables'
 ];
 
 interface Product {

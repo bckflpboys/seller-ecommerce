@@ -70,6 +70,14 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center space-x-4 border-l border-blue-400 pl-8">
+              {session?.user?.role === 'admin' && (
+                <Link 
+                  href="/admin" 
+                  className="text-blue-400 hover:text-blue-500 transition-colors duration-200 font-medium"
+                >
+                  Admin
+                </Link>
+              )}
               <div 
                 ref={cartRef}
                 className="relative"
@@ -165,6 +173,14 @@ export default function Navbar() {
               <div className="pt-4 border-t border-blue-400">
                 {session ? (
                   <div className="flex flex-col space-y-4">
+                    {session?.user?.role === 'admin' && (
+                      <Link 
+                        href="/admin" 
+                        className="text-blue-400 hover:text-blue-500 transition-colors duration-200 font-medium"
+                      >
+                        Admin
+                      </Link>
+                    )}
                     <Link 
                       href="/profile" 
                       className="flex items-center space-x-2 text-blue-400 hover:text-blue-500 transition-colors duration-200"
