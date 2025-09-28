@@ -6,11 +6,14 @@ import {
   ShoppingBag, 
   Users, 
   Settings,
-  BarChart
+  BarChart,
+  X
 } from 'lucide-react';
 
 interface AdminSidebarProps {
   activeTab: string;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const menuItems = [
@@ -52,17 +55,19 @@ const menuItems = [
   }
 ];
 
-export default function AdminSidebar({ activeTab }: AdminSidebarProps) {
+export default function AdminSidebar({ activeTab, isOpen, onClose }: AdminSidebarProps) {
   const router = useRouter();
 
   return (
-    <div className="w-64 min-h-screen bg-white border-r border-gray-200">
-      <div className="p-6">
+    <div className={`fixed inset-y-0 left-0 z-30 w-64 min-h-screen bg-white border-r border-gray-200 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out md:relative md:translate-x-0`}>
+      <div className="flex items-center justify-between p-6">
         <Link href="/admin" className="flex items-center space-x-2">
           <span className="text-xl font-bold text-earth-dark">Admin Panel</span>
         </Link>
+        <button onClick={onClose} className="md:hidden">
+          <X className="w-6 h-6" />
+        </button>
       </div>
-      
       <nav className="px-4 py-2">
         {menuItems.map((item) => {
           const isActive = activeTab === item.id;

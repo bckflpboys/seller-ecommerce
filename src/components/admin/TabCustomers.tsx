@@ -71,7 +71,8 @@ export default function TabCustomers() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center space-x-4">
+      {/* Search - responsive */}
+      <div className="px-4 md:px-0">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
           <input
@@ -84,7 +85,8 @@ export default function TabCustomers() {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg border-2 border-gray-300 shadow">
+      {/* Table for desktop */}
+      <div className="hidden md:block bg-white rounded-lg border-2 border-gray-300 shadow">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y-2 divide-gray-300">
             <thead className="bg-gray-50">
@@ -142,6 +144,44 @@ export default function TabCustomers() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Cards for mobile */}
+      <div className="md:hidden space-y-4 px-4">
+        {filteredUsers.map((user) => (
+          <div key={user._id} className="bg-white p-4 rounded-lg border-2 border-gray-300 shadow">
+            <div className="space-y-3">
+              <div>
+                <h3 className="text-lg font-medium text-gray-900">{user.name}</h3>
+                <p className="text-sm text-gray-500">{user.role}</p>
+              </div>
+              
+              <div className="space-y-2">
+                <div className="flex items-center text-sm text-gray-600">
+                  <Mail className="h-4 w-4 mr-2 text-gray-400" />
+                  <span>{user.email}</span>
+                </div>
+                
+                {user.phoneNumber && (
+                  <div className="flex items-center text-sm text-gray-600">
+                    <Phone className="h-4 w-4 mr-2 text-gray-400" />
+                    <span>{user.phoneNumber}</span>
+                  </div>
+                )}
+                
+                <div className="text-sm text-gray-600">
+                  <p className="font-medium">Address:</p>
+                  <p>{formatAddress(user.address)}</p>
+                </div>
+                
+                <div className="flex items-center text-sm text-gray-600">
+                  <Calendar className="h-4 w-4 mr-2 text-gray-400" />
+                  <span>Joined {format(new Date(user.createdAt), 'MMM d, yyyy')}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
