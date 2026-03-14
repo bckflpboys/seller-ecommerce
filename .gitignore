@@ -133,7 +133,7 @@ dist
 
 # Gatsby files
 .cache/
-public
+# public  # NOTE: Do NOT ignore public/ in Next.js — it contains static assets (images, videos, etc.)
 
 # vuepress build output
 .vuepress/dist
