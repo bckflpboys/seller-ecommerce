@@ -1,42 +1,63 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
-export default withAuth(
+const handler = withAuth(
   function proxy(req) {
-    // Get user role from token
+    const { pathname } = req.nextUrl;
     const userRole = req.nextauth.token?.role;
 
-    // Check if route starts with /admin
-    if (req.nextUrl.pathname.startsWith("/admin")) {
+    // Admin-only protection
+    if (pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) {
       if (userRole !== "admin") {
-        // If not admin, redirect to home page
         return NextResponse.redirect(new URL("/", req.url));
       }
     }
-
+    
     return NextResponse.next();
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token // Require authentication for all routes
+      authorized: ({ token, req }) => {
+        const { pathname } = req.nextUrl;
+        
+        // Define routes that MUST have a session
+        const protectedRoutes = [
+          "/admin", 
+          "/cart", 
+          "/checkout", 
+          "/orders", 
+          "/profile", 
+          "/api/admin", 
+          "/api/orders", 
+          "/api/upload", 
+          "/api/user", 
+          "/api/users"
+        ];
+        
+        // If it's a protected route, require a token
+        if (protectedRoutes.some(route => pathname.startsWith(route))) {
+          return !!token;
+        }
+        
+        // Allow public pages (Home, About, etc.) and assets
+        return true;
+      }
     }
   }
 );
 
-// Protect all routes that require authentication
+export const proxy = handler;
+export default handler;
+
 export const config = {
   matcher: [
-    // Page routes
-    "/admin/:path*",
-    "/cart",
-    "/checkout",
-    "/orders/:path*",
-    "/profile",
-    // API routes
-    "/api/admin/:path*",
-    "/api/orders/:path*",
-    "/api/upload",
-    "/api/user/:path*",
-    "/api/users/:path*"
-  ]
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public folder assets
+     */
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|mp4)).*)',
+  ],
 };
