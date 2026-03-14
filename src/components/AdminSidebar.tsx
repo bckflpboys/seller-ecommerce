@@ -12,8 +12,8 @@ import {
 
 interface AdminSidebarProps {
   activeTab: string;
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 const menuItems = [
@@ -55,7 +55,7 @@ const menuItems = [
   }
 ];
 
-export default function AdminSidebar({ activeTab, isOpen, onClose }: AdminSidebarProps) {
+export default function AdminSidebar({ activeTab, isOpen = true, onClose = () => {} }: AdminSidebarProps) {
   const router = useRouter();
 
   return (
