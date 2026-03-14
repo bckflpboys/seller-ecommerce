@@ -78,6 +78,7 @@ export default function Home({ products: initialProducts }: HomeProps) {
             alt="Background"
             fill
             className="object-cover"
+            loading="eager"
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">

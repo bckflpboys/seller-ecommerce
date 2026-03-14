@@ -36,6 +36,7 @@ export default function AboutPage() {
             alt="Background"
             fill
             className="object-cover"
+            loading="eager"
           />
         </div>
         <div className="max-w-7xl mx-auto relative z-10">
@@ -57,6 +58,7 @@ export default function AboutPage() {
                 alt="Premium toilet paper manufacturing"
                 fill
                 className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           </div>
@@ -71,6 +73,7 @@ export default function AboutPage() {
             alt="Background"
             fill
             className="object-cover"
+            loading="eager"
           />
         </div>
         <div className="max-w-7xl mx-auto px-4 relative z-10">

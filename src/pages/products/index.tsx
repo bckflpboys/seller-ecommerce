@@ -69,6 +69,7 @@ export default function ProductsPage({ initialProducts }: ProductsPageProps) {
             alt="Background"
             fill
             className="object-cover"
+            loading="eager"
           />
         </div>
         <div className="container mx-auto px-4 py-8 relative z-10">
