@@ -13,6 +13,7 @@ export default function AboutPage() {
             fill
             className="object-contain bg-gradient-to-br from-blue-100 to-blue-200"
             priority
+            sizes="100vw"
           />
         </div>
         {/* Text content moved below image */}
