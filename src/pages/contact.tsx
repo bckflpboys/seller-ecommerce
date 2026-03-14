@@ -65,12 +65,12 @@ export default function ContactPage() {
                     {
                       icon: Phone,
                       title: 'Call Us',
-                      content: '+27 67 152 0479'
+                      content: '+27 788 8401'
                     },
                     {
                       icon: Mail,
                       title: 'Email Us',
-                      content: 'soilsolutionsptyltd@gmail.com'
+                      content: 'sales@moonsoft.life'
                     },
                     {
                       icon: Clock,

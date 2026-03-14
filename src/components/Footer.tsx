@@ -1,5 +1,6 @@
-import { Leaf, Mail, Phone, MapPin, Facebook } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -8,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <Leaf className="w-8 h-8 text-blue-400" />
+              <Image src="/favi.png" alt="MoonSoft Logo" width={32} height={32} className="w-8 h-8" />
               <div>
                 <span className="text-2xl font-display font-bold text-blue-400">Moon</span>
                 <span className="text-2xl font-display font-bold text-blue-900">Soft</span>
@@ -73,33 +74,18 @@ export default function Footer() {
             <h3 className="text-lg font-display font-bold text-blue-900 mb-6">Categories</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/products?category=muthi-products" className="text-gray-600 hover:text-blue-400 transition-colors duration-200">
-                  Muthi Products
+                <Link href="/products?category=toilet-paper" className="text-gray-600 hover:text-blue-400 transition-colors duration-200">
+                  Toilet Paper
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=poultry-products" className="text-gray-600 hover:text-blue-400 transition-colors duration-200">
-                  Poultry Products
+                <Link href="/products?category=1-ply-toilet-paper" className="text-gray-600 hover:text-blue-400 transition-colors duration-200">
+                  1 Ply Toilet Paper
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=livestock" className="text-gray-600 hover:text-blue-400 transition-colors duration-200">
-                  Livestock
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=cleaning-products" className="text-gray-600 hover:text-blue-400 transition-colors duration-200">
-                  Cleaning Products
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=sanitary-products" className="text-gray-600 hover:text-blue-400 transition-colors duration-200">
-                  Sanitary Products
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=vegetables" className="text-gray-600 hover:text-blue-400 transition-colors duration-200">
-                  Vegetables
+                <Link href="/products?category=2-ply-toilet-paper" className="text-gray-600 hover:text-blue-400 transition-colors duration-200">
+                  2 Ply Toilet Paper
                 </Link>
               </li>
             </ul>

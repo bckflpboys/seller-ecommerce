@@ -1,26 +1,28 @@
 import Image from 'next/image';
-import { Leaf, Sprout, Heart, ShieldCheck } from 'lucide-react';
+import { Package, Sparkles, Heart, ShieldCheck } from 'lucide-react';
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sage-50/50 via-white to-earth-50/50">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50/50 via-white to-blue-50/50">
       {/* Hero Section */}
-      <section className="relative h-[60vh] overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2071&auto=format&fit=crop"
-          alt="Eco-friendly farming"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white space-y-4 max-w-4xl px-4">
-            <h1 className="text-5xl md:text-6xl font-display font-bold">
-              Nurturing Earth, Growing Future
+      <section className="relative">
+        <div className="relative h-[60vh] overflow-hidden">
+          <Image
+            src="/about-email.jpeg"
+            alt="Premium toilet paper quality"
+            fill
+            className="object-contain bg-gradient-to-br from-blue-100 to-blue-200"
+            priority
+          />
+        </div>
+        {/* Text content moved below image */}
+        <div className="bg-gradient-to-br from-yellow-50/50 via-white to-blue-50/50 py-16">
+          <div className="text-center space-y-4 max-w-4xl mx-auto px-4">
+            <h1 className="text-5xl md:text-6xl font-display font-bold text-blue-900">
+              Premium Comfort, Everyday Luxury
             </h1>
-            <p className="text-xl md:text-2xl text-white/90">
-              Committed to sustainable agriculture and eco-friendly solutions
+            <p className="text-xl md:text-2xl text-gray-700">
+              Crafting the softest, strongest toilet paper for your ultimate comfort
             </p>
           </div>
         </div>
@@ -31,20 +33,20 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <h2 className="text-4xl font-display font-bold text-earth-dark">
+              <h2 className="text-4xl font-display font-bold text-blue-900">
                 Our Mission
               </h2>
               <p className="text-gray-600 leading-relaxed">
-                At EcoStore, we believe in harmonizing agriculture with nature. Our mission is to provide sustainable, eco-friendly solutions that enhance soil health while protecting our environment for future generations.
+                At MoonSoft, we believe everyone deserves the luxury of premium toilet paper. Our mission is to provide the softest, most absorbent, and strongest toilet paper that transforms your daily routine into a moment of comfort and care.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                We work directly with farmers and environmental experts to develop products that not only improve crop yields but also maintain the delicate balance of our ecosystem.
+                We use advanced manufacturing techniques and carefully selected materials to create toilet paper that's gentle on your skin while being tough enough for everyday use. Every roll is crafted with attention to detail and quality.
               </p>
             </div>
             <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?q=80&w=2070&auto=format&fit=crop"
-                alt="Sustainable farming practices"
+                src="/heroo.jpeg"
+                alt="Premium toilet paper manufacturing"
                 fill
                 className="object-cover"
               />
@@ -54,42 +56,42 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-earth-50/30">
+      <section className="py-20 bg-blue-50/30">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-display font-bold text-earth-dark text-center mb-16">
-            Our Core Values
+          <h2 className="text-4xl font-display font-bold text-blue-900 text-center mb-16">
+            Why Choose MoonSoft
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                icon: Leaf,
-                title: 'Sustainability',
-                description: 'We prioritize environmental sustainability in every product and practice.'
+                icon: Package,
+                title: 'Premium Quality',
+                description: 'Made from the finest materials for superior softness and strength.'
               },
               {
-                icon: Sprout,
-                title: 'Innovation',
-                description: 'Constantly developing new solutions for better agricultural practices.'
+                icon: Sparkles,
+                title: 'Ultra Soft',
+                description: 'Gentle on your skin with a luxurious feel that you\'ll love.'
               },
               {
                 icon: Heart,
-                title: 'Community',
-                description: 'Supporting farmers and local communities for collective growth.'
+                title: 'Family Care',
+                description: 'Safe and comfortable for the whole family, from babies to seniors.'
               },
               {
                 icon: ShieldCheck,
-                title: 'Quality',
-                description: 'Ensuring the highest standards in all our products and services.'
+                title: 'Reliable',
+                description: 'Strong and absorbent - you can count on MoonSoft every time.'
               }
             ].map((value, index) => (
               <div
                 key={index}
-                className="bg-white rounded-xl p-6 shadow-warm hover:shadow-lg transition-shadow duration-300"
+                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
-                <div className="w-12 h-12 bg-sage/10 rounded-full flex items-center justify-center mb-4">
-                  <value.icon className="w-6 h-6 text-sage" />
+                <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+                  <value.icon className="w-6 h-6 text-yellow-600" />
                 </div>
-                <h3 className="text-xl font-bold text-earth-dark mb-2">
+                <h3 className="text-xl font-bold text-blue-900 mb-2">
                   {value.title}
                 </h3>
                 <p className="text-gray-600">
@@ -100,54 +102,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      {/* Team Section */}
-      {/* <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-display font-bold text-earth-dark text-center mb-16">
-            Meet Our Team
-          </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: 'Sarah Johnson',
-                role: 'Founder & CEO',
-                image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop'
-              },
-              {
-                name: 'Michael Chen',
-                role: 'Agricultural Scientist',
-                image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop'
-              },
-              {
-                name: 'Emma Williams',
-                role: 'Sustainability Director',
-                image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop'
-              }
-            ].map((member, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl overflow-hidden shadow-warm hover:shadow-lg transition-shadow duration-300"
-              >
-                <div className="relative h-64">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-earth-dark">
-                    {member.name}
-                  </h3>
-                  <p className="text-sage">{member.role}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
     </div>
   );
 }

@@ -55,10 +55,10 @@ export default function Home({ products: initialProducts }: HomeProps) {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl mx-auto text-white text-center">
             <h1 className="text-5xl font-bold mb-6 text-blue-600">
-              Welcome to Soil Solution
+              Welcome to MoonSoft
             </h1>
             <p className="text-xl mb-8 text-black">
-              Discover our collection of premium fertilizers, soil supplements, and agricultural solutions.
+              Experience the ultimate in softness and comfort with our premium toilet paper - gentle on your skin, strong when you need it.
             </p>
             <Link
               href="/products"

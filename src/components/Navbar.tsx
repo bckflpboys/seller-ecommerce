@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
-import { ShoppingCart, User, Leaf, Menu, X } from 'lucide-react';
+import { ShoppingCart, User, Menu, X } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import CartPopover from './CartPopover';
+import Image from 'next/image';
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -39,7 +40,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <Leaf className="w-8 h-8 text-blue-400" />
+            <Image src="/favi.png" alt="MoonSoft Logo" width={32} height={32} className="w-8 h-8" />
             <div className="font-display">
               <span className="text-2xl font-bold text-blue-400">Moon</span>
               <span className="text-2xl font-bold text-brown-400">soft</span>
