@@ -70,7 +70,6 @@ export default function ProductsPage({ initialProducts }: ProductsPageProps) {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-white/40" />
         </div>
         <div className="container mx-auto px-4 py-8 relative z-10">
           <div className="flex flex-col md:flex-row gap-8">

@@ -37,7 +37,6 @@ export default function AboutPage() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-white/30" />
         </div>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -73,7 +72,6 @@ export default function AboutPage() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-blue-50/40" />
         </div>
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <h2 className="text-4xl font-display font-bold text-blue-900 text-center mb-16">

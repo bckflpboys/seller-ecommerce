@@ -79,7 +79,6 @@ export default function Home({ products: initialProducts }: HomeProps) {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-white/20" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-3xl font-bold mb-8 text-gray-900 text-center drop-shadow-sm">
