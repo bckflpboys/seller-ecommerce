@@ -2,7 +2,7 @@ import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
 export default withAuth(
-  function middleware(req) {
+  function proxy(req) {
     // Get user role from token
     const userRole = req.nextauth.token?.role;
 
@@ -24,7 +24,6 @@ export default withAuth(
 );
 
 // Protect all routes that require authentication
-// This config specifies the routes that the middleware will run on.
 export const config = {
   matcher: [
     // Page routes
