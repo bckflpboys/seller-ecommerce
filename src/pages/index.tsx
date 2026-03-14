@@ -44,17 +44,12 @@ export default function Home({ products: initialProducts }: HomeProps) {
       <section className="relative h-[600px] flex items-center justify-center">
         <div className="absolute inset-0 z-0">
           <video
+            src="/clousoft-banner-video.mp4"
             autoPlay
             loop
             muted
-            playsInline
             className="object-cover w-full h-full"
-            preload="metadata"
-            poster="/heroo.jpeg"
-          >
-            <source src="/clousoft-banner-video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          />
           <div className="absolute inset-0 bg-sky-200/15" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
@@ -83,7 +78,6 @@ export default function Home({ products: initialProducts }: HomeProps) {
             alt="Background"
             fill
             className="object-cover"
-            sizes="100vw"
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
