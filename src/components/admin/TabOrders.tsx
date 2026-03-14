@@ -134,7 +134,7 @@ export default function TabOrders({ limit }: TabOrdersProps) {
                     value={order.status}
                     onChange={(e) => updateOrderStatus(order.paymentReference, e.target.value)}
                     className={`px-3 py-1 text-xs font-semibold rounded-full appearance-none cursor-pointer pl-3 pr-8 ${
-                      order.status === 'delivered' ? 'bg-green-100 text-green-800' : order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800'
+                      order.status === 'delivered' ? 'bg-yellow-100 text-yellow-800' : order.status === 'processing' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
                     } relative`}
                     style={{
                       backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
@@ -175,7 +175,7 @@ export default function TabOrders({ limit }: TabOrdersProps) {
                 value={order.status}
                 onChange={(e) => updateOrderStatus(order.paymentReference, e.target.value)}
                 className={`px-3 py-1 text-xs font-semibold rounded-full appearance-none cursor-pointer pl-3 pr-8 ${
-                  order.status === 'delivered' ? 'bg-green-100 text-green-800' : order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800'
+                  order.status === 'delivered' ? 'bg-yellow-100 text-yellow-800' : order.status === 'processing' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
                 } relative`}
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,

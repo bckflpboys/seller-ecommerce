@@ -32,14 +32,14 @@ module.exports = {
           dark: '#5C4033'
         },
         sage: {
-          light: '#BCB88A',
-          DEFAULT: '#9CA777',
-          dark: '#78866B'
+          light: '#FDE047',
+          DEFAULT: '#FACC15',
+          dark: '#EAB308'
         }
       },
       fontFamily: {
-        sans: ['var(--font-inter)'],
-        display: ['var(--font-playfair)'],
+        sans: ['var(--font-nunito)'],
+        display: ['var(--font-quicksand)'],
       },
       boxShadow: {
         'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',

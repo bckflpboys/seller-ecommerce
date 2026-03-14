@@ -41,7 +41,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center space-x-2">
             <Leaf className="w-8 h-8 text-blue-400" />
             <div className="font-display">
-              <span className="text-2xl font-bold text-blue-400">Cloud</span>
+              <span className="text-2xl font-bold text-blue-400">Moon</span>
               <span className="text-2xl font-bold text-brown-400">soft</span>
             </div>
           </Link>

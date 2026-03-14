@@ -335,7 +335,7 @@ export default function Profile() {
                     id="name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                   />
                 </div>
 
@@ -354,7 +354,7 @@ export default function Profile() {
                           ...formData,
                           address: { ...formData.address, street: e.target.value }
                         })}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                       />
                     </div>
                     <div>
@@ -369,7 +369,7 @@ export default function Profile() {
                           ...formData,
                           address: { ...formData.address, city: e.target.value }
                         })}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                       />
                     </div>
                     <div>
@@ -384,7 +384,7 @@ export default function Profile() {
                           ...formData,
                           address: { ...formData.address, province: e.target.value }
                         })}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                       />
                     </div>
                     <div>
@@ -399,7 +399,7 @@ export default function Profile() {
                           ...formData,
                           address: { ...formData.address, postalCode: e.target.value }
                         })}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                       />
                     </div>
                   </div>
@@ -414,7 +414,7 @@ export default function Profile() {
                     id="phoneNumber"
                     value={formData.phoneNumber}
                     onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                   />
                 </div>
 
@@ -426,7 +426,7 @@ export default function Profile() {
                     id="userType"
                     value={formData.userType}
                     onChange={(e) => setFormData({ ...formData, userType: e.target.value })}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                   >
                     <option value="user">Customer</option>
                     <option value="supplier">Supplier</option>
@@ -438,7 +438,7 @@ export default function Profile() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
                   >
                     <Save className="w-4 h-4 mr-2" />
                     Save Changes
@@ -446,7 +446,7 @@ export default function Profile() {
                   <button
                     type="button"
                     onClick={handleCancel}
-                    className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
                   >
                     <X className="w-4 h-4 mr-2" />
                     Cancel
@@ -516,7 +516,7 @@ export default function Profile() {
                       <div className="text-right">
                         <p className="font-semibold">Total: R{order.total.toFixed(2)}</p>
                         <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
-                          order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
+                          order.status === 'Delivered' ? 'bg-yellow-100 text-yellow-800' :
                           order.status === 'Processing' ? 'bg-blue-100 text-blue-800' :
                           'bg-gray-100 text-gray-800'
                         }`}>

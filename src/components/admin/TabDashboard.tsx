@@ -115,7 +115,7 @@ export default function TabDashboard() {
                 </div>
                 <div className="mt-4">
                   <span className={`text-sm font-medium ${
-                    stat.trend === 'up' ? 'text-green-600' : 'text-red-600'
+                    stat.trend === 'up' ? 'text-yellow-600' : 'text-red-600'
                   }`}>
                     {stat.change}
                   </span>

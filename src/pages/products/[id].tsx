@@ -204,8 +204,8 @@ export default function ProductPage({ product }: ProductPageProps) {
                   {/* Stock Status */}
                   <div className="mb-3">
                     <div className="flex items-center space-x-2">
-                      <div className={`w-2 h-2 rounded-full ${product.isInStock ? 'bg-green-500' : 'bg-red-500'}`} />
-                      <span className={`text-sm ${product.isInStock ? 'text-green-600' : 'text-red-600'}`}>
+                      <div className={`w-2 h-2 rounded-full ${product.isInStock ? 'bg-yellow-500' : 'bg-red-500'}`} />
+                      <span className={`text-sm ${product.isInStock ? 'text-yellow-600' : 'text-red-600'}`}>
                         {product.isInStock ? 'In Stock' : 'Out of Stock'}
                       </span>
                     </div>

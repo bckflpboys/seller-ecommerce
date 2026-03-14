@@ -1,28 +1,28 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Nunito, Quicksand } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
 import { CartProvider } from '@/context/CartContext';
 import Layout from '@/components/Layout';
 import { Toaster } from 'react-hot-toast';
 
-const inter = Inter({
+const nunito = Nunito({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-nunito',
 });
 
-const playfair = Playfair_Display({
+const quicksand = Quicksand({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-playfair',
+  variable: '--font-quicksand',
 });
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <CartProvider>
-        <main className={`${inter.variable} ${playfair.variable} font-sans`}>
+        <main className={`${nunito.variable} ${quicksand.variable} font-sans`}>
           <Layout>
             <Component {...pageProps} />
           </Layout>

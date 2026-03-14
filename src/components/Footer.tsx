@@ -10,12 +10,12 @@ export default function Footer() {
             <div className="flex items-center space-x-2">
               <Leaf className="w-8 h-8 text-blue-400" />
               <div>
-                <span className="text-2xl font-display font-bold text-blue-400">Eco</span>
-                <span className="text-2xl font-display font-bold text-blue-900">Store</span>
+                <span className="text-2xl font-display font-bold text-blue-400">Moon</span>
+                <span className="text-2xl font-display font-bold text-blue-900">Soft</span>
               </div>
             </div>
             <p className="text-gray-600 leading-relaxed">
-              Your trusted source for natural products, eco-friendly cleaning solutions, and sustainable food items.
+              Your trusted source for premium, ultra-soft toilet paper that combines superior comfort with exceptional quality for everyday luxury.
             </p>
             <div className="flex space-x-4 pt-4">
               <a 
@@ -114,11 +114,11 @@ export default function Footer() {
               </li>
               <li className="flex items-center space-x-3 text-gray-600">
                 <Phone className="w-5 h-5 text-blue-400 flex-shrink-0" />
-                <span>+27 67 152 0479</span>
+                <span>+27 788 8401</span>
               </li>
               <li className="flex items-center space-x-3 text-gray-600">
                 <Mail className="w-5 h-5 text-blue-400 flex-shrink-0" />
-                <span>soilsolutionsptyltd@gmail.com</span>
+                <span>sales@moonsoft.life</span>
               </li>
             </ul>
           </div>
@@ -127,7 +127,7 @@ export default function Footer() {
         <div className="mt-8 pt-6 border-t border-blue-300">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-blue-400">
-              &copy; {new Date().getFullYear()} EcoStore. All rights reserved.
+              &copy; {new Date().getFullYear()} MoonSoft. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link href="/privacy" className="text-blue-400 hover:text-blue-500 transition-colors">

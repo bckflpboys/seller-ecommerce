@@ -221,7 +221,7 @@ export default function TabAnalytics() {
                   <span 
                     className={`text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full flex-shrink-0 ml-1 sm:ml-2 ${
                       status.status === 'delivered' 
-                        ? 'bg-green-100 text-green-800'
+                        ? 'bg-yellow-100 text-yellow-800'
                         : status.status === 'shipped'
                         ? 'bg-blue-100 text-blue-800'
                         : 'bg-gray-100 text-gray-800'
@@ -364,7 +364,7 @@ export default function TabAnalytics() {
                                 ? 'bg-red-100 text-red-800' 
                                 : product.stock < 20 
                                 ? 'bg-yellow-100 text-yellow-800' 
-                                : 'bg-green-100 text-green-800'
+                                : 'bg-yellow-100 text-yellow-800'
                             }`}>
                               {product.stock < 10 
                                 ? 'Low Stock' 
