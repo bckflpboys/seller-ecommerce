@@ -29,17 +29,26 @@ export default function AboutPage() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-4 relative">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/blue-bg.jpeg"
+            alt="Background"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-white/30" />
+        </div>
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h2 className="text-4xl font-display font-bold text-blue-900">
                 Our Mission
               </h2>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-800 leading-relaxed font-medium">
                 At MoonSoft, we believe everyone deserves the luxury of premium toilet paper. Our mission is to provide the softest, most absorbent, and strongest toilet paper that transforms your daily routine into a moment of comfort and care.
               </p>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-800 leading-relaxed font-medium">
                 We use advanced manufacturing techniques and carefully selected materials to create toilet paper that's gentle on your skin while being tough enough for everyday use. Every roll is crafted with attention to detail and quality.
               </p>
             </div>
@@ -56,8 +65,17 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-blue-50/30">
-        <div className="max-w-7xl mx-auto px-4">
+      <section className="py-20 relative">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/blue-bg.jpeg"
+            alt="Background"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-blue-50/40" />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
           <h2 className="text-4xl font-display font-bold text-blue-900 text-center mb-16">
             Why Choose MoonSoft
           </h2>
@@ -86,7 +104,7 @@ export default function AboutPage() {
             ].map((value, index) => (
               <div
                 key={index}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
                   <value.icon className="w-6 h-6 text-yellow-600" />
@@ -94,7 +112,7 @@ export default function AboutPage() {
                 <h3 className="text-xl font-bold text-blue-900 mb-2">
                   {value.title}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-700">
                   {value.description}
                 </p>
               </div>

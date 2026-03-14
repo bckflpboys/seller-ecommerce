@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import { GetServerSideProps } from 'next';
 import ProductCard from '@/components/ProductCard';
 import ProductFilter from '@/components/ProductFilter';
@@ -57,31 +58,42 @@ export default function ProductsPage({ initialProducts }: ProductsPageProps) {
   return (
     <>
       <Head>
-        <title>Products - Soil Solution</title>
-        <meta name="description" content="Browse our collection of eco-friendly products" />
+        <title>Products - MoonSoft</title>
+        <meta name="description" content="Browse our collection of premium toilet paper products" />
       </Head>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row gap-8">
-          <aside className="w-full md:w-1/4">
-            <ProductFilter
-              categories={CATEGORIES}
-              selectedCategory={selectedCategory}
-              onCategoryChange={setSelectedCategory}
-              priceRange={priceRange}
-              onPriceRangeChange={setPriceRange}
-              sortBy={sortBy}
-              onSortByChange={setSortBy}
-            />
-          </aside>
+      <div className="min-h-screen relative">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/light-bg.jpeg"
+            alt="Background"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-white/40" />
+        </div>
+        <div className="container mx-auto px-4 py-8 relative z-10">
+          <div className="flex flex-col md:flex-row gap-8">
+            <aside className="w-full md:w-1/4">
+              <ProductFilter
+                categories={CATEGORIES}
+                selectedCategory={selectedCategory}
+                onCategoryChange={setSelectedCategory}
+                priceRange={priceRange}
+                onPriceRangeChange={setPriceRange}
+                sortBy={sortBy}
+                onSortByChange={setSortBy}
+              />
+            </aside>
 
-          <main className="w-full md:w-3/4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
-            </div>
-          </main>
+            <main className="w-full md:w-3/4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredProducts.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+            </main>
+          </div>
         </div>
       </div>
     </>

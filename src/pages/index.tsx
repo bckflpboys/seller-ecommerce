@@ -71,9 +71,18 @@ export default function Home({ products: initialProducts }: HomeProps) {
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 bg-primary-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-earth-dark text-center">
+      <section className="py-16 relative">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/blue-bg.jpeg"
+            alt="Background"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-white/20" />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <h2 className="text-3xl font-bold mb-8 text-gray-900 text-center drop-shadow-sm">
             Featured Products
           </h2>
           <div className={`grid grid-cols-1 gap-6 ${
@@ -92,7 +101,7 @@ export default function Home({ products: initialProducts }: HomeProps) {
                 <ProductCard key={product._id} product={product} />
               ))
             ) : (
-              <div className="col-span-full text-center text-gray-600">
+              <div className="col-span-full text-center text-gray-900 font-medium">
                 No products available at the moment.
               </div>
             )}
