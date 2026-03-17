@@ -46,9 +46,9 @@ const productSchema = new mongoose.Schema({
     required: [true, 'Please provide a product category'],
     enum: {
       values: [
-        'muthi-products',
-        'poultry-products',
-        'livestock',
+        'toilet-paper',
+        '1-ply-toilet-paper',
+        '2-ply-toilet-paper',
         'cleaning-products',
         'sanitary-products',
         'vegetables'
