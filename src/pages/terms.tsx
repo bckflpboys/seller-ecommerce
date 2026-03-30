@@ -1,10 +1,9 @@
 import React from 'react';
-import Layout from '@/components/Layout';
 import Head from 'next/head';
 
 export default function TermsOfService() {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Terms of Service - MoonSoft</title>
         <meta name="description" content="MoonSoft Terms of Service - Read our terms and conditions for purchasing products." />
@@ -54,6 +53,6 @@ export default function TermsOfService() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

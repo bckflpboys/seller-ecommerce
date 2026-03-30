@@ -1,10 +1,9 @@
 import React from 'react';
-import Layout from '@/components/Layout';
 import Head from 'next/head';
 
 export default function ShippingPolicy() {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Shipping Policy - MoonSoft</title>
         <meta name="description" content="MoonSoft Shipping Policy - Learn about our delivery areas, timeframes, and shipping costs." />
@@ -76,6 +75,6 @@ export default function ShippingPolicy() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

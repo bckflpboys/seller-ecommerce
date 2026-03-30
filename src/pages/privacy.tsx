@@ -1,10 +1,9 @@
 import React from 'react';
-import Layout from '@/components/Layout';
 import Head from 'next/head';
 
 export default function PrivacyPolicy() {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Privacy Policy - MoonSoft</title>
         <meta name="description" content="MoonSoft Privacy Policy - Learn how we protect and handle your personal information." />
@@ -60,6 +59,6 @@ export default function PrivacyPolicy() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

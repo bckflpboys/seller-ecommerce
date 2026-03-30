@@ -1,10 +1,9 @@
 import React from 'react';
-import Layout from '@/components/Layout';
 import Head from 'next/head';
 
 export default function RefundPolicy() {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Refund & Return Policy - MoonSoft</title>
         <meta name="description" content="MoonSoft Refund & Return Policy - Learn about our return and refund procedures." />
@@ -57,6 +56,6 @@ export default function RefundPolicy() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
