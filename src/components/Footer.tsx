@@ -115,12 +115,18 @@ export default function Footer() {
             <p className="text-blue-400">
               &copy; {new Date().getFullYear()} MoonSoft. All rights reserved.
             </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
+            <div className="flex flex-wrap gap-4 md:gap-6 mt-4 md:mt-0 justify-center md:justify-end">
               <Link href="/privacy" className="text-blue-400 hover:text-blue-500 transition-colors">
                 Privacy Policy
               </Link>
               <Link href="/terms" className="text-blue-400 hover:text-blue-500 transition-colors">
                 Terms of Service
+              </Link>
+              <Link href="/refund-policy" className="text-blue-400 hover:text-blue-500 transition-colors">
+                Refund Policy
+              </Link>
+              <Link href="/shipping-policy" className="text-blue-400 hover:text-blue-500 transition-colors">
+                Shipping Policy
               </Link>
             </div>
           </div>
