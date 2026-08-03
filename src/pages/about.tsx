@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Package, Sparkles, Heart, ShieldCheck } from 'lucide-react';
 
 export default function AboutPage() {
@@ -118,6 +119,83 @@ export default function AboutPage() {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-display font-bold text-blue-900 mb-6">
+              Our Professional Services
+            </h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              MoonSoft is more than just products - we provide comprehensive cleaning solutions tailored to your needs
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {[
+              {
+                title: 'Contract Cleaning',
+                description: 'Reliable, scheduled cleaning services for corporate offices, schools, healthcare facilities, and retail outlets.',
+                icon: '🏢'
+              },
+              {
+                title: 'Deep Cleaning & Sanitisation',
+                description: 'Thorough deep cleaning that goes beyond surface cleaning, perfect for periodic maintenance and special events.',
+                icon: '✨'
+              },
+              {
+                title: 'Post-Construction Cleaning',
+                description: 'Specialized cleaning for newly built or renovated properties, making spaces move-in ready.',
+                icon: '🏗️'
+              },
+              {
+                title: 'Carpet & Upholstery Cleaning',
+                description: 'Expert cleaning using advanced techniques to restore freshness and extend furniture life.',
+                icon: '🛋️'
+              },
+              {
+                title: 'Window Cleaning',
+                description: 'Professional window cleaning for residential and commercial properties with streak-free results.',
+                icon: '🪟'
+              },
+              {
+                title: 'Professional Cleaning Chemicals',
+                description: 'High-quality MoonSoft cleaning products and chemicals for all your cleaning needs.',
+                icon: '🧴'
+              }
+            ].map((service, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-blue-100"
+              >
+                <div className="text-5xl mb-4">{service.icon}</div>
+                <h3 className="text-2xl font-bold text-blue-900 mb-4">
+                  {service.title}
+                </h3>
+                <p className="text-gray-700 leading-relaxed">
+                  {service.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl p-12 text-center text-white shadow-2xl">
+            <h3 className="text-3xl font-bold mb-4">
+              Serving Kimberley and the Northern Cape
+            </h3>
+            <p className="text-xl mb-8 max-w-3xl mx-auto">
+              We provide customized cleaning solutions for corporate offices, schools, healthcare facilities, retail outlets, hospitality establishments, and residential customers.
+            </p>
+            <Link
+              href="/services"
+              className="inline-block bg-white text-blue-600 px-10 py-4 rounded-lg hover:bg-gray-100 transition-colors duration-200 font-semibold text-lg shadow-lg"
+            >
+              Learn More About Our Services
+            </Link>
           </div>
         </div>
       </section>

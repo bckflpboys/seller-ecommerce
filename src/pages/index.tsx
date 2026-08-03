@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Building2, Sparkles, Home as HomeIcon, Shirt, SprayCan, Droplets } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
 import ProductCardSkeleton from '@/components/ProductCardSkeleton';
 import connectDB from '@/lib/mongodb';
@@ -112,6 +113,88 @@ export default function Home({ products: initialProducts }: HomeProps) {
               className="inline-block bg-sage hover:bg-sage-dark text-white px-8 py-3 rounded-md font-semibold transition"
             >
               View All Products
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-20 relative">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/light-bg.jpeg"
+            alt="Background"
+            fill
+            className="object-cover"
+            loading="eager"
+          />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-6 drop-shadow-sm">
+              Professional Cleaning Services
+            </h2>
+            <p className="text-xl text-gray-800 max-w-3xl mx-auto font-medium">
+              Beyond quality products, we offer comprehensive cleaning solutions for businesses and homes across Kimberley and the Northern Cape
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {[
+              {
+                title: 'Contract Cleaning',
+                description: 'Regular professional cleaning services for offices, schools, and healthcare facilities',
+                icon: Building2
+              },
+              {
+                title: 'Deep Cleaning & Sanitisation',
+                description: 'Thorough cleaning and sanitisation services for complete hygiene',
+                icon: Sparkles
+              },
+              {
+                title: 'Post-Construction Cleaning',
+                description: 'Specialized cleaning for newly built or renovated properties',
+                icon: HomeIcon
+              },
+              {
+                title: 'Carpet & Upholstery Cleaning',
+                description: 'Expert cleaning to restore and protect your furnishings',
+                icon: Shirt
+              },
+              {
+                title: 'Window Cleaning',
+                description: 'Crystal-clear windows for residential and commercial properties',
+                icon: SprayCan
+              },
+              {
+                title: 'Professional Cleaning Chemicals',
+                description: 'Supply of high-quality MoonSoft cleaning products',
+                icon: Droplets
+              }
+            ].map((service, index) => (
+              <div
+                key={index}
+                className="bg-white/95 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-blue-100"
+              >
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                  <service.icon className="w-8 h-8 text-blue-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-blue-900 mb-4">
+                  {service.title}
+                </h3>
+                <p className="text-gray-700 leading-relaxed">
+                  {service.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link
+              href="/services"
+              className="inline-block bg-sage hover:bg-sage-dark text-white px-10 py-4 rounded-md font-semibold transition text-lg shadow-lg hover:shadow-xl"
+            >
+              Explore All Services
             </Link>
           </div>
         </div>

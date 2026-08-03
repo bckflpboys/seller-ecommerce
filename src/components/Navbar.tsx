@@ -57,6 +57,12 @@ export default function Navbar() {
                 Products
               </Link>
               <Link 
+                href="/services" 
+                className="text-blue-400 hover:text-blue-500 transition-colors duration-200 font-medium"
+              >
+                Services
+              </Link>
+              <Link 
                 href="/about" 
                 className="text-blue-400 hover:text-blue-500 transition-colors duration-200 font-medium"
               >
@@ -157,6 +163,12 @@ export default function Navbar() {
                 className="text-blue-400 hover:text-blue-500 transition-colors duration-200 font-medium"
               >
                 Products
+              </Link>
+              <Link 
+                href="/services" 
+                className="text-blue-400 hover:text-blue-500 transition-colors duration-200 font-medium"
+              >
+                Services
               </Link>
               <Link 
                 href="/about" 
