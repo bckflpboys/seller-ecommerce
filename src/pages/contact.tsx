@@ -4,6 +4,8 @@ import Head from 'next/head';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
+import MetaSEO from '@/components/MetaSEO';
+
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
@@ -33,13 +35,18 @@ export default function ContactPage() {
 
   return (
     <>
-      <Head>
-        <title>Contact Moon Soft | Kimberley & Northern Cape</title>
-        <meta 
-          name="description" 
-          content="Contact Moon Soft for commercial cleaning quotes, site surveys, toilet paper wholesale orders, and chemical supply in Kimberley and Northern Cape." 
-        />
-      </Head>
+      <MetaSEO
+        title="Contact Moon Soft Kimberley | Fast Quotes & Free Site Audits"
+        description="Contact Moon Soft for commercial cleaning quotes, on-site facility surveys, toilet paper wholesale orders, and chemical supply in Kimberley and Northern Cape. Call +27 788 8401 or visit 4139 Sehurutsi Street."
+        canonicalUrl="https://www.moonsoft.life/contact"
+        ogImage="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200"
+        keywords={[
+          'Contact Moon Soft Kimberley',
+          'Kimberley cleaning company phone number',
+          'Commercial cleaning quotes Northern Cape',
+          'Moon Soft depot address'
+        ]}
+      />
 
       <div className="min-h-screen bg-slate-50 font-sans text-navy-950">
         

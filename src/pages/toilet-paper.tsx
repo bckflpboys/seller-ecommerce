@@ -9,6 +9,8 @@ import connectDB from '@/lib/mongodb';
 import Product from '@/models/Product';
 import { useState, useEffect } from 'react';
 
+import MetaSEO from '@/components/MetaSEO';
+
 interface ProductType {
   _id: string;
   name: string;
@@ -23,6 +25,21 @@ interface ProductType {
 interface ToiletPaperProps {
   products: ProductType[];
 }
+
+const TOILET_PAPER_FAQS = [
+  {
+    question: "What types of toilet paper does Moon Soft manufacture in Kimberley?",
+    answer: "Moon Soft manufactures ultra-absorbent 2-ply virgin pulp rolls, economical 1-ply commercial rolls, jumbo garage rolls, and folded paper hand towels designed for corporate dispensers, schools, healthcare centers, and households."
+  },
+  {
+    question: "Is Moon Soft toilet paper safe for septic tanks and sensitive skin?",
+    answer: "Yes! All Moon Soft paper products are dermatologically gentle, hypoallergenic, free from harsh chlorine bleaches, and engineered for rapid bio-degradation in septic systems."
+  },
+  {
+    question: "Do you offer bulk wholesale pricing and delivery in the Northern Cape?",
+    answer: "Yes, we provide direct-from-factory tiered wholesale pricing for bulk buyers, retailers, and facilities across Kimberley, Upington, Kuruman, and all Northern Cape municipalities with priority dispatch."
+  }
+];
 
 export default function ToiletPaperPage({ products: initialProducts }: ToiletPaperProps) {
   const [products, setProducts] = useState(initialProducts);
@@ -41,13 +58,21 @@ export default function ToiletPaperPage({ products: initialProducts }: ToiletPap
 
   return (
     <>
-      <Head>
-        <title>Premium Toilet Paper & Tissue Products | Moon Soft</title>
-        <meta 
-          name="description" 
-          content="Experience the ultimate in softness and comfort with Moon Soft premium 1-ply and 2-ply toilet paper. Gentle on your skin, strong when you need it." 
-        />
-      </Head>
+      <MetaSEO
+        title="Premium Toilet Paper & Tissue Supplies Kimberley | Moon Soft"
+        description="Experience the ultimate in softness and comfort with Moon Soft premium 1-ply and 2-ply toilet paper. Gentle on your skin, ultra-absorbent, and available for direct bulk wholesale in Kimberley & Northern Cape."
+        canonicalUrl="https://www.moonsoft.life/toilet-paper"
+        ogImage="https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?auto=format&fit=crop&q=80&w=1200"
+        faqs={TOILET_PAPER_FAQS}
+        keywords={[
+          'Toilet Paper Manufacturer Kimberley',
+          'Bulk toilet paper Northern Cape',
+          '2-ply toilet paper South Africa',
+          'Commercial tissue supplier Kimberley',
+          'Wholesale toilet paper Kimberley',
+          'Moon Soft paper products'
+        ]}
+      />
 
       <main className="min-h-screen bg-white font-sans text-navy-950">
         

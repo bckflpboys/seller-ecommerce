@@ -9,6 +9,8 @@ import {
 } from 'lucide-react';
 import { SERVICES_DATA, TARGET_MARKETS, COMPETITIVE_ADVANTAGES } from '@/data/servicesData';
 
+import MetaSEO from '@/components/MetaSEO';
+
 const iconMap: Record<string, any> = {
   Building2,
   Sparkles,
@@ -18,16 +20,40 @@ const iconMap: Record<string, any> = {
   Droplets
 };
 
+const SERVICES_FAQS = [
+  {
+    question: "What contract cleaning models does Moon Soft provide in Kimberley?",
+    answer: "We offer daily early morning, day porter, after-hours, and weekend cleaning rotas for offices, educational campuses, clinics, and commercial facilities with dedicated on-site supervision and transparent SLAs."
+  },
+  {
+    question: "Are emergency deep sanitisation services available across the Northern Cape?",
+    answer: "Yes, our rapid-response deep sanitisation and clinical decontamination teams can deploy within hours across Kimberley and Northern Cape regional centers."
+  },
+  {
+    question: "Do you supply all industrial equipment, vacuums, and cleaning chemicals?",
+    answer: "Yes, all contracts include our industrial HEPA filtration vacuums, floor burnishers, steam extractors, and Moon Soft certified SABS-approved cleaning chemical supplies."
+  }
+];
+
 export default function ServicesPage() {
   return (
     <>
-      <Head>
-        <title>Professional Cleaning Services Kimberley & Northern Cape | Moon Soft</title>
-        <meta 
-          name="description" 
-          content="Moon Soft provides premier commercial contract cleaning, deep sanitisation, post-construction cleaning, carpet & upholstery extraction, window cleaning, and bulk cleaning chemicals across Kimberley and Northern Cape." 
-        />
-      </Head>
+      <MetaSEO
+        title="Commercial Cleaning Services Directory Kimberley | Moon Soft"
+        description="Explore Moon Soft's 6 specialized commercial cleaning divisions in Kimberley & Northern Cape: Contract Cleaning, Deep Sanitisation, Post-Construction, Carpet Extraction, Window Detailing, and SABS Chemical Supply."
+        canonicalUrl="https://www.moonsoft.life/services"
+        ogImage="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=1600"
+        faqs={SERVICES_FAQS}
+        keywords={[
+          'Commercial Cleaning Services Kimberley',
+          'Northern Cape Contract Cleaners',
+          'Deep Cleaning Kimberley',
+          'Post Construction Cleaners Kimberley',
+          'Carpet Cleaners Kimberley',
+          'Window Cleaners Kimberley',
+          'Cleaning Chemicals Kimberley'
+        ]}
+      />
 
       <div className="min-h-screen bg-slate-50 text-navy-950 font-sans">
         

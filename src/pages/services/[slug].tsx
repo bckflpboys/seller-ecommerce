@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import { SERVICES_DATA, ServiceItem } from '@/data/servicesData';
 
+import MetaSEO from '@/components/MetaSEO';
+
 interface ServiceDetailProps {
   service: ServiceItem;
   otherServices: { slug: string; title: string; number: string; iconName: string; imageUrl: string; subtitle: string }[];
@@ -54,10 +56,27 @@ export default function ServiceDetailPage({ service, otherServices }: ServiceDet
 
   return (
     <>
-      <Head>
-        <title>{`${service.title} | Moon Soft Cleaning Services Kimberley`}</title>
-        <meta name="description" content={service.shortDescription} />
-      </Head>
+      <MetaSEO
+        title={`${service.title} Kimberley & Northern Cape | Moon Soft`}
+        description={`Moon Soft ${service.title}: ${service.shortDescription} Kimberley & Northern Cape trusted cleaning division. Vetted staff, SABS chemicals & transparent SLA.`}
+        canonicalUrl={`https://www.moonsoft.life/services/${service.slug}`}
+        ogImage={service.imageUrl}
+        faqs={service.faqs}
+        serviceSchema={{
+          name: service.title,
+          serviceType: service.subtitle,
+          description: service.fullDescription,
+          priceStarting: service.pricingStartingAt,
+          areaServed: ['Kimberley', 'Northern Cape', 'South Africa']
+        }}
+        keywords={[
+          `${service.title} Kimberley`,
+          `${service.title} Northern Cape`,
+          `${service.title} South Africa`,
+          'Commercial cleaning Kimberley',
+          'Moon Soft cleaning division'
+        ]}
+      />
 
       <div className="bg-slate-50 min-h-screen font-sans text-navy-950">
         

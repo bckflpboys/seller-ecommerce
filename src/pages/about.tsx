@@ -7,16 +7,23 @@ import {
 } from 'lucide-react';
 import { SERVICES_DATA, COMPETITIVE_ADVANTAGES } from '@/data/servicesData';
 
+import MetaSEO from '@/components/MetaSEO';
+
 export default function AboutPage() {
   return (
     <>
-      <Head>
-        <title>About Moon Soft | Where Quality Meets Care</title>
-        <meta 
-          name="description" 
-          content="Learn about Moon Soft - Kimberley & Northern Cape's premier cleaning services provider and manufacturer of high-quality toilet paper and professional cleaning chemicals." 
-        />
-      </Head>
+      <MetaSEO
+        title="About Moon Soft | Kimberley & Northern Cape Leading Hygiene Enterprise"
+        description="Where quality meets care. Learn about Moon Soft - Kimberley & Northern Cape's premier cleaning services provider and manufacturer of high-quality toilet paper and SABS certified cleaning chemicals."
+        canonicalUrl="https://www.moonsoft.life/about"
+        ogImage="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200"
+        keywords={[
+          'About Moon Soft',
+          'Kimberley cleaning company history',
+          'Northern Cape hygiene manufacturer',
+          'Moon Soft values and story'
+        ]}
+      />
 
       <div className="min-h-screen bg-slate-50 text-navy-950">
         {/* Editorial Hero */}
