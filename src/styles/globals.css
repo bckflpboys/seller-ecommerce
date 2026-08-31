@@ -2,13 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-rgb: 255, 255, 255;
+@layer base {
+  :root {
+    --foreground-rgb: 8, 18, 37;
+    --background-rgb: 255, 255, 255;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  body {
+    color: rgb(var(--foreground-rgb));
+    background: #ffffff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  ::selection {
+    background-color: #06B6D4;
+    color: #081225;
+  }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
-  min-height: 100vh;
+/* Swiss Editorial grid patterns */
+.swiss-grid-pattern {
+  background-image: linear-gradient(to right, rgba(8, 18, 37, 0.04) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(8, 18, 37, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.swiss-dot-pattern {
+  background-image: radial-gradient(rgba(8, 18, 37, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.swiss-dark-grid {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Glassmorphic Luxury Styles */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(8, 18, 37, 0.08);
+}
+
+.glass-panel-dark {
+  background: rgba(13, 27, 54, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.editorial-card {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 50px -12px rgba(8, 18, 37, 0.15);
+}
+
+/* Subtle gradient text */
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #FFFFFF 0%, #67E8F9 50%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

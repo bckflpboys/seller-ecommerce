@@ -35,15 +35,44 @@ module.exports = {
           light: '#FDE047',
           DEFAULT: '#FACC15',
           dark: '#EAB308'
+        },
+        navy: {
+          50: '#F0F6FC',
+          100: '#E1ECF9',
+          200: '#C3DCF4',
+          300: '#94C3EC',
+          400: '#5CA4E2',
+          500: '#2563EB',
+          600: '#1D4ED8',
+          700: '#1D3557',
+          800: '#112240',
+          850: '#0D1B36',
+          900: '#081225',
+          950: '#040914',
+        },
+        cyanAccent: {
+          light: '#67E8F9',
+          DEFAULT: '#06B6D4',
+          dark: '#0891B2',
+        },
+        electricBlue: {
+          DEFAULT: '#2563EB',
+          light: '#3B82F6',
+          dark: '#1D4ED8',
         }
       },
       fontFamily: {
-        sans: ['var(--font-nunito)'],
-        display: ['var(--font-quicksand)'],
+        sans: ['"Plus Jakarta Sans"', 'var(--font-nunito)', 'sans-serif'],
+        display: ['Outfit', 'var(--font-quicksand)', 'sans-serif'],
+        mono: ['"Space Grotesk"', 'monospace'],
       },
       boxShadow: {
         'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
         'warm': '0 2px 15px -3px rgba(111, 78, 55, 0.1), 0 10px 20px -2px rgba(111, 78, 55, 0.04)',
+        'editorial': '0 20px 40px -15px rgba(8, 18, 37, 0.07), 0 1px 3px rgba(8, 18, 37, 0.05)',
+        'card-hover': '0 30px 60px -15px rgba(8, 18, 37, 0.12), 0 0 1px 1px rgba(8, 18, 37, 0.05)',
+        'glow-cyan': '0 0 35px -5px rgba(6, 182, 212, 0.3)',
+        'glow-blue': '0 0 35px -5px rgba(37, 99, 235, 0.35)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
