@@ -536,6 +536,7 @@ export default function Profile() {
                                 alt={item.name}
                                 fill
                                 className="object-cover rounded"
+                                sizes="64px"
                               />
                             </div>
                             <div className="flex-1">
@@ -584,6 +585,7 @@ export default function Profile() {
                           alt={product.name}
                           fill
                           className="object-cover rounded"
+                          sizes="80px"
                         />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -829,6 +831,7 @@ export default function Profile() {
                         alt={product.name}
                         fill
                         className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     </div>
                     <div className="p-4">

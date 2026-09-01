@@ -68,8 +68,10 @@ export default function ProductsPage({ initialProducts }: ProductsPageProps) {
             src="/light-bg.jpeg"
             alt="Background"
             fill
-            className="object-cover"
+            priority
             loading="eager"
+            className="object-cover"
+            sizes="100vw"
           />
         </div>
         <div className="container mx-auto px-4 py-8 relative z-10">

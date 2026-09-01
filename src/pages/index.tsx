@@ -144,7 +144,7 @@ export default function Home({ products: initialProducts }: HomeProps) {
             
             {/* Top Micro Status Strip */}
             <div className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-8 border-b border-white/10 text-xs font-mono tracking-widest text-slate-400">
-              <div className="flex items-center space-x-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                 <span className="inline-flex items-center text-cyanAccent font-bold">
                   <span className="w-2 h-2 rounded-full bg-cyanAccent animate-pulse mr-2" />
                   KIMBERLEY DEPOT
@@ -152,7 +152,7 @@ export default function Home({ products: initialProducts }: HomeProps) {
                 <span className="text-slate-600">/</span>
                 <span className="text-slate-300">NORTHERN CAPE REGION</span>
               </div>
-              <div className="flex items-center space-x-4 text-[11px]">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-[11px]">
                 <span className="text-slate-400 font-sans">Slogan:</span>
                 <span className="text-cyanAccent font-semibold font-mono tracking-normal">WHERE QUALITY MEETS CARE</span>
               </div>
@@ -225,9 +225,10 @@ export default function Home({ products: initialProducts }: HomeProps) {
                       src={activeSrv.imageUrl}
                       alt={activeSrv.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                      sizes="(max-width: 768px) 100vw, 40vw"
                       priority
+                      loading="eager"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent" />
                     
@@ -298,13 +299,13 @@ export default function Home({ products: initialProducts }: HomeProps) {
         {/* ========================================================================= */}
         <section className="bg-navy-900 text-white py-4 px-4 border-b border-navy-800 text-xs font-mono">
           <div className="container mx-auto max-w-7xl flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 sm:gap-x-4">
               <span className="text-cyanAccent font-bold">KIMBERLEY</span>
               <span className="text-slate-600">•</span>
               <span className="text-slate-300">CORPORATE &amp; COMMERCIAL</span>
-              <span className="text-slate-600">•</span>
+              <span className="text-slate-600 hidden sm:inline">•</span>
               <span className="text-slate-300">HEALTHCARE &amp; CLINICAL</span>
-              <span className="text-slate-600">•</span>
+              <span className="text-slate-600 hidden sm:inline">•</span>
               <span className="text-slate-300">POST-CONSTRUCTION</span>
             </div>
             <div className="flex items-center space-x-2 text-cyanAccent font-bold">
@@ -355,6 +356,7 @@ export default function Home({ products: initialProducts }: HomeProps) {
                   alt={SERVICES_DATA[0].title}
                   fill
                   className="object-cover opacity-35 group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 66vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/60 to-transparent" />
                 
@@ -398,6 +400,7 @@ export default function Home({ products: initialProducts }: HomeProps) {
                     alt={SERVICES_DATA[1].title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute top-3 left-3">
                     <span className="bg-navy-950/80 text-cyanAccent text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-md uppercase">
@@ -429,6 +432,7 @@ export default function Home({ products: initialProducts }: HomeProps) {
                     alt={SERVICES_DATA[2].title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute top-3 left-3">
                     <span className="bg-navy-950/80 text-cyanAccent text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-md uppercase">
@@ -460,6 +464,7 @@ export default function Home({ products: initialProducts }: HomeProps) {
                     alt={SERVICES_DATA[3].title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute top-3 left-3">
                     <span className="bg-navy-950/80 text-cyanAccent text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-md uppercase">
@@ -491,6 +496,7 @@ export default function Home({ products: initialProducts }: HomeProps) {
                     alt={SERVICES_DATA[4].title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute top-3 left-3">
                     <span className="bg-navy-950/80 text-cyanAccent text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-md uppercase">
@@ -523,6 +529,7 @@ export default function Home({ products: initialProducts }: HomeProps) {
                 alt={SERVICES_DATA[5].title}
                 fill
                 className="object-cover opacity-20"
+                sizes="(max-width: 1280px) 100vw, 1280px"
               />
               <div className="relative z-10 max-w-xl">
                 <span className="text-xs font-mono uppercase tracking-widest text-cyanAccent font-bold">
@@ -585,7 +592,7 @@ export default function Home({ products: initialProducts }: HomeProps) {
                     alt={sector.title}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    sizes="(max-width: 768px) 100vw, 33vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/60 to-transparent" />
                   

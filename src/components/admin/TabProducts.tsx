@@ -185,7 +185,7 @@ export default function TabProducts() {
                         <div className="flex items-center">
                           <div className="h-12 w-12 flex-shrink-0">
                             <div className="h-12 w-12 rounded-lg relative overflow-hidden border border-gray-200">
-                              <Image src={product.image} alt={product.name} fill className="object-cover" />
+                              <Image src={product.image} alt={product.name} fill className="object-cover" sizes="48px" />
                             </div>
                           </div>
                           <div className="ml-4">
@@ -216,7 +216,7 @@ export default function TabProducts() {
                 <div key={product._id} className="bg-white p-4 rounded-lg border-2 border-gray-200 shadow-sm">
                   <div className="flex gap-4">
                     <div className="h-20 w-20 flex-shrink-0 rounded-lg relative overflow-hidden border border-gray-200">
-                      <Image src={product.image} alt={product.name} fill className="object-cover" />
+                      <Image src={product.image} alt={product.name} fill className="object-cover" sizes="80px" />
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-gray-900">{product.name}</p>

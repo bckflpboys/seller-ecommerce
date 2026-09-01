@@ -89,8 +89,10 @@ export default function ServiceDetailPage({ service, otherServices }: ServiceDet
               src={service.imageUrl}
               alt={service.title}
               fill
-              className="object-cover"
               priority
+              loading="eager"
+              className="object-cover"
+              sizes="100vw"
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/90 to-navy-950/70" />
@@ -98,7 +100,7 @@ export default function ServiceDetailPage({ service, otherServices }: ServiceDet
           
           <div className="container mx-auto max-w-7xl px-4 relative z-10">
             {/* Breadcrumb */}
-            <div className="flex items-center space-x-2 text-xs uppercase tracking-widest font-mono text-slate-400 mb-6">
+            <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest font-mono text-slate-400 mb-6">
               <Link href="/" className="hover:text-cyanAccent transition-colors">Home</Link>
               <ChevronRight className="w-3.5 h-3.5" />
               <Link href="/services" className="hover:text-cyanAccent transition-colors">Services</Link>
@@ -108,7 +110,7 @@ export default function ServiceDetailPage({ service, otherServices }: ServiceDet
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
               <div className="lg:col-span-8 space-y-4">
-                <div className="inline-flex items-center space-x-3">
+                <div className="inline-flex flex-wrap items-center gap-2 sm:gap-3">
                   <span className="font-mono text-cyanAccent text-xs font-bold tracking-widest bg-navy-900/90 border border-cyanAccent/40 px-3 py-1 rounded-full uppercase">
                     DIVISION {service.number} // KIMBERLEY DEPOT
                   </span>
@@ -169,6 +171,7 @@ export default function ServiceDetailPage({ service, otherServices }: ServiceDet
                       alt={service.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4 text-white">
@@ -184,6 +187,7 @@ export default function ServiceDetailPage({ service, otherServices }: ServiceDet
                       alt="Workplace cleanliness"
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4 text-white">
@@ -539,7 +543,7 @@ export default function ServiceDetailPage({ service, otherServices }: ServiceDet
                     alt={srv.title}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    sizes="(max-width: 768px) 100vw, 20vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 20vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/60 to-transparent" />
                   

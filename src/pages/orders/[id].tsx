@@ -165,6 +165,7 @@ export default function OrderPage() {
                         alt={item.name}
                         fill
                         className="object-cover"
+                        sizes="96px"
                       />
                     </div>
                     <div className="flex-1 min-w-0">

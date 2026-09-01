@@ -66,8 +66,10 @@ export default function ServicesPage() {
               src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=1600"
               alt="Modern Office Background"
               fill
-              className="object-cover"
               priority
+              loading="eager"
+              className="object-cover"
+              sizes="100vw"
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/90 to-navy-950/70" />
@@ -166,6 +168,7 @@ export default function ServicesPage() {
                           alt={service.title}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-700"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent" />
                         
@@ -248,6 +251,7 @@ export default function ServicesPage() {
                     alt={sector.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-60"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/60 to-transparent" />
                   

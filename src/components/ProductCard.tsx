@@ -40,10 +40,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             <Image
               src={product.image}
               alt={product.name}
-              width={800}
-              height={800}
+              width={600}
+              height={600}
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              priority
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             />
             <div className="absolute inset-0 bg-navy-950/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </Link>

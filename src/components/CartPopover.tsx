@@ -13,14 +13,14 @@ export default function CartPopover({ onClose }: CartPopoverProps) {
 
   if (cart.items.length === 0) {
     return (
-      <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-lg p-4 cart-popup">
-        <p className="text-center text-gray-500">Your cart is empty</p>
+      <div className="absolute top-full right-0 mt-2 w-[calc(100vw-2rem)] max-w-xs sm:w-80 bg-white rounded-xl shadow-xl p-4 cart-popup border border-slate-200 z-50">
+        <p className="text-center text-gray-500 text-sm">Your cart is empty</p>
       </div>
     );
   }
 
   return (
-    <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-lg p-4 z-51 border border-blue-400 cart-popup">
+    <div className="absolute top-full right-0 mt-2 w-[calc(100vw-2rem)] max-w-xs sm:w-80 bg-white rounded-xl shadow-xl p-4 z-50 border border-slate-200 cart-popup">
       <div className="max-h-96 overflow-y-auto">
         {cart.items.map((item) => (
           <div key={item._id} className="flex items-center gap-3 py-2 border-b border-blue-100 last:border-0">
@@ -30,6 +30,7 @@ export default function CartPopover({ onClose }: CartPopoverProps) {
                 alt={item.name}
                 fill
                 className="object-cover rounded"
+                sizes="64px"
               />
             </div>
             <div className="flex-1 min-w-0">

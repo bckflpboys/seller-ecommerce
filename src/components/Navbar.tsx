@@ -106,16 +106,16 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-20">
           
           {/* Logo with Modern Swiss Identity */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 rounded-xl bg-navy-950 flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform">
+          <Link href="/" className="flex items-center space-x-2.5 sm:space-x-3 group min-w-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-navy-950 flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform flex-shrink-0">
               <Image src="/favi.png" alt="MoonSoft Logo" width={32} height={32} className="w-full h-full object-contain" />
             </div>
-            <div className="flex flex-col">
-              <div className="flex items-center font-display font-extrabold text-2xl tracking-tight leading-none">
+            <div className="flex flex-col min-w-0">
+              <div className="flex items-center font-display font-extrabold text-xl sm:text-2xl tracking-tight leading-none">
                 <span className="text-navy-950">MOON</span>
                 <span className="text-blue-600">SOFT</span>
               </div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500 font-semibold mt-0.5">
+              <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-slate-500 font-semibold mt-0.5 truncate">
                 Quality &amp; Care
               </span>
             </div>
